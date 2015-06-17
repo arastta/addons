@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>Opencart2 Migration Tool</name>
+  <code>opencart_2_migration_tool</code>
+  <version>1.0</version>
+  <author>Arastta eCommerce</author>
+  <link>http://arastta.org</link>
+  
+  <file path="admin/controller/common/menu.php">
+	<operation>
+      <search><![CDATA[$data['order_status'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], 'SSL');]]></search>
+      <add position="after"><![CDATA[		$data['opencart'] = $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL');]]></add>
+    </operation>
+	
+	<operation>
+      <search><![CDATA[$data['preturn_upload'] = $this->user->hasPermission('access','tool/upload');]]></search>
+      <add position="after"><![CDATA[		$data['preturn_opencart'] = $this->user->hasPermission('access','tool/opencart');]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/view/template/common/menu.tpl">
+	<operation>
+      <search><![CDATA[<?php if($preturn_error_log) { ?>]]></search>
+      <add position="before"><![CDATA[            <?php if($preturn_opencart) { ?>
+                <li><a href="<?php echo $opencart; ?>"><?php echo $text_opencart; ?></a></li>
+            <?php } ?>]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/language/*/common/menu.php">
+	<operation>
+      <search><![CDATA[$_['text_order_status']]]></search>
+      <add position="after"><![CDATA[$_['text_opencart']               	   = 'Opencart 2 Migration';]]></add>
+    </operation>
+  </file>
+</modification>
