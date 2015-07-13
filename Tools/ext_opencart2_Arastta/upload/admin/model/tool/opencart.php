@@ -101,26 +101,26 @@ class ModelToolOpencart extends Model {
                 }
             } else {
                 if ($value != NULL) {
+
                     $data_array = explode('(', $value);
 
-                    $data_key = explode(',', $data_array[1]);
+                    $data_key = @explode(',', $data_array[1]);
 
                     for ($i = 0; $i < count($data_key); $i++) {
-                        $check = strpos($data_key[1], ")");
-
+                        $check = strpos($data_key[$i], ")");
                         if ($check !== false) {
                             $var = explode(')', $data_key[$i]);
                             $data_key[$i] = $var[0];
                         }
                     }
 
-                    $data_value = explode(',', $data_array[2]);
+                    $data_value = @explode(',', $data_array[2]);
 
                     for ($i = 0; $i < count($data_value); $i++) {
-                        $check = strpos($data_value[1], ")");
+                        $check = strpos($data_value[$i], ")");
 
                         if ($check !== false) {
-                            $var = explode(')', $data_value[$i]);
+                            $var = @explode(')', $data_value[$i]);
                             $data_value[$i] = $var[0];
                         }
                     }
@@ -139,7 +139,7 @@ class ModelToolOpencart extends Model {
                     $is_setting = strpos($data_array[0], "setting`");
 
                     if (($is_address !== false ) || ($is_customer_group !== false ) || ($is_order !== false ) || ($is_product_option !== false ) || ($is_setting !== false )) {
-                        $keys = " (";
+                        $keys = " ( ";
                         $values = "";
                         for ($i = 0; $i < count($data_key); $i++) {
                             if ($is_address !== false) {
@@ -181,7 +181,7 @@ class ModelToolOpencart extends Model {
 
                         }
                         if(empty($none)){
-                            $value = $data_array[0] . rtrim($keys, ",") . "(" . rtrim($values, ",") . ";";
+                            $value = $data_array[0] . rtrim($keys, ",") . " ) VALUES ( " . rtrim($values, ",") . " );";
                         } else {
                             $value = '';
                             unset($none);
@@ -339,11 +339,11 @@ class ModelToolOpencart extends Model {
             $permission['access'][] = 'system/email_template';
             $permission['modify'][] = 'system/email_template';
 
-            $permission['access'][] = 'system/export_import';
-            $permission['modify'][] = 'system/export_import';
+            $permission['access'][] = 'tool/export_import';
+            $permission['modify'][] = 'tool/export_import';
 
-            $permission['access'][] = 'system/file_manager';
-            $permission['modify'][] = 'system/file_manager';
+            $permission['access'][] = 'tool/file_manager';
+            $permission['modify'][] = 'tool/file_manager';
 
             $permission['access'][] = 'system/language_override';
             $permission['modify'][] = 'system/language_override';
