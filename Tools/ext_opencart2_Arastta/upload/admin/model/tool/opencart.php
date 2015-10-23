@@ -430,12 +430,25 @@ class ModelToolOpencart extends Model {
                 $permission['access'][] = 'tool/file_manager';
                 $permission['modify'][] = 'tool/file_manager';
 
+				$permission['access'][] = 'feed/facebook_store';
+                $permission['modify'][] = 'feed/facebook_store';
+
                 $permission['access'][] = 'system/language_override';
                 $permission['modify'][] = 'system/language_override';
 
                 $permission['access'][] = 'tool/opencart';
                 $permission['modify'][] = 'tool/opencart';
 
+				$permission['dashboard'][] = 'dashboard/charts';
+				$permission['dashboard'][] = 'dashboard/online';
+				
+				$permission['dashboard'][] = 'dashboard/recenttabs';
+				$permission['dashboard'][] = 'dashboard/customer';
+				
+				$permission['dashboard'][] = 'dashboard/order';
+				$permission['dashboard'][] = 'dashboard/sale"';
+				
+				$permission['dashboard'][] = 'dashboard/map"';
 
                 $permission = serialize($permission);
 
