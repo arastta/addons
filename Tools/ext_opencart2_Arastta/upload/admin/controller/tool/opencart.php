@@ -239,7 +239,6 @@ class ControllerToolOpencart extends Controller {
     }
 
     public function ocPrefix(){
-
         $sqlFile = fopen(DIR_UPLOAD . $this->request->post['path'] . "/install.sql", "r") or die("Unable to open file!");
 
         $sql = fgets($sqlFile);

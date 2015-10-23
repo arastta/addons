@@ -64,8 +64,10 @@ class ModelToolOpencart extends Model {
 
         if(DB_PREFIX == 'oc_') {
             $sqlFile = str_replace ( '`' . $ocPrefix . '_', "`cs_" , $sqlFile );
+            $prefix = 'cs_';
         } else {
             $sqlFile = str_replace ( '`' . $ocPrefix . '_', "`oc_"  , $sqlFile );
+            $prefix = 'oc_';
         }
 
 
@@ -137,8 +139,9 @@ class ModelToolOpencart extends Model {
                     $is_language = strpos($data_array[0], "language`");
                     $is_product_option = strpos($data_array[0], "product_option`");
                     $is_setting = strpos($data_array[0], "setting`");
+                    $is_api = strpos($data_array[0], "api`");
 
-                    if (($is_address !== false ) || ($is_customer_group !== false ) || ($is_order !== false ) || ($is_product_option !== false ) || ($is_setting !== false )) {
+                    if (($is_address !== false ) || ($is_customer_group !== false ) || ($is_order !== false ) || ($is_product_option !== false )) {
                         $keys = " ( ";
                         $values = "";
                         for ($i = 0; $i < count($data_key); $i++) {
@@ -160,63 +163,134 @@ class ModelToolOpencart extends Model {
                             } else if ($is_product_option !== false) {
                                 $keys .= str_replace("option_value", "value", $data_key[$i]) . ",";
                                 $values .= $data_value[$i] . ",";
-                            } else if ($is_setting !== false) {
-                                if(isset($data_value[$i]) && $data_value[$i] != " 'config_robots'") {
-                                    $_data = str_replace("',", "*", $data_array[2]);
-                                    $_data = str_replace(",", "#", $_data);
-                                    $_data = str_replace("*", "',", $_data);
-                                    $_data = str_replace("\'", "", $_data);
-
-                                    $data_value = explode(",", $_data);
-
-                                    $keys .= str_replace("group", "code", $data_key[$i]) . ",";
-                                    $values .= @str_replace("#", ",", $data_value[$i]) . ",";
-                                } else {
-                                    $none = true;
-                                }
                             } else {
                                 $keys .= $data_key[$i] . ",";
                                 $values .= $data_value[$i] . ",";
                             }
 
                         }
-                        if(empty($none)){
-                            $value = $data_array[0] . rtrim($keys, ",") . " ) VALUES ( " . rtrim($values, ",") . " );";
-                        } else {
-                            $value = '';
-                            unset($none);
+
+                        $value = $data_array[0] . rtrim($keys, ",") . " ) VALUES ( " . rtrim($values, ",") . " );";
+                    } else if ($is_setting !== false ) {
+                        preg_match("~\(`(.*)`\) VALUES \('(.*)'\)~", $value, $matches);
+
+                        $setting_keys = explode("`, `", $matches[1]);
+                        $setting_values = explode("', '", $matches[2]);
+
+                        $setting_sql = array();
+
+                        $setting = array(
+                            'setting_id', 'store_id', 'code', 'key', 'value', 'serialized'
+                        );
+
+                        foreach ($setting_keys as $key => $value) {
+                            if (in_array(trim($value), $setting)) {
+                                $setting_sql[trim($value)] = trim($setting_values[$key]);
+                            } else {
+                                $columnName = $this->getChangeColumnName('setting', trim($value));
+
+                                $setting_sql[$columnName] = trim($setting_values[$key]);
+                            }
                         }
-                    } else if($is_language !== false) {
-                        $keys = " (";
-                        $values = "";
 
-                        $_data = str_replace("',", "*", $data_array[2]);
-                        $_data = str_replace(",", "#", $_data);
-                        $_data = str_replace("*", "',", $_data);
+                        $count_setting = count($setting);
+                        $count_settingSql = count($setting_sql);
 
-                        $data_value = explode(",", $_data);
-
-                        for ($i = 0; $i < count($data_key); $i++) {
-                            if ($data_key[$i] != " `filename`") {
-                                $keys .= $data_key[$i] . ",";
-
-                                if ($data_key[$i] == " `directory`") {
-                                    $values .= str_replace("english", "en-GB", $data_value[$i]) . ",";
-                                } else {
-                                    $values .= str_replace("#", ",", $data_value[$i]) . ",";
+                        if ($count_settingSql < $count_setting) {
+                            foreach ($setting as $_setting) {
+                                if (!array_key_exists($_setting, $setting_sql)) {
+                                    $setting_sql[$_setting] = '';
                                 }
                             }
                         }
 
-                        $value = $data_array[0] . rtrim($keys, ",") . "(" . rtrim($values, ",") . ";";
+                        $value = "INSERT INTO `" . $prefix . "setting` (`".implode("`, `", array_keys($setting_sql))."`) VALUES ('".implode("', '", $setting_sql)."') ";
+                    } else if($is_language !== false) {
+                        preg_match("~\(`(.*)`\) VALUES \('(.*)'\)~", $value, $matches);
+
+                        $langauge_keys = explode("`, `", $matches[1]);
+                        $langauge_values = explode("', '", $matches[2]);
+
+                        foreach ($langauge_keys as $key => $value) {
+                            if ($value == 'directory') {
+                                $langauge_values[$key] = str_replace("english", "en-GB", $langauge_values[$key]);
+                            }
+                        }
+
+                        $value = "INSERT INTO `" . $prefix . "language` (`".implode("`, `", $langauge_keys)."`) VALUES ('".implode("', '", $langauge_values)."') ";
+                    } else if ($is_api !== false) {
+                        preg_match("~\(`(.*)`\) VALUES \('(.*)'\)~", $value, $matches);
+
+                        $api_keys = str_replace('`', '', $matches[1]);
+                        $api_keys = explode(',', $api_keys);
+
+                        $api_values = str_replace("'", "", $matches[2]);
+                        $api_values = explode(',', $api_values);
+
+                        $api_sql = array();
+
+                        $api = array(
+                            'api_id', 'username', 'firstname', 'lastname', 'password', 'status', 'date_added', 'date_modified'
+                        );
+
+                        foreach ($api_keys as $key => $api_key) {
+                            if (in_array(trim($api_key), $api)) {
+                                $api_sql[trim($api_key)] = trim($api_values[$key]);
+                            } else {
+                                $columnName = $this->getChangeColumnName('api', trim($api_key));
+
+                                $api_sql[$columnName] = trim($api_values[$key]);
+                            }
+                        }
+
+                        $count_api = count($api);
+                        $count_apiSql = count($api_sql);
+
+                        if ($count_apiSql < $count_api) {
+                             foreach ($api as $_api) {
+                                 if (!array_key_exists($_api, $api_sql)) {
+                                     $api_sql[$_api] = '';
+                                 }
+                             }
+                        }
+
+                        $value = "INSERT INTO `" . $prefix . "api` (`".implode("`, `", array_keys($api_sql))."`) VALUES ('".implode("', '", $api_sql)."') ";
                     }
 
                     if(!empty($value)) {
-                        $this->db->query($value);
+                        $check_sql = strpos($value, "INSERT INTO");
+
+                        if ($check_sql !== false) {
+                            $this->db->query($value);
+                        }
                     }
                 }
             }
         }
+    }
+
+    protected function getChangeColumnName($table, $column) {
+        $result = '';
+
+        if ($table == 'setting') {
+            $colums = array(
+                'group' => 'code'
+            );
+        } else if ($table == 'api') {
+            $colums = array(
+                'name' => 'username',
+                'key' => 'password'
+            );
+
+        } else {
+            $colums = array();
+        }
+
+        if (array_key_exists($column, $colums)) {
+            $result = $colums[$column];
+        }
+
+        return $result;
     }
 
     public function migrateTables(){
@@ -241,7 +315,7 @@ class ModelToolOpencart extends Model {
 
         }
 
-        $privateTable = array($prefix . "manufacturer", $prefix . "setting", $prefix . "event");
+        $privateTable = array($prefix . "manufacturer", $prefix . "setting", $prefix . "event", $prefix . "modification");
 
         foreach ($table_data as $table) {
             if (!in_array($table, $privateTable)) {
@@ -254,12 +328,12 @@ class ModelToolOpencart extends Model {
     }
 
     protected function _defaultMigrate($table){
-
         if(DB_PREFIX == 'oc_') {
             $tname = explode('cs_',$table);
         } else {
             $tname = explode('oc_', $table);
         }
+		
         $table_name = DB_PREFIX  . $tname[1];
 
         if ("category" == $tname[1]){
@@ -304,65 +378,83 @@ class ModelToolOpencart extends Model {
         if("user_group" == $tname[1]) {
             $query = $this->db->query("SELECT permission FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = 1");
 
-            $permission = unserialize($query->row['permission']);
+            if (!empty($query->row['permission'])) {
+                $check = $this->isJson($query->row['permission']);
 
-            $permission['access'][] = 'appearance/customizer';
-            $permission['modify'][] = 'appearance/customizer';
+                if ($check) {
+                    $permission = json_decode($query->row['permission']);
+                } else {
+                    $permission = unserialize($query->row['permission']);
+                }
 
-            $permission['access'][] = 'appearance/layout';
-            $permission['modify'][] = 'appearance/layout';
+                if (is_object($permission)) {
+                    $permission = (array) $permission;
+                }
 
-            $permission['access'][] = 'appearance/menu';
-            $permission['modify'][] = 'appearance/menu';
+                $permission['access'][] = 'appearance/customizer';
+                $permission['modify'][] = 'appearance/customizer';
 
-            $permission['access'][] = 'common/edit';
-            $permission['modify'][] = 'common/edit';
+                $permission['access'][] = 'appearance/layout';
+                $permission['modify'][] = 'appearance/layout';
 
-            $permission['access'][] = 'common/update';
-            $permission['modify'][] = 'common/update';
+                $permission['access'][] = 'appearance/menu';
+                $permission['modify'][] = 'appearance/menu';
 
-            $permission['access'][] = 'extension/marketplace';
-            $permission['modify'][] = 'extension/marketplace';
+                $permission['access'][] = 'common/edit';
+                $permission['modify'][] = 'common/edit';
 
-            $permission['access'][] = 'module/categoryhome';
-            $permission['modify'][] = 'module/categoryhome';
+                $permission['access'][] = 'common/update';
+                $permission['modify'][] = 'common/update';
 
-            $permission['access'][] = 'module/login';
-            $permission['modify'][] = 'module/login';
+                $permission['access'][] = 'extension/marketplace';
+                $permission['modify'][] = 'extension/marketplace';
 
-            $permission['access'][] = 'module/manufacturer';
-            $permission['modify'][] = 'module/manufacturer';
+                $permission['access'][] = 'module/categoryhome';
+                $permission['modify'][] = 'module/categoryhome';
 
-            $permission['access'][] = 'search/search';
-            $permission['modify'][] = 'search/search';
+                $permission['access'][] = 'module/login';
+                $permission['modify'][] = 'module/login';
 
-            $permission['access'][] = 'system/email_template';
-            $permission['modify'][] = 'system/email_template';
+                $permission['access'][] = 'module/manufacturer';
+                $permission['modify'][] = 'module/manufacturer';
 
-            $permission['access'][] = 'tool/export_import';
-            $permission['modify'][] = 'tool/export_import';
+                $permission['access'][] = 'search/search';
+                $permission['modify'][] = 'search/search';
 
-            $permission['access'][] = 'tool/file_manager';
-            $permission['modify'][] = 'tool/file_manager';
+                $permission['access'][] = 'system/email_template';
+                $permission['modify'][] = 'system/email_template';
 
-            $permission['access'][] = 'system/language_override';
-            $permission['modify'][] = 'system/language_override';
+                $permission['access'][] = 'tool/export_import';
+                $permission['modify'][] = 'tool/export_import';
 
-            $permission['access'][] = 'tool/opencart';
-            $permission['modify'][] = 'tool/opencart';
+                $permission['access'][] = 'tool/file_manager';
+                $permission['modify'][] = 'tool/file_manager';
 
-            $permission = serialize($permission);
+                $permission['access'][] = 'system/language_override';
+                $permission['modify'][] = 'system/language_override';
 
-            $this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $permission . "' WHERE `user_group_id` = 1");
+                $permission['access'][] = 'tool/opencart';
+                $permission['modify'][] = 'tool/opencart';
+
+
+                $permission = serialize($permission);
+
+                if (empty($query->row['permission'])) {
+                    $permission = '';
+                }
+
+                $this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $permission . "' WHERE `user_group_id` = 1");
+            }
         }
     }
 
-    protected function _privateTable($table){
+    protected function _privateTable($table) {
         if(DB_PREFIX == 'oc_') {
             $tname = explode('cs_',$table);
         } else {
             $tname = explode('oc_', $table);
         }
+		
         $table_name = DB_PREFIX  . $tname[1];
 
         // Manufacturer
@@ -413,8 +505,19 @@ class ModelToolOpencart extends Model {
                         foreach ($data->rows as $setValue) {
                             $sqlDEL = "DELETE FROM ". $table_name ." WHERE code = '" . $code ."' AND `key` = '" . $key ."' AND store_id = '" . (int)$setValue['store_id'] . "'";
                             $this->db->query($sqlDEL);
+
                             if(!empty($setValue['serialized'])) {
-                                $setValue['value'] = unserialize($setValue['value']);
+                                $check = $this->isJson($setValue['value']);
+
+                                if ($check) {
+                                    $setValue['value'] = json_decode($setValue['value']);
+
+                                    if (is_object($setValue['value'])) {
+                                        $setValue['value'] = (array) $setValue['value'];
+                                    }
+                                } else {
+                                    $setValue['value'] = unserialize($setValue['value']);
+                                }
                             }
 
                             if (empty($setValue['serialized'])) {
@@ -428,6 +531,12 @@ class ModelToolOpencart extends Model {
             }
 
         }
+    }
+
+    protected function isJson($string) {
+        return ((is_string($string) &&
+            (is_object(json_decode($string)) ||
+                is_array(json_decode($string))))) ? true : false;
     }
 
     protected function addCategoryMenu($table) {
@@ -535,4 +644,5 @@ class ModelToolOpencart extends Model {
             $this->db->query("DROP TABLE " . $table);
         }
     }
+
 }
