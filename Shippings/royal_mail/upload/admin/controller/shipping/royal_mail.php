@@ -73,9 +73,9 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_1st_class_standard'] = $this->language->get('tab_1st_class_standard');
-		$data['tab_1st_class_recorded'] = $this->language->get('tab_1st_class_recorded');
+		$data['tab_1st_class_signed'] = $this->language->get('tab_1st_class_signed');
 		$data['tab_2nd_class_standard'] = $this->language->get('tab_2nd_class_standard');
-		$data['tab_2nd_class_recorded'] = $this->language->get('tab_2nd_class_recorded');
+		$data['tab_2nd_class_signed'] = $this->language->get('tab_2nd_class_signed');
 		$data['tab_special_delivery_500'] = $this->language->get('tab_special_delivery_500');
 		$data['tab_special_delivery_1000'] = $this->language->get('tab_special_delivery_1000');
 		$data['tab_special_delivery_2500'] = $this->language->get('tab_special_delivery_2500');
@@ -136,26 +136,26 @@ class ControllerShippingRoyalMail extends Controller {
 		}
 
 		// 1st Class Recorded
-		if (isset($this->request->post['royal_mail_1st_class_recorded_rate'])) {
-			$data['royal_mail_1st_class_recorded_rate'] = $this->request->post['royal_mail_1st_class_recorded_rate'];
-		} elseif ($this->config->has('royal_mail_1st_class_recorded_rate')) {
-			$data['royal_mail_1st_class_recorded_rate'] = $this->config->get('royal_mail_1st_class_recorded_rate');
+		if (isset($this->request->post['royal_mail_1st_class_signed_rate'])) {
+			$data['royal_mail_1st_class_signed_rate'] = $this->request->post['royal_mail_1st_class_signed_rate'];
+		} elseif ($this->config->has('royal_mail_1st_class_signed_rate')) {
+			$data['royal_mail_1st_class_signed_rate'] = $this->config->get('royal_mail_1st_class_signed_rate');
 		} else {
-			$data['royal_mail_1st_class_recorded_rate'] = '.1:2.35,.25:2.73,.5:3.25,.75:3.82,1:4.86,1.25:5.67,1.5:6.43,1.75:7.19,2:7.95,4:9.72,6:12.77,8:15.82,10:18.87';
+			$data['royal_mail_1st_class_signed_rate'] = '.1:2.35,.25:2.73,.5:3.25,.75:3.82,1:4.86,1.25:5.67,1.5:6.43,1.75:7.19,2:7.95,4:9.72,6:12.77,8:15.82,10:18.87';
 		}
 
-		if (isset($this->request->post['royal_mail_1st_class_recorded_insurance'])) {
-			$data['royal_mail_1st_class_recorded_insurance'] = $this->request->post['royal_mail_1st_class_recorded_insurance'];
-		} elseif ($this->config->has('royal_mail_1st_class_recorded_insurance')) {
-			$data['royal_mail_1st_class_recorded_insurance'] = $this->config->get('royal_mail_1st_class_recorded_insurance');
+		if (isset($this->request->post['royal_mail_1st_class_signed_insurance'])) {
+			$data['royal_mail_1st_class_signed_insurance'] = $this->request->post['royal_mail_1st_class_signed_insurance'];
+		} elseif ($this->config->has('royal_mail_1st_class_signed_insurance')) {
+			$data['royal_mail_1st_class_signed_insurance'] = $this->config->get('royal_mail_1st_class_signed_insurance');
 		} else {
-			$data['royal_mail_1st_class_recorded_insurance'] = '39:46,100:46,250:46,500:46';
+			$data['royal_mail_1st_class_signed_insurance'] = '39:46,100:46,250:46,500:46';
 		}
 
-		if (isset($this->request->post['royal_mail_1st_class_recorded_status'])) {
-			$data['royal_mail_1st_class_recorded_status'] = $this->request->post['royal_mail_1st_class_recorded_status'];
+		if (isset($this->request->post['royal_mail_1st_class_signed_status'])) {
+			$data['royal_mail_1st_class_signed_status'] = $this->request->post['royal_mail_1st_class_signed_status'];
 		} else {
-			$data['royal_mail_1st_class_recorded_status'] = $this->config->get('royal_mail_1st_class_recorded_status');
+			$data['royal_mail_1st_class_signed_status'] = $this->config->get('royal_mail_1st_class_signed_status');
 		}
 
 		// 2nd Class Standard
@@ -174,26 +174,26 @@ class ControllerShippingRoyalMail extends Controller {
 		}
 
 		// 2nd Class Recorded
-		if (isset($this->request->post['royal_mail_2nd_class_recorded_rate'])) {
-			$data['royal_mail_2nd_class_recorded_rate'] = $this->request->post['royal_mail_2nd_class_recorded_rate'];
-		} elseif ($this->config->has('royal_mail_2nd_class_recorded_rate')) {
-			$data['royal_mail_2nd_class_recorded_rate'] = $this->config->get('royal_mail_2nd_class_recorded_rate');
+		if (isset($this->request->post['royal_mail_2nd_class_signed_rate'])) {
+			$data['royal_mail_2nd_class_signed_rate'] = $this->request->post['royal_mail_2nd_class_signed_rate'];
+		} elseif ($this->config->has('royal_mail_2nd_class_signed_rate')) {
+			$data['royal_mail_2nd_class_signed_rate'] = $this->config->get('royal_mail_2nd_class_signed_rate');
 		} else {
-			$data['royal_mail_2nd_class_recorded_rate'] = '.1:2.10,.25:2.49,.5:2.93,.75:3.38,1:3.92';
+			$data['royal_mail_2nd_class_signed_rate'] = '.1:2.10,.25:2.49,.5:2.93,.75:3.38,1:3.92';
 		}
 
-		if (isset($this->request->post['royal_mail_2nd_class_recorded_insurance'])) {
-			$data['royal_mail_2nd_class_recorded_insurance'] = $this->request->post['royal_mail_2nd_class_recorded_insurance'];
-		} elseif ($this->config->has('royal_mail_2nd_class_recorded_insurance')) {
-			$data['royal_mail_2nd_class_recorded_insurance'] = $this->config->get('royal_mail_2nd_class_recorded_insurance');
+		if (isset($this->request->post['royal_mail_2nd_class_signed_insurance'])) {
+			$data['royal_mail_2nd_class_signed_insurance'] = $this->request->post['royal_mail_2nd_class_signed_insurance'];
+		} elseif ($this->config->has('royal_mail_2nd_class_signed_insurance')) {
+			$data['royal_mail_2nd_class_signed_insurance'] = $this->config->get('royal_mail_2nd_class_signed_insurance');
 		} else {
-			$data['royal_mail_2nd_class_recorded_insurance'] = '39:46,100:46,250:46,500:46';
+			$data['royal_mail_2nd_class_signed_insurance'] = '39:46,100:46,250:46,500:46';
 		}
 
-		if (isset($this->request->post['royal_mail_2nd_class_recorded_status'])) {
-			$data['royal_mail_2nd_class_recorded_status'] = $this->request->post['royal_mail_2nd_class_recorded_status'];
+		if (isset($this->request->post['royal_mail_2nd_class_signed_status'])) {
+			$data['royal_mail_2nd_class_signed_status'] = $this->request->post['royal_mail_2nd_class_signed_status'];
 		} else {
-			$data['royal_mail_2nd_class_recorded_status'] = $this->config->get('royal_mail_2nd_class_recorded_status');
+			$data['royal_mail_2nd_class_signed_status'] = $this->config->get('royal_mail_2nd_class_signed_status');
 		}
 
 		// Special Delivery < 500
