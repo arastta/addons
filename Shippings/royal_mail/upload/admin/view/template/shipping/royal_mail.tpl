@@ -31,9 +31,9 @@
               <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                 <li><a href="#tab-1st-class-standard" data-toggle="tab"><?php echo $tab_1st_class_standard; ?></a></li>
-                <li><a href="#tab-1st-class-recorded" data-toggle="tab"><?php echo $tab_1st_class_recorded; ?></a></li>
+                <li><a href="#tab-1st-class-signed" data-toggle="tab"><?php echo $tab_1st_class_signed; ?></a></li>
                 <li><a href="#tab-2nd-class-standard" data-toggle="tab"><?php echo $tab_2nd_class_standard; ?></a></li>
-                <li><a href="#tab-2nd-class-recorded" data-toggle="tab"><?php echo $tab_2nd_class_recorded; ?></a></li>
+                <li><a href="#tab-2nd-class-signed" data-toggle="tab"><?php echo $tab_2nd_class_signed; ?></a></li>
                 <li><a href="#tab-special-delivery-500" data-toggle="tab"><?php echo $tab_special_delivery_500; ?></a></li>
                 <li><a href="#tab-special-delivery-1000" data-toggle="tab"><?php echo $tab_special_delivery_1000; ?></a></li>
                 <li><a href="#tab-special-delivery-2500" data-toggle="tab"><?php echo $tab_special_delivery_2500; ?></a></li>
@@ -186,24 +186,24 @@
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane" id="tab-1st-class-recorded">
+                <div class="tab-pane" id="tab-1st-class-signed">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-1st-class-recorded-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-1st-class-signed-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_1st_class_recorded_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-1st-class-recorded-rate" class="form-control"><?php echo $royal_mail_1st_class_recorded_rate; ?></textarea>
+                      <textarea name="royal_mail_1st_class_signed_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-1st-class-signed-rate" class="form-control"><?php echo $royal_mail_1st_class_signed_rate; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-1st-class-recorded-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-1st-class-signed-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_1st_class_recorded_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-1st-class-recorded-insurance" class="form-control"><?php echo $royal_mail_1st_class_recorded_insurance; ?></textarea>
+                      <textarea name="royal_mail_1st_class_signed_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-1st-class-signed-insurance" class="form-control"><?php echo $royal_mail_1st_class_signed_insurance; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-1st-class-recorded-status"><?php echo $entry_status; ?></label>
+                    <label class="col-sm-2 control-label" for="input-1st-class-signed-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_1st_class_recorded_status" id="input-1st-class-recorded-status" class="form-control">
-                        <?php if ($royal_mail_1st_class_recorded_status) { ?>
+                      <select name="royal_mail_1st_class_signed_status" id="input-1st-class-signed-status" class="form-control">
+                        <?php if ($royal_mail_1st_class_signed_status) { ?>
                         <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                         <option value="0"><?php echo $text_disabled; ?></option>
                         <?php } else { ?>
@@ -236,24 +236,24 @@
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane" id="tab-2nd-class-recorded">
+                <div class="tab-pane" id="tab-2nd-class-signed">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-2nd-class-recorded-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-2nd-class-signed-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_2nd_class_recorded_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-2nd-class-recorded-rate" class="form-control"><?php echo $royal_mail_2nd_class_recorded_rate; ?></textarea>
+                      <textarea name="royal_mail_2nd_class_signed_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-2nd-class-signed-rate" class="form-control"><?php echo $royal_mail_2nd_class_signed_rate; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-2nd-class-recorded-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-2nd-class-signed-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_2nd_class_recorded_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-2nd-class-recorded-insurance" class="form-control"s><?php echo $royal_mail_2nd_class_recorded_insurance; ?></textarea>
+                      <textarea name="royal_mail_2nd_class_signed_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-2nd-class-signed-insurance" class="form-control"s><?php echo $royal_mail_2nd_class_signed_insurance; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-2nd-class-recorded-status"><?php echo $entry_status; ?></label>
+                    <label class="col-sm-2 control-label" for="input-2nd-class-signed-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_2nd_class_recorded_status" id="input-2nd-class-recorded-status" class="form-control">
-                        <?php if ($royal_mail_2nd_class_recorded_status) { ?>
+                      <select name="royal_mail_2nd_class_signed_status" id="input-2nd-class-signed-status" class="form-control">
+                        <?php if ($royal_mail_2nd_class_signed_status) { ?>
                         <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                         <option value="0"><?php echo $text_disabled; ?></option>
                         <?php } else { ?>
