@@ -1,0 +1,124 @@
+<modification>
+    <name><![CDATA[TrPos Sanal Pos]]></name>
+    <code><![CDATA[trpos]]></code>
+    <author><![CDATA[Arastta eCommerce]]></author>
+    <version><![CDATA[1.0.0]]></version>
+    <link><![CDATA[http://www.arastta.org/]]></link>
+
+    <file path="catalog/controller/product/product.php">
+        <operation>
+            <search><![CDATA[$data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);]]></search>
+            <add position="after"><![CDATA[
+			$trpos_status = $this->config->get('trpos_status');
+
+			if ($trpos_status == 1) {
+				$this->load->language('payment/trpos');
+			    $data['tab_instalment'] = $this->language->get('text_instalments');
+					
+                $data['text_instalments'] = $this->language->get('text_instalments');
+                $data['text_instalment'] = $this->language->get('text_instalment');
+                $data['text_no_instalment'] = $this->language->get('text_no_instalment');
+                $data['trpos_other_id'] = $this->config->get('trpos_other_id');
+
+                if ((float)$product_info['special']) {
+                    $order_total = $this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax'));
+                } else {
+                    $order_total = $this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax'));
+                }
+
+                $trpos_single_ratio = floatval($this->config->get('trpostotal_single_ratio'));
+
+                if ($trpos_single_ratio >= 0){
+                    $trpos_single_title = $this->language->get('text_single_positive') . '(%'.$trpos_single_ratio.')';
+                } else if($trpos_single_ratio<0){
+                    $trpos_single_title = $this->language->get('text_single_negative') . '(%'.$trpos_single_ratio.')';
+                }
+
+                $trpos_total = $order_total + ($order_total*$trpos_single_ratio/100);
+
+                $data['single_order_total'] = $trpos_single_title . ' ' . $this->currency->format($trpos_total, $this->session->data['currency'], false, true);
+
+                $data['banks'] = $this->config->get('trpos_banks_info');
+                $new_banks = array();
+
+                foreach($data['banks'] as $bank ){
+                    if ($bank['status'] != 0) {
+                        $new_banks[$bank['bank_id']] = $bank;
+
+                        if(!empty($bank['instalment']) || $bank['instalment']!='') {
+                            $instalments = array();
+                            $instalments = explode(';',$bank['instalment']);
+
+                            foreach($instalments as $instalment) {
+                                $instalment_array = explode('=',$instalment);
+                                $instalment_count = $instalment_array[0];
+                                $instalment_ratio = $instalment_array[1];
+                                $instalment_total = $order_total+($order_total*$instalment_ratio)/100;
+
+                                if($instalment_count != 0){
+                                    $instalment_price = $instalment_total/$instalment_count;
+                                } else {
+                                    $instalment_price = $order_total;
+                                }
+
+                                $instalment_total = $this->currency->format($instalment_total, $this->session->data['currency'], false, true);
+                                $instalment_price = $this->currency->format($instalment_price, $this->session->data['currency'], false, true);
+
+                                $new_banks[$bank['bank_id']]['instalments'][] = array('count'=>$instalment_count,
+                                                                                      'ratio'=>$instalment_ratio,
+                                                                                      'total'=>$instalment_total,
+                                                                                      'price'=>$instalment_price);
+                            }
+                        }
+                    }
+                }
+
+                unset($data['banks']);
+                $data['banks'] = $new_banks;
+            }
+			]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/default/template/product/product.tpl">
+        <operation>
+            <search index="2"><![CDATA[</ul>]]></search>
+            <add position="before"><![CDATA[			<?php if (isset($tab_instalment)) { ?>
+            <li><a href="#tab-instalment" data-toggle="tab"><?php echo $tab_instalment; ?></a></li>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation info="instalments to product page">
+            <search index="1"><![CDATA[<?php if ($review_status) { ?>]]></search>
+            <add position="before"><![CDATA[			<?php if(isset($tab_instalment)) { ?>
+			<div class="tab-pane" id="tab-instalment">
+			<p><?php echo $text_no_instalment . $single_order_total; ?></p>
+			<?php if ($banks) { ?>
+                <?php foreach ($banks as $bank) {
+                if(!empty($bank['instalment']) || $bank['instalment'] != ''){ ?>
+				<table class="col-sm-3">
+					<thead>
+						<tr><td>
+							<?php if (!empty($bank['image'])) {?>
+							<img src="<?php echo $bank['image']; ?>"/>
+				            <?php } else { ?>
+							<strong><?php echo $bank['name']; ?></strong>
+				            <?php } ?>
+						</td></tr>
+					</thead>
+				    <tbody>
+					<?php foreach($bank['instalments'] as $instalment) { ?>
+						<tr>
+							<td><?php echo $instalment['count'] . $text_instalment . $instalment['total'] . '('.$instalment['count'] . 'x' . $instalment['price'] . ')'; ?></td>
+                        </tr>
+					<?php } ?>
+					</tbody>
+				</table>
+                <?php } ?>
+			    <?php } ?>
+			  <?php } ?>
+			</div>
+			<?php } ?>]]></add>
+        </operation>
+    </file>
+</modification>
