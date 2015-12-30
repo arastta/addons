@@ -166,7 +166,7 @@ class ControllerPaymentTrPos extends Controller
 
     private function getbank($bank_id)
     {
-        $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "trposbank WHERE bank_id = '" . (int) $bank_id . "'");
+        $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "trpos_bank WHERE bank_id = '" . (int) $bank_id . "'");
 
         return $query->row;
     }

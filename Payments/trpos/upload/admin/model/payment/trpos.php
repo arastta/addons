@@ -11,7 +11,7 @@ class ModelPaymentTrPos extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "trposbank` (
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "trpos_bank` (
 				`bank_id` INT(11) NOT NULL AUTO_INCREMENT,
 				`name` varchar(64) NOT NULL,
 				`image` varchar(64) NOT NULL,
@@ -26,12 +26,12 @@ class ModelPaymentTrPos extends Model
 
     public function uninstall()
     {
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "trposbank`;");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "trpos_bank`;");
     }
     
     public function addBank($data)
     {
-        $this->db->query("INSERT INTO " . DB_PREFIX . "trposbank SET name = '" . $this->db->escape($data['name']) . "', image = '" . $this->db->escape($data['image']) . "', method = '" . $this->db->escape($data['method']) . "', model = '" . $this->db->escape($data['model']) . "', short = '" . $this->db->escape($data['short']) . "', status = '" . (int) $data['status'] . "'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "trpos_bank SET name = '" . $this->db->escape($data['name']) . "', image = '" . $this->db->escape($data['image']) . "', method = '" . $this->db->escape($data['method']) . "', model = '" . $this->db->escape($data['model']) . "', short = '" . $this->db->escape($data['short']) . "', status = '" . (int) $data['status'] . "'");
 
         $bank_id = $this->db->getLastId();
 
@@ -40,24 +40,24 @@ class ModelPaymentTrPos extends Model
 
     public function editBank($bank_id, $data)
     {
-        $this->db->query("UPDATE " . DB_PREFIX . "trposbank SET name = '" . $this->db->escape($data['name']) . "', image = '" . $this->db->escape($data['image']) . "', method = '" . $this->db->escape($data['method']) . "', model = '" . $this->db->escape($data['model']) . "', short = '" . $this->db->escape($data['short']) . "', status = '" . (int) $data['status'] . "' WHERE bank_id = '" . (int) $bank_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "trpos_bank SET name = '" . $this->db->escape($data['name']) . "', image = '" . $this->db->escape($data['image']) . "', method = '" . $this->db->escape($data['method']) . "', model = '" . $this->db->escape($data['model']) . "', short = '" . $this->db->escape($data['short']) . "', status = '" . (int) $data['status'] . "' WHERE bank_id = '" . (int) $bank_id . "'");
     }
 
     public function deleteBank($bank_id)
     {
-        $this->db->query("DELETE FROM " . DB_PREFIX . "trposbank WHERE bank_id = '" . (int) $bank_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "trpos_bank WHERE bank_id = '" . (int) $bank_id . "'");
     }
 
     public function getBank($bank_id)
     {
-        $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "trposbank WHERE bank_id = '" . (int) $bank_id . "'");
+        $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "trpos_bank WHERE bank_id = '" . (int) $bank_id . "'");
 
         return $query->row;
     }
 
     public function getBanks($data = array())
     {
-        $sql = "SELECT * FROM " . DB_PREFIX . "trposbank";
+        $sql = "SELECT * FROM " . DB_PREFIX . "trpos_bank";
 
         $sort_data = array(
             'name',
@@ -109,14 +109,14 @@ class ModelPaymentTrPos extends Model
 
     public function getTotalBanks()
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "trposbank;");
+        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "trpos_bank;");
 
         return $query->row['total'];
     }
 
     public function checkShortName($short)
     {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "trposbank WHERE short = '" . $this->db->escape($short) . "'");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "trpos_bank WHERE short = '" . $this->db->escape($short) . "'");
 
         $bank = array();
 

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `ar_trposbank` (
+CREATE TABLE IF NOT EXISTS `ar_trpos_bank` (
     `bank_id` INT(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(64) NOT NULL,
     `image` varchar(64) NOT NULL,
