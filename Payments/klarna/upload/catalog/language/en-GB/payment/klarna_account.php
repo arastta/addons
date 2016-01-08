@@ -1,4 +1,10 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package		Arastta eCommerce
+ * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license		GNU General Public License version 3; see LICENSE.txt
+ */
+
 // Text
 $_['text_title']				= 'Klarna Account - Pay from %s/month';
 $_['text_terms']				= '<span id="klarna_account_toc"></span><script type="text/javascript">var terms = new Klarna.Terms.Account({el: \'klarna_account_toc\', eid: \'%s\', country: \'%s\'});</script>';
