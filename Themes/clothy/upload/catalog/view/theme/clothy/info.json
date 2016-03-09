@@ -1,0 +1,12 @@
+{
+    "author":{
+        "name":"Arastta Core",
+        "email":"info@arastta.org",
+        "website":"arastta.org"
+    },
+    "theme":{
+        "name":"Clothy",
+        "description":"Fully responsive shopping theme for Arastta.",
+        "version":"1.0.0"
+    }
+}
