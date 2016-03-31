@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Affiliate, Compare, Reward Points, Wishlist Feature Disable</name>
+    <code>disable_functions</code>
+    <version>1.0.0</version>
+    <link>https://www.arastta.org</link>
+    <author>Arastta E-Commerce</author>
+
+    <file path="admin/controller/setting/setting.php">
+        <operation error="log">
+            <search><![CDATA[if (isset($this->request->post['config_product_count']))]]></search>
+            <add position="before"><![CDATA[        if (isset($this->request->post['config_compare_status'])) {
+            $data['config_compare_status'] = $this->request->post['config_compare_status'];
+        } else {
+            $data['config_compare_status'] = $this->config->get('config_compare_status');
+        }
+
+        if (isset($this->request->post['config_wishlist_status'])) {
+            $data['config_wishlist_status'] = $this->request->post['config_wishlist_status'];
+        } else {
+            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');
+        }
+
+        if (isset($this->request->post['config_reward_point_status'])) {
+            $data['config_reward_point_status'] = $this->request->post['config_reward_point_status'];
+        } else {
+            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');
+        }]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[if (isset($this->request->post['config_affiliate_auto']))]]></search>
+            <add position="before"><![CDATA[        if (isset($this->request->post['config_affiliate_status'])) {
+            $data['config_affiliate_status'] = $this->request->post['config_affiliate_status'];
+        } else {
+            $data['config_affiliate_status'] = $this->config->get('config_affiliate_status');
+        }]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/language/*/setting/setting.php">
+        <operation error="log">
+            <search><![CDATA[$_['entry_product_count']]]></search>
+            <add position="before"><![CDATA[$_['entry_compare']                    = 'Allow Compare';
+$_['entry_wishlist']                   = 'Allow Wishlist';
+$_['entry_reward_point']               = 'Allow Reward Point';]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$_['entry_product_count']]]></search>
+            <add position="before"><![CDATA[$_['help_compare']                     = 'Enable/Disable product compare.';
+$_['help_wishlist']                    = 'Enable/Disable product wish list.';
+$_['help_reward_point']                = 'Enable/Disable product reward point.';]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$_['entry_affiliate_approval']]]></search>
+            <add position="before"><![CDATA[$_['entry_affiliate_status']        = 'Allow Affiliate';]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$_['help_affiliate_approval']]]></search>
+            <add position="before"><![CDATA[$_['help_affiliate_status']         = 'Enable/Disable Affiliate';]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/template/setting/setting.tpl">
+        <operation error="log">
+            <search><![CDATA[<legend><?php echo $text_product; ?></legend>]]></search>
+            <add position="after"><![CDATA[                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_compare; ?>"><?php echo $entry_compare; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_compare_status) { ?>
+                                            <input type="radio" name="config_compare_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_compare_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_compare_status) { ?>
+                                            <input type="radio" name="config_compare_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_compare_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_wishlist; ?>"><?php echo $entry_wishlist; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_wishlist_status) { ?>
+                                            <input type="radio" name="config_wishlist_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_wishlist_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_wishlist_status) { ?>
+                                            <input type="radio" name="config_wishlist_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_wishlist_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_reward_point; ?>"><?php echo $entry_reward_point; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_reward_point_status) { ?>
+                                            <input type="radio" name="config_reward_point_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_reward_point_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_reward_point_status) { ?>
+                                            <input type="radio" name="config_reward_point_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_reward_point_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<legend><?php echo $text_affiliate; ?></legend>]]></search>
+            <add position="after"><![CDATA[                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_affiliate_status; ?>"><?php echo $entry_affiliate_status; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_affiliate_status) { ?>
+                                            <input type="radio" name="config_affiliate_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_affiliate_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_affiliate_status) { ?>
+                                            <input type="radio" name="config_affiliate_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_affiliate_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/theme/basic/template/setting/setting.tpl">
+        <operation error="log">
+            <search><![CDATA[<legend><?php echo $text_product; ?></legend>]]></search>
+            <add position="after"><![CDATA[                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_compare; ?>"><?php echo $entry_compare; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_compare_status) { ?>
+                                            <input type="radio" name="config_compare_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_compare_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_compare_status) { ?>
+                                            <input type="radio" name="config_compare_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_compare_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_wishlist; ?>"><?php echo $entry_wishlist; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_wishlist_status) { ?>
+                                            <input type="radio" name="config_wishlist_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_wishlist_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_wishlist_status) { ?>
+                                            <input type="radio" name="config_wishlist_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_wishlist_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_reward_point; ?>"><?php echo $entry_reward_point; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_reward_point_status) { ?>
+                                            <input type="radio" name="config_reward_point_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_reward_point_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_reward_point_status) { ?>
+                                            <input type="radio" name="config_reward_point_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_reward_point_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<legend><?php echo $text_affiliate; ?></legend>]]></search>
+            <add position="after"><![CDATA[                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_affiliate_status; ?>"><?php echo $entry_affiliate_status; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_affiliate_status) { ?>
+                                            <input type="radio" name="config_affiliate_status" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_affiliate_status" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_affiliate_status) { ?>
+                                            <input type="radio" name="config_affiliate_status" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_affiliate_status" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>]]></add>
+        </operation>
+    </file>    
+    
+    <file path="admin/controller/dashboard/charts.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->model('localisation/currency');]]></search>
+            <add position="before"><![CDATA[        $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$this->load->model('localisation/currency');]]></search>
+            <add position="before"><![CDATA[        $data['config_affiliate_status'] = $this->config->get('config_affiliate_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/template/dashboard/charts.tpl">
+        <operation error="log">
+            <search><![CDATA[<dl onclick="getChart(this, 'rewards');" class="col-xs-4 col-lg-2 passive" style="background-color: #b3591f">]]></search>
+            <add position="before"><![CDATA[            <?php if ($config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search index="5"><![CDATA[</dl>]]></search>
+            <add position="after"><![CDATA[            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<div id="chart-rewards" class="chart "></div>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_reward_point_status) { ?>
+                <div id="chart-rewards" class="chart "></div>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<dl onclick="getChart(this, 'affiliates');" class="col-xs-4 col-lg-2 passive  fourth-tab" style="background-color: #6b399c">]]></search>
+            <add position="before"><![CDATA[            <?php if ($config_affiliate_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search index="3"><![CDATA[</dl>]]></search>
+            <add position="after"><![CDATA[            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<div id="chart-affiliates" class="chart "></div>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_affiliate_status) { ?>
+                <div id="chart-affiliates" class="chart "></div>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<script type="text/javascript">]]></search>
+            <add position="before"><![CDATA[
+<?php if (!$config_reward_point_status && !$config_affiliate_status) { ?>
+<style type="text/css">
+    @media (min-width: 1200px) {
+        .col-lg-2 {
+            width: 24.666667% !important;
+        }
+    }
+</style>
+<?php } elseif (!$config_reward_point_status || !$config_affiliate_status) { ?>
+<style type="text/css">
+    @media (min-width: 1200px) {
+        .col-lg-2 {
+            width: 19.666667% !important;
+        }
+    }
+</style>
+<?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/controller/marketing/contact.php">
+        <operation error="log">
+            <search><![CDATA[$data['token'] = $this->session->data['token'];]]></search>
+            <add position="before"><![CDATA[        $data['config_affiliate_status'] = $this->config->get('config_affiliate_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/template/marketing/contact.tpl">
+        <operation error="log">
+            <search><![CDATA[<option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>]]></search>
+            <add position="before"><![CDATA[                                <?php if ($config_affiliate_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<option value="affiliate"><?php echo $text_affiliate; ?></option>]]></search>
+            <add position="after"><![CDATA[                                <?php } ?>]]></add>
+        </operation>
+    </file>
+    
+    <file path="admin/view/theme/basic/template/marketing/contact.tpl">
+        <operation error="log">
+            <search><![CDATA[<option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>]]></search>
+            <add position="before"><![CDATA[                                <?php if ($config_affiliate_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<option value="affiliate"><?php echo $text_affiliate; ?></option>]]></search>
+            <add position="after"><![CDATA[                                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/controller/sale/customer.php">
+        <operation error="log">
+            <search><![CDATA[$data['token'] = $this->session->data['token'];]]></search>
+            <add position="before"><![CDATA[        $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/template/sale/customer_form.tpl">
+        <operation error="log">
+            <search><![CDATA[<li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_reward_point_status) { ?>
+                            <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+                        <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<div class="tab-pane" id="tab-reward">]]></search>
+            <add position="before"><![CDATA[                        <?php if ($config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<div class="tab-pane" id="tab-ip">]]></search>
+            <add position="before"><![CDATA[                        <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/theme/basic/template/sale/customer_form.tpl">
+        <operation error="log">
+            <search><![CDATA[<h3 class="panel-title"><?php echo $tab_reward; ?></h3>]]></search>
+            <add position="before" offset="2"><![CDATA[<?php if ($config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" id="button-reward" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>]]></search>
+            <add position="after" offset="4"><![CDATA[                    <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/controller/sale/order.php">
+        <operation error="log">
+            <search><![CDATA[$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();]]></search>
+            <add position="before"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();]]></search>
+            <add position="before"><![CDATA[            $data['config_affiliate_status'] = $this->config->get('config_affiliate_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/template/sale/order_form.tpl">
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
+            <add position="before" offset="1"><![CDATA[                                <?php if ($config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
+            <add position="after" offset="8"><![CDATA[                                <?php } else { ?>
+                                    <input type="hidden" name="reward" value="<?php echo $reward; ?>" id="input-reward" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
+                                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
+            <add position="before" offset="1"><![CDATA[                                <?php if ($config_affiliate_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
+            <add position="after" offset="5"><![CDATA[                                <?php } else { ?>
+                                        <input type="hidden" name="affiliate" value="<?php echo $affiliate; ?>" id="input-affiliate" class="form-control" />
+                                        <input type="hidden" name="affiliate_id" value="<?php echo $affiliate_id; ?>" />
+                                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/theme/basic/template/sale/order_form.tpl">
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
+            <add position="before" offset="1"><![CDATA[                                <?php if ($config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
+            <add position="after" offset="8"><![CDATA[                                <?php } else { ?>
+                                    <input type="hidden" name="reward" value="<?php echo $reward; ?>" id="input-reward" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
+                                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
+            <add position="before" offset="1"><![CDATA[                                <?php if ($config_affiliate_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
+            <add position="after" offset="5"><![CDATA[                                <?php } else { ?>
+                                        <input type="hidden" name="affiliate" value="<?php echo $affiliate; ?>" id="input-affiliate" class="form-control" />
+                                        <input type="hidden" name="affiliate_id" value="<?php echo $affiliate_id; ?>" />
+                                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/template/sale/order_info.tpl">
+        <operation error="log">
+            <search><![CDATA[<?php if ($customer && $reward) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($customer && $reward && $config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<?php if ($affiliate) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($affiliate && $config_affiliate_status) { ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/theme/basic/template/sale/order_info.tpl">
+        <operation error="log">
+            <search><![CDATA[<?php if ($customer && $reward) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($customer && $reward && $config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<?php if ($affiliate) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($affiliate && $config_affiliate_status) { ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/controller/catalog/product.php">
+        <operation error="log">
+            <search><![CDATA[$data['language_code'] = $this->config->get('config_admin_language');]]></search>
+            <add position="before"><![CDATA[        $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="admin/view/template/catalog/product_form.tpl">
+        <operation error="log">
+            <search><![CDATA[<li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_reward_point_status) { ?>
+                        <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+                        <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<div class="tab-pane" id="tab-reward">]]></search>
+            <add position="before"><![CDATA[                        <?php if ($config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<div class="tab-pane" id="tab-design">]]></search>
+            <add position="before"><![CDATA[                        <?php } else { ?>
+                                <input type="hidden" name="points" value="<?php echo $points; ?>" placeholder="" id="input-points" class="form-control hidden" />
+                                <?php foreach ($customer_groups as $customer_group) { ?>
+                                <input type="hidden" name="product_reward[<?php echo $customer_group['customer_group_id']; ?>][points]" value="<?php echo isset($product_reward[$customer_group['customer_group_id']]) ? $product_reward[$customer_group['customer_group_id']]['points'] : ''; ?>" class="form-control hidden" />
+                                <?php } ?>
+                        <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/product/product.php">
+        <operation error="log">
+            <search><![CDATA[$data['reward'] = $product_info['reward'];]]></search>
+            <add position="after"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/product/product.tpl">
+        <operation error="log">
+            <search><![CDATA[<?php if ($reward) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($reward && $config_reward_point_status) { ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/account/account.php">
+        <operation error="log">
+            <search><![CDATA[$data['recurring'] = $this->url->link('account/recurring', '', 'SSL');]]></search>
+            <add position="after"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+    </file>
+
+	<file path="catalog/view/theme/*/template/account/account.tpl">
+        <operation error="log">
+            <search><![CDATA[<?php if ($reward) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($reward && $config_reward_point_status) { ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/module/account.php">
+        <operation error="log">
+            <search><![CDATA[$data['logged'] = $this->customer->isLogged();]]></search>
+            <add position="before"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+    </file>
+
+	<file path="catalog/view/theme/*/template/module/account.tpl">
+        <operation error="log">
+            <search><![CDATA[<a href="<?php echo $reward; ?>" class="list-group-item"><?php echo $text_reward; ?></a>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_reward_point_status) { ?> <a href="<?php echo $reward; ?>" class="list-group-item"><?php echo $text_reward; ?></a> <?php } ?>]]></add>
+        </operation>
+    </file>
+
+	<file path="catalog/controller/checkout/cart.tpl">
+        <operation error="log">
+            <search><![CDATA[$data['vouchers'] = array();]]></search>
+            <add position="before" offset="1"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/checkout/cart.tpl">
+        <operation error="log">
+            <search><![CDATA[<?php if ($product['reward']) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($product['reward'] && $config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<?php echo $reward; ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_reward_point_status) { echo $reward; } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/affiliate/login.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->language('affiliate/login');]]></search>
+            <add position="before"><![CDATA[        if(!$this->config->get('config_affiliate_status')) {
+            $this->response->redirect($this->url->link('account/login', '', 'SSL'));
+        }
+        ]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/affiliate/account.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->language('affiliate/login');]]></search>
+            <add position="before"><![CDATA[        if(!$this->config->get('config_affiliate_status')) {
+            $this->response->redirect($this->url->link('account/login', '', 'SSL'));
+        }
+        ]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/affiliate/register.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->language('affiliate/login');]]></search>
+            <add position="before"><![CDATA[        if(!$this->config->get('config_affiliate_status')) {
+            $this->response->redirect($this->url->link('account/login', '', 'SSL'));
+        }
+        ]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/common/footer.php">
+        <operation error="log">
+            <search><![CDATA[$data['affiliate'] = $this->url->link('affiliate/account', '', 'SSL');]]></search>
+            <add position="before"><![CDATA[        $data['config_affiliate_status'] = $this->config->get('config_affiliate_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/common/footer.tpl">
+        <operation error="log">
+            <search><![CDATA[<li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_affiliate_status) { ?>
+                    <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
+                    <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/feed/facebook_store.php">
+        <operation error="log">
+            <search><![CDATA[$footer['affiliate'] = $this->url->link('affiliate/account', '', 'SSL');]]></search>
+            <add position="before"><![CDATA[        $footer['config_affiliate_status'] = $this->config->get('config_affiliate_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/feed/facebook_store.tpl">
+        <operation error="log">
+            <search><![CDATA[<li><a href="<?php echo $affiliate; ?>" target="_blank"><?php echo $text_affiliate; ?></a></li>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_affiliate_status) { ?>
+            <li><a href="<?php echo $affiliate; ?>" target="_blank"><?php echo $text_affiliate; ?></a></li>
+            <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/module/bestseller.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->language('module/bestseller');]]></search>
+            <add position="after"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+        }]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[        $data['config_compare_status'] = $this->config->get('config_compare_status');
+        $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/module/bestseller.tpl">
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/module/featured.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->language('module/featured');]]></search>
+            <add position="after"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+        }]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[        $data['config_compare_status'] = $this->config->get('config_compare_status');
+        $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/module/featured.tpl">
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/module/latest.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->language('module/latest');]]></search>
+            <add position="after"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+        }]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[        $data['config_compare_status'] = $this->config->get('config_compare_status');
+        $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/module/latest.tpl">
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/module/special.php">
+        <operation error="log">
+            <search><![CDATA[$this->load->language('module/special');]]></search>
+            <add position="after"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+        }]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[        $data['config_compare_status'] = $this->config->get('config_compare_status');
+        $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/module/special.tpl">
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/product/category.php">
+        <operation error="log">
+            <search><![CDATA[$data['heading_title'] = $category_info['name'];]]></search>
+            <add position="before"><![CDATA[            if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+            } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+            }
+        ]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[            $data['config_compare_status'] = $this->config->get('config_compare_status');
+            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/product/category.tpl">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/product/manufacturer.php">
+        <operation error="log">
+            <search><![CDATA[$data['heading_title'] = $manufacturer_info['name'];]]></search>
+            <add position="before"><![CDATA[            if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+            } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+            }
+        ]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[            $data['config_compare_status'] = $this->config->get('config_compare_status');
+            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/product/manufacturer_info.tpl">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"> <?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"> <?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/product/search.php">
+        <operation error="log">
+            <search><![CDATA[$data['text_empty'] = $this->language->get('text_empty');]]></search>
+            <add position="before"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+        }
+        ]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[            $data['config_compare_status'] = $this->config->get('config_compare_status');
+            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/product/search.tpl">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/product/special.php">
+        <operation error="log">
+            <search><![CDATA[$data['text_empty'] = $this->language->get('text_empty');]]></search>
+            <add position="before"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+        }
+        ]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[            $data['config_compare_status'] = $this->config->get('config_compare_status');
+            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/product/special.tpl">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/product/product.php">
+        <operation error="log">
+            <search><![CDATA[$data['heading_title'] = $product_info['name'];]]></search>
+            <add position="before"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+        }
+        ]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[$data['products'] = array();]]></search>
+            <add position="before"><![CDATA[            $data['config_compare_status'] = $this->config->get('config_compare_status');
+            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/*/template/product/product.tpl">
+        <operation error="log">
+            <search><![CDATA[<div class="btn-group">]]></search>
+            <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_compare_status) { ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<div class="btn-group">]]></search>
+            <add position="after" offset="3"><![CDATA[                    <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                        <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
+                        <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                        <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
+                        <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+</modification>
