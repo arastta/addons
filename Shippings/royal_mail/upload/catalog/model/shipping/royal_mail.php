@@ -248,7 +248,7 @@ Zimbabwe = ZW
 */
 class ModelShippingRoyalMail extends Model
 {
-    function getQuote($address)
+    public function getQuote($address)
     {
         $this->load->language('shipping/royal_mail');
 

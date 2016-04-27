@@ -7,7 +7,7 @@
 
 class ModelShippingUps extends Model
 {
-    function getQuote($address)
+    public function getQuote($address)
     {
         $this->load->language('shipping/ups');
 
