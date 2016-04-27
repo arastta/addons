@@ -1,11 +1,17 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
+
 // Heading
-$_['heading_title']    = 'Pickup From Store';
+$_['heading_title'] = 'Pickup From Store';
 
 // Text
-$_['text_shipping']    = 'Shipping';
-$_['text_success']     = 'Success: You have modified pickup from store!';
-$_['text_edit']        = 'Edit Pickup From Store Shipping';
+$_['text_shipping'] = 'Shipping';
+$_['text_success']  = 'Success: You have modified pickup from store!';
+$_['text_edit']     = 'Edit Pickup From Store Shipping';
 
 // Entry
 $_['entry_geo_zone']   = 'Geo Zone';
