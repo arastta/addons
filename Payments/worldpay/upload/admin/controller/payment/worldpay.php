@@ -1,182 +1,183 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
-class ControllerPaymentWorldPay extends Controller {
-	private $error = array();
+<?php
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
 
-	public function index() {
-		$this->load->language('payment/worldpay');
+class ControllerPaymentWorldPay extends Controller
+{
+    private $error = array();
 
-		$this->document->setTitle($this->language->get('heading_title'));
+    public function index()
+    {
+        $this->load->language('payment/worldpay');
 
-		$this->load->model('setting/setting');
+        $this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('worldpay', $this->request->post);
+        $this->load->model('setting/setting');
 
-			$this->session->data['success'] = $this->language->get('text_success');
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            $this->model_setting_setting->editSetting('worldpay', $this->request->post);
+
+            $this->session->data['success'] = $this->language->get('text_success');
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $route = $this->request->get['route'];
-                $module_id = '';
-                if (isset($this->request->get['module_id'])) {
-                    $module_id = '&module_id=' . $this->request->get['module_id'];
-                }
-	            elseif ($this->db->getLastId()) {
-		            $module_id = '&module_id=' . $this->db->getLastId();
-	            }
-                $this->response->redirect($this->url->link($route, 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+                $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], 'SSL'));
             }
-            
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
+            $this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+        }
 
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_successful'] = $this->language->get('text_successful');
-		$data['text_declined'] = $this->language->get('text_declined');
-		$data['text_off'] = $this->language->get('text_off');
+        $data['heading_title'] = $this->language->get('heading_title');
 
-		$data['entry_merchant'] = $this->language->get('entry_merchant');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_callback'] = $this->language->get('entry_callback');
-		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+        $data['text_edit']       = $this->language->get('text_edit');
+        $data['text_enabled']    = $this->language->get('text_enabled');
+        $data['text_disabled']   = $this->language->get('text_disabled');
+        $data['text_all_zones']  = $this->language->get('text_all_zones');
+        $data['text_yes']        = $this->language->get('text_yes');
+        $data['text_no']         = $this->language->get('text_no');
+        $data['text_successful'] = $this->language->get('text_successful');
+        $data['text_declined']   = $this->language->get('text_declined');
+        $data['text_off']        = $this->language->get('text_off');
 
-		$data['help_password'] = $this->language->get('help_password');
-		$data['help_callback'] = $this->language->get('help_callback');
-		$data['help_total'] = $this->language->get('help_total');
+        $data['entry_merchant']     = $this->language->get('entry_merchant');
+        $data['entry_password']     = $this->language->get('entry_password');
+        $data['entry_callback']     = $this->language->get('entry_callback');
+        $data['entry_test']         = $this->language->get('entry_test');
+        $data['entry_total']        = $this->language->get('entry_total');
+        $data['entry_order_status'] = $this->language->get('entry_order_status');
+        $data['entry_geo_zone']     = $this->language->get('entry_geo_zone');
+        $data['entry_status']       = $this->language->get('entry_status');
+        $data['entry_sort_order']   = $this->language->get('entry_sort_order');
 
-		$data['button_save'] = $this->language->get('button_save');
-        $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');		
-		$data['button_cancel'] = $this->language->get('button_cancel');
+        $data['help_password'] = $this->language->get('help_password');
+        $data['help_callback'] = $this->language->get('help_callback');
+        $data['help_total']    = $this->language->get('help_total');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+        $data['button_save']      = $this->language->get('button_save');
+        $data['button_savenew']   = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
+        $data['button_cancel']    = $this->language->get('button_cancel');
 
-		if (isset($this->error['merchant'])) {
-			$data['error_merchant'] = $this->error['merchant'];
-		} else {
-			$data['error_merchant'] = '';
-		}
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
-		}
+        if (isset($this->error['merchant'])) {
+            $data['error_merchant'] = $this->error['merchant'];
+        } else {
+            $data['error_merchant'] = '';
+        }
 
-		$data['breadcrumbs'] = array();
+        if (isset($this->error['password'])) {
+            $data['error_password'] = $this->error['password'];
+        } else {
+            $data['error_password'] = '';
+        }
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'] = array();
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_payment'),
+            'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['action'] = $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL');
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+        $data['action'] = $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['worldpay_merchant'])) {
-			$data['worldpay_merchant'] = $this->request->post['worldpay_merchant'];
-		} else {
-			$data['worldpay_merchant'] = $this->config->get('worldpay_merchant');
-		}
+        $data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['worldpay_password'])) {
-			$data['worldpay_password'] = $this->request->post['worldpay_password'];
-		} else {
-			$data['worldpay_password'] = $this->config->get('worldpay_password');
-		}
+        if (isset($this->request->post['worldpay_merchant'])) {
+            $data['worldpay_merchant'] = $this->request->post['worldpay_merchant'];
+        } else {
+            $data['worldpay_merchant'] = $this->config->get('worldpay_merchant');
+        }
 
-		$data['callback'] = HTTP_CATALOG . 'index.php?route=payment/worldpay/callback';
+        if (isset($this->request->post['worldpay_password'])) {
+            $data['worldpay_password'] = $this->request->post['worldpay_password'];
+        } else {
+            $data['worldpay_password'] = $this->config->get('worldpay_password');
+        }
 
-		if (isset($this->request->post['worldpay_test'])) {
-			$data['worldpay_test'] = $this->request->post['worldpay_test'];
-		} else {
-			$data['worldpay_test'] = $this->config->get('worldpay_test');
-		}
+        $data['callback'] = HTTP_CATALOG . 'index.php?route=payment/worldpay/callback';
 
-		if (isset($this->request->post['worldpay_total'])) {
-			$data['worldpay_total'] = $this->request->post['worldpay_total'];
-		} else {
-			$data['worldpay_total'] = $this->config->get('worldpay_total');
-		}
+        if (isset($this->request->post['worldpay_test'])) {
+            $data['worldpay_test'] = $this->request->post['worldpay_test'];
+        } else {
+            $data['worldpay_test'] = $this->config->get('worldpay_test');
+        }
 
-		if (isset($this->request->post['worldpay_order_status_id'])) {
-			$data['worldpay_order_status_id'] = $this->request->post['worldpay_order_status_id'];
-		} else {
-			$data['worldpay_order_status_id'] = $this->config->get('worldpay_order_status_id');
-		}
+        if (isset($this->request->post['worldpay_total'])) {
+            $data['worldpay_total'] = $this->request->post['worldpay_total'];
+        } else {
+            $data['worldpay_total'] = $this->config->get('worldpay_total');
+        }
 
-		$this->load->model('localisation/order_status');
+        if (isset($this->request->post['worldpay_order_status_id'])) {
+            $data['worldpay_order_status_id'] = $this->request->post['worldpay_order_status_id'];
+        } else {
+            $data['worldpay_order_status_id'] = $this->config->get('worldpay_order_status_id');
+        }
 
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+        $this->load->model('localisation/order_status');
 
-		if (isset($this->request->post['worldpay_geo_zone_id'])) {
-			$data['worldpay_geo_zone_id'] = $this->request->post['worldpay_geo_zone_id'];
-		} else {
-			$data['worldpay_geo_zone_id'] = $this->config->get('worldpay_geo_zone_id');
-		}
+        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		$this->load->model('localisation/geo_zone');
+        if (isset($this->request->post['worldpay_geo_zone_id'])) {
+            $data['worldpay_geo_zone_id'] = $this->request->post['worldpay_geo_zone_id'];
+        } else {
+            $data['worldpay_geo_zone_id'] = $this->config->get('worldpay_geo_zone_id');
+        }
 
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+        $this->load->model('localisation/geo_zone');
 
-		if (isset($this->request->post['worldpay_status'])) {
-			$data['worldpay_status'] = $this->request->post['worldpay_status'];
-		} else {
-			$data['worldpay_status'] = $this->config->get('worldpay_status');
-		}
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['worldpay_sort_order'])) {
-			$data['worldpay_sort_order'] = $this->request->post['worldpay_sort_order'];
-		} else {
-			$data['worldpay_sort_order'] = $this->config->get('worldpay_sort_order');
-		}
+        if (isset($this->request->post['worldpay_status'])) {
+            $data['worldpay_status'] = $this->request->post['worldpay_status'];
+        } else {
+            $data['worldpay_status'] = $this->config->get('worldpay_status');
+        }
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        if (isset($this->request->post['worldpay_sort_order'])) {
+            $data['worldpay_sort_order'] = $this->request->post['worldpay_sort_order'];
+        } else {
+            $data['worldpay_sort_order'] = $this->config->get('worldpay_sort_order');
+        }
 
-		$this->response->setOutput($this->load->view('payment/worldpay.tpl', $data));
-	}
+        $data['header']      = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer']      = $this->load->controller('common/footer');
 
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
+        $this->response->setOutput($this->load->view('payment/worldpay.tpl', $data));
+    }
 
-		if (!$this->request->post['worldpay_merchant']) {
-			$this->error['merchant'] = $this->language->get('error_merchant');
-		}
+    protected function validate()
+    {
+        if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
 
-		if (!$this->request->post['worldpay_password']) {
-			$this->error['password'] = $this->language->get('error_password');
-		}
+        if (!$this->request->post['worldpay_merchant']) {
+            $this->error['merchant'] = $this->language->get('error_merchant');
+        }
 
-		return !$this->error;
-	}
+        if (!$this->request->post['worldpay_password']) {
+            $this->error['password'] = $this->language->get('error_password');
+        }
+
+        return !$this->error;
+    }
 }
