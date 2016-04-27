@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class ipara3DModel
 {
     private $card;
@@ -87,8 +87,7 @@ class ipara3DModel
         date_default_timezone_set('Europe/Istanbul');
         $response         = array();
         $response['form'] = $this->createForm($bank);
-        //$response['redirect']=;
-        //$response['error']=;
+
         return $response;
     }
 
@@ -235,7 +234,7 @@ class ipara3DModel
 
             }
         }
-        //print_r($response);
+
         return $response;
     }
 

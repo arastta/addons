@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class posnetHosting
 {
     // non-3d hosting method for posnet
@@ -13,9 +13,7 @@ class posnetHosting
     {
         $response         = array();
         $response['form'] = $this->createForm($bank);
-        //$response['redirect']=;
-        //$response['error']=;
-        //$response['form'];
+
         return $response;
     }
 
@@ -29,7 +27,6 @@ class posnetHosting
             $instalment = "00";
         }
 
-        $inputs = array();
         $inputs = array('posnetID'                 => $bank['posnet_posnet_id'],
                         'mid'                      => $bank['posnet_merchant_id'],
                         'xid'                      => $xid,

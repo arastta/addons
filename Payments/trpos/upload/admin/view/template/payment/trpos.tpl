@@ -3,17 +3,21 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button type="button" data-toggle="tooltip" title="<?php echo $tab_add; ?>" class="btn btn-success add-bank"><i class="fa fa-plus"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $tab_add; ?>" class="btn btn-success add-bank">
+                    <i class="fa fa-plus"></i></button>
                 <?php if (!$banks) { ?>
                 <div class="ba-message">
                     <span><?php echo $tab_add; ?></span>
                     <div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="<?php echo $text_close; ?>"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="<?php echo $text_close; ?>">
+                            <span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
                     </div>
                 </div>
                 <?php } ?>
-                <button type="submit" onclick="save('save')" form="form-trpos" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
-                <button type="submit" form="form-trpos" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
+                <button type="submit" onclick="save('save')" form="form-trpos" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save">
+                    <i class="fa fa-check"></i></button>
+                <button type="submit" form="form-trpos" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close">
+                    <i class="fa fa-save text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -32,17 +36,20 @@
             <div class="panel-body">
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-trpos" class="form-horizontal">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-general" class="tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+                        <li class="active">
+                            <a href="#tab-general" class="tab-general" data-toggle="tab"><?php echo $tab_general; ?></a>
+                        </li>
                         <?php foreach ($banks as $tab_bank) { ?>
-                        <li id="bank-id-<?php echo $tab_bank['bank_id']; ?>"><a href="#tab-bank-<?php echo $tab_bank['bank_id']; ?>" data-toggle="tab">
-                            <?php if (!empty($tab_bank['image'])) {?>
+                        <li id="bank-id-<?php echo $tab_bank['bank_id']; ?>">
+                            <a href="#tab-bank-<?php echo $tab_bank['bank_id']; ?>" data-toggle="tab">
+                                <?php if (!empty($tab_bank['image'])) {?>
                                 <img src="<?php echo $tab_bank['image']; ?>"/>
-                            <?php } else { ?>
+                                <?php } else { ?>
                                 <?php echo $tab_bank['name']; ?>
-                            <?php } ?>
-                            <span class="edit-bank" data-toggle="tooltip" title="<?php echo $button_edit_bank; ?>"><i class="fa fa-pencil text-info"></i></span>
-                            <span class="remove-bank" data-toggle="tooltip" title="<?php echo $button_remove_bank; ?>"><i class="fa fa-times-circle text-danger"></i></span>
-                        </a></li>
+                                <?php } ?>
+                                <span class="edit-bank" data-toggle="tooltip" title="<?php echo $button_edit_bank; ?>"><i class="fa fa-pencil text-info"></i></span>
+                                <span class="remove-bank" data-toggle="tooltip" title="<?php echo $button_remove_bank; ?>"><i class="fa fa-times-circle text-danger"></i></span>
+                            </a></li>
                         <?php } ?>
                     </ul>
                     <div class="tab-content">
@@ -168,28 +175,28 @@
     </div>
 </div>
 <style type="text/css"><!--
-    .tab-general {
-        height: 62px;
-        width: 120px;
-        font-size: 20px;
-        padding-left: 30px !important;
-        padding-top: 15px !important;
-    }
-    .pull-right .ba-message {
-        left: -40px;
-        width: 150px;
-    }
-    .edit-bank {
-        margin-right: 10px;
-        font-size: 15px;
-    }
-    .remove-bank {
-        font-size: 15px;
-    }
+.tab-general {
+    height       : 62px;
+    width        : 120px;
+    font-size    : 20px;
+    padding-left : 30px !important;
+    padding-top  : 15px !important;
+}
+.pull-right .ba-message {
+    left  : -40px;
+    width : 150px;
+}
+.edit-bank {
+    margin-right : 10px;
+    font-size    : 15px;
+}
+.remove-bank {
+    font-size : 15px;
+}
 --></style>
 <script type="text/javascript"><!--
-$(document).ready(function() {
-    $(document).on('click', '.add-bank', function(e) {
+$(document).ready(function () {
+    $(document).on('click', '.add-bank', function (e) {
         e.preventDefault();
 
         $('#modal-popup').remove();
@@ -197,11 +204,11 @@ $(document).ready(function() {
         var element = this;
 
         $.ajax({
-            url: 'index.php?route=payment/trpos/bank&token=<?php echo $token; ?>',
-            type: 'get',
+            url     : 'index.php?route=payment/trpos/bank&token=<?php echo $token; ?>',
+            type    : 'get',
             dataType: 'html',
-            success: function(data) {
-                html  = '<div id="modal-popup" class="modal">';
+            success : function (data) {
+                html = '<div id="modal-popup" class="modal">';
                 html += '  <div class="modal-dialog">';
                 html += '    <div class="modal-content">';
                 html += '      <div class="modal-header">';
@@ -219,7 +226,7 @@ $(document).ready(function() {
         });
     });
 
-    $(document).on('click', '#new-bank', function(e) {
+    $(document).on('click', '#new-bank', function (e) {
         e.preventDefault();
 
         $.ajax({
@@ -257,7 +264,7 @@ $(document).ready(function() {
         });
     });
 
-    $(document).on('click', '.edit-bank', function(e) {
+    $(document).on('click', '.edit-bank', function (e) {
         e.preventDefault();
 
         tab_bank_id = $(this).closest('li').attr('id');
@@ -267,7 +274,7 @@ $(document).ready(function() {
         $.ajax({
             url     : 'index.php?route=payment/trpos/bank&token=<?php echo $token; ?>',
             type    : 'get',
-            data    : {bank_id:bank_id},
+            data    : {bank_id: bank_id},
             dataType: 'html',
             success : function (data) {
                 $('#modal-popup').remove();
@@ -294,7 +301,7 @@ $(document).ready(function() {
         });
     });
 
-    $(document).on('click', '#edit-bank', function(e) {
+    $(document).on('click', '#edit-bank', function (e) {
         e.preventDefault();
 
         $.ajax({
@@ -332,7 +339,7 @@ $(document).ready(function() {
         });
     });
 
-    $(document).on('click', '.remove-bank', function(e) {
+    $(document).on('click', '.remove-bank', function (e) {
         e.preventDefault();
 
         var remove_bank = false;
@@ -347,7 +354,7 @@ $(document).ready(function() {
             $.ajax({
                 url     : 'index.php?route=payment/trpos/deleteBank&token=<?php echo $token; ?>',
                 type    : 'post',
-                data    : {bank_id:bank_id},
+                data    : {bank_id: bank_id},
                 dataType: 'json',
                 success : function (json) {
                     $('#' + tab_bank_id).remove();
@@ -359,12 +366,12 @@ $(document).ready(function() {
 });
 --></script>
 <script type="text/javascript"><!--
-function save(type){
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'button';
+function save(type) {
+    var input   = document.createElement('input');
+    input.type  = 'hidden';
+    input.name  = 'button';
     input.value = type;
-    form = $("form[id^='form-']").append(input);
+    form        = $("form[id^='form-']").append(input);
     form.submit();
 }
 //--></script>

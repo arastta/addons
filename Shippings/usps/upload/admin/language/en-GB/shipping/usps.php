@@ -1,6 +1,12 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
+
 // Heading
-$_['heading_title']         = 'United States Postal Service';
+$_['heading_title'] = 'United States Postal Service';
 
 // Text
 $_['text_shipping']         = 'Shipping';
@@ -51,38 +57,38 @@ $_['text_non_rectangular']  = 'Non Rectangular';
 $_['text_variable']         = 'Variable';
 
 // Entry
-$_['entry_user_id']         = 'User ID';
-$_['entry_postcode']        = 'Zip Code';
-$_['entry_domestic']        = 'Domestic Services';
-$_['entry_international']   = 'International Services';
-$_['entry_size']            = 'Size';
-$_['entry_container']       = 'Container';
-$_['entry_machinable']      = 'Machinable';
-$_['entry_dimension']       = 'Dimensions (L x W x H)';
-$_['entry_length']          = 'Length';
-$_['entry_height']          = 'Height';
-$_['entry_width']           = 'Width';
-$_['entry_display_time']    = 'Display Delivery Time';
-$_['entry_display_weight']  = 'Display Delivery Weight';
-$_['entry_weight_class']    = 'Weight Class';
-$_['entry_tax']             = 'Tax Class';
-$_['entry_geo_zone']        = 'Geo Zone';
-$_['entry_status']          = 'Status';
-$_['entry_sort_order']      = 'Sort Order';
-$_['entry_debug']      		= 'Debug Mode';
+$_['entry_user_id']        = 'User ID';
+$_['entry_postcode']       = 'Zip Code';
+$_['entry_domestic']       = 'Domestic Services';
+$_['entry_international']  = 'International Services';
+$_['entry_size']           = 'Size';
+$_['entry_container']      = 'Container';
+$_['entry_machinable']     = 'Machinable';
+$_['entry_dimension']      = 'Dimensions (L x W x H)';
+$_['entry_length']         = 'Length';
+$_['entry_height']         = 'Height';
+$_['entry_width']          = 'Width';
+$_['entry_display_time']   = 'Display Delivery Time';
+$_['entry_display_weight'] = 'Display Delivery Weight';
+$_['entry_weight_class']   = 'Weight Class';
+$_['entry_tax']            = 'Tax Class';
+$_['entry_geo_zone']       = 'Geo Zone';
+$_['entry_status']         = 'Status';
+$_['entry_sort_order']     = 'Sort Order';
+$_['entry_debug']          = 'Debug Mode';
 
 // Help
-$_['help_dimension']        = 'Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.';
-$_['help_display_time']     = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
-$_['help_display_weight']   = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
-$_['help_weight_class']     = 'Must be set to Pound.';
-$_['help_debug']      		= 'Saves send/recv data to the system log';
+$_['help_dimension']      = 'Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.';
+$_['help_display_time']   = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
+$_['help_display_weight'] = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
+$_['help_weight_class']   = 'Must be set to Pound.';
+$_['help_debug']          = 'Saves send/recv data to the system log';
 
 // Error
-$_['error_permission']      = 'Warning: You do not have permission to modify United States Postal Service!';
-$_['error_user_id']         = 'User ID Required!';
-$_['error_postcode']        = 'Zip Code Required!';
-$_['error_width']        	= 'Width Required!';
-$_['error_length']        	= 'Length Required!';
-$_['error_height']        	= 'Height Required!';
-$_['error_girth']        	= 'Girth Required!';
+$_['error_permission'] = 'Warning: You do not have permission to modify United States Postal Service!';
+$_['error_user_id']    = 'User ID Required!';
+$_['error_postcode']   = 'Zip Code Required!';
+$_['error_width']      = 'Width Required!';
+$_['error_length']     = 'Length Required!';
+$_['error_height']     = 'Height Required!';
+$_['error_girth']      = 'Girth Required!';

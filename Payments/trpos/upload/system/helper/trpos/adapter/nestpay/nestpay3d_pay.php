@@ -5,10 +5,9 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class nestpay3DPay
 {
-
     private function createHash($clientId, $storekey, $okUrl, $failUrl, $oid, $amount, $rnd, $transactionType, $installment)
     {
         $hashstr = $clientId . $oid . $amount . $okUrl . $failUrl . $transactionType . $installment . $rnd . $storekey;
@@ -36,7 +35,6 @@ class nestpay3DPay
         $transactionType = "Auth";
         $hash            = $this->createHash($clientId, $storekey, $okUrl, $failUrl, $oid, $amount, $rnd, $transactionType, $taksit);
 
-        $inputs = array();
         //test info pan: 4508034508034509 expire: 12/16 cv2:000 3dpass:a
         $inputs = array('pan'                             => $bank['cc_number'],
                         'cv2'                             => $bank['cc_cvv2'],
@@ -91,8 +89,7 @@ class nestpay3DPay
     {
         $response         = array();
         $response['form'] = $this->createForm($bank);
-        //$response['redirect']=;
-        //$response['error']=;
+
         return $response;
     }
 
@@ -150,7 +147,7 @@ class nestpay3DPay
 
             }
         }
-        //print_r($response);
+
         return $response;
     }
 }

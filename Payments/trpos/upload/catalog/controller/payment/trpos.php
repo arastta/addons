@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class ControllerPaymentTrPos extends Controller
 {
     public function index()
@@ -14,7 +14,7 @@ class ControllerPaymentTrPos extends Controller
 
         $data = $this->language->all();
 
-        $data['trpos_other_id']    = $this->config->get('trpos_other_id');
+        $data['trpos_other_id'] = $this->config->get('trpos_other_id');
 
         $this->load->model('checkout/order');
 
@@ -34,7 +34,7 @@ class ControllerPaymentTrPos extends Controller
 
         $trpos_total = $order_total + ($order_total * $trpos_single_ratio / 100);
 
-        $data['single_order_total']  = $this->currency->format($trpos_total, $this->session->data['currency'], false, true);
+        $data['single_order_total'] = $this->currency->format($trpos_total, $this->session->data['currency'], false, true);
         $data['trpos_single_title'] = $trpos_single_title;
 
         $data['banks'] = $this->config->get('trpos_banks_info');
@@ -91,9 +91,9 @@ class ControllerPaymentTrPos extends Controller
 
     public function confirm()
     {
-        if((isset($this->request->post['payment_method'])) && ($this->request->post['payment_method'] == 'trpos') && (isset($this->request->post['instalment']))) {
-            $this->session->data['instalment'] = $this->request->post['instalment'];
-            $bank_array = explode('_',$this->request->post['instalment']);
+        if ((isset($this->request->post['payment_method'])) && ($this->request->post['payment_method'] == 'trpos') && (isset($this->request->post['instalment']))) {
+            $this->session->data['instalment']    = $this->request->post['instalment'];
+            $bank_array                           = explode('_', $this->request->post['instalment']);
             $this->session->data['trpos_bank_id'] = $bank_array[0];
         }
 
@@ -138,7 +138,7 @@ class ControllerPaymentTrPos extends Controller
         $data['cc_types'][] = array('text' => 'AMEX', 'value' => '3');//American Express
 
         $bank_id = $this->session->data['trpos_bank_id'];
-        $bank = $this->getbank($bank_id);
+        $bank    = $this->getbank($bank_id);
 
         $data['payment_model'] = $bank['model'];
 
@@ -345,7 +345,7 @@ class ControllerPaymentTrPos extends Controller
 
         $this->load->model('checkout/order');
 
-        $bank_id = $this->session->data['trpos_bank_id'];
+        $bank_id  = $this->session->data['trpos_bank_id'];
         $order_id = $this->session->data['order_id'];
 
         $bank_response = $this->request->post;

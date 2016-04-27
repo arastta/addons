@@ -1,6 +1,12 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
+
 // Heading
-$_['heading_title']                            = 'Fedex';
+$_['heading_title'] = 'Fedex';
 
 // Text
 $_['text_shipping']                            = 'Shipping';
@@ -43,40 +49,40 @@ $_['text_list_rate']                           = 'List Rate';
 $_['text_account_rate']                        = 'Account Rate';
 
 // Entry
-$_['entry_key']                                = 'Key';
-$_['entry_password']                           = 'Password';
-$_['entry_account']                            = 'Account Number';
-$_['entry_meter']                              = 'Meter Number';
-$_['entry_postcode']                           = 'Post Code';
-$_['entry_test']                               = 'Test Mode';
-$_['entry_service']                            = 'Services';
-$_['entry_dimension']                          = 'Box Dimensions (L x W x H)';
-$_['entry_length_class']                       = 'Length Class';
-$_['entry_length']                             = 'Length';
-$_['entry_width']                              = 'Width';
-$_['entry_height']                             = 'Height';
-$_['entry_dropoff_type']                       = 'Drop Off Type';
-$_['entry_packaging_type']                     = 'Packaging Type';
-$_['entry_rate_type']                          = 'Rate Type';
-$_['entry_display_time']                       = 'Display Delivery Time';
-$_['entry_display_weight']                     = 'Display Delivery Weight';
-$_['entry_weight_class']                       = 'Weight Class';
-$_['entry_tax_class']                          = 'Tax Class';
-$_['entry_geo_zone']                           = 'Geo Zone';
-$_['entry_status']                             = 'Status';
-$_['entry_sort_order']                         = 'Sort Order';
+$_['entry_key']            = 'Key';
+$_['entry_password']       = 'Password';
+$_['entry_account']        = 'Account Number';
+$_['entry_meter']          = 'Meter Number';
+$_['entry_postcode']       = 'Post Code';
+$_['entry_test']           = 'Test Mode';
+$_['entry_service']        = 'Services';
+$_['entry_dimension']      = 'Box Dimensions (L x W x H)';
+$_['entry_length_class']   = 'Length Class';
+$_['entry_length']         = 'Length';
+$_['entry_width']          = 'Width';
+$_['entry_height']         = 'Height';
+$_['entry_dropoff_type']   = 'Drop Off Type';
+$_['entry_packaging_type'] = 'Packaging Type';
+$_['entry_rate_type']      = 'Rate Type';
+$_['entry_display_time']   = 'Display Delivery Time';
+$_['entry_display_weight'] = 'Display Delivery Weight';
+$_['entry_weight_class']   = 'Weight Class';
+$_['entry_tax_class']      = 'Tax Class';
+$_['entry_geo_zone']       = 'Geo Zone';
+$_['entry_status']         = 'Status';
+$_['entry_sort_order']     = 'Sort Order';
 
 // Help
-$_['help_length_class']                        = 'Set to inches or centimeters.';
-$_['help_display_time']                        = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
-$_['help_display_weight']                      = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
-$_['help_weight_class']                        = 'Set to kilograms or pounds.';
+$_['help_length_class']   = 'Set to inches or centimeters.';
+$_['help_display_time']   = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
+$_['help_display_weight'] = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
+$_['help_weight_class']   = 'Set to kilograms or pounds.';
 
 // Error
-$_['error_permission']                         = 'Warning: You do not have permission to modify Fedex shipping!';
-$_['error_key']                                = 'Key required!';
-$_['error_password']                           = 'Password required!';
-$_['error_account']                            = 'Account required!';
-$_['error_meter']                              = 'Meter required!';
-$_['error_postcode']                           = 'Post Code required!';
-$_['error_dimension']                          = 'Width &amp; Height required!';
+$_['error_permission'] = 'Warning: You do not have permission to modify Fedex shipping!';
+$_['error_key']        = 'Key required!';
+$_['error_password']   = 'Password required!';
+$_['error_account']    = 'Account required!';
+$_['error_meter']      = 'Meter required!';
+$_['error_postcode']   = 'Post Code required!';
+$_['error_dimension']  = 'Width &amp; Height required!';

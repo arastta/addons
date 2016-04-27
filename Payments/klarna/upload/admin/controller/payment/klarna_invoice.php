@@ -1,257 +1,254 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerPaymentKlarnaInvoice extends Controller {
-	private $error = array();
+class ControllerPaymentKlarnaInvoice extends Controller
+{
+    private $error = array();
 
-	public function index() {
-		$this->load->language('payment/klarna_invoice');
+    public function index()
+    {
+        $this->load->language('payment/klarna_invoice');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/setting');
+        $this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$status = false;
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            $status = false;
 
-			foreach ($this->request->post['klarna_invoice'] as $klarna_invoice) {
-				if ($klarna_invoice['status']) {
-					$status = true;
+            foreach ($this->request->post['klarna_invoice'] as $klarna_invoice) {
+                if ($klarna_invoice['status']) {
+                    $status = true;
 
-					break;
-				}
-			}
+                    break;
+                }
+            }
 
-			$klarna_data = array(
-				'klarna_invoice_pclasses' => $this->pclasses,
-				'klarna_invoice_status'   => $status
-			);
+            $klarna_data = array(
+                'klarna_invoice_pclasses' => $this->pclasses,
+                'klarna_invoice_status'   => $status
+            );
 
-			$this->model_setting_setting->editSetting('klarna_invoice', array_merge($this->request->post, $klarna_data));
+            $this->model_setting_setting->editSetting('klarna_invoice', array_merge($this->request->post, $klarna_data));
 
-			$this->session->data['success'] = $this->language->get('text_success');
+            $this->session->data['success'] = $this->language->get('text_success');
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $route = $this->request->get['route'];
-                $module_id = '';
-                if (isset($this->request->get['module_id'])) {
-                    $module_id = '&module_id=' . $this->request->get['module_id'];
-                }
-	            elseif ($this->db->getLastId()) {
-		            $module_id = '&module_id=' . $this->db->getLastId();
-	            }
-                $this->response->redirect($this->url->link($route, 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+                $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], 'SSL'));
             }
-            
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_beta'] = $this->language->get('text_beta');
-		$data['text_sweden'] = $this->language->get('text_sweden');
-		$data['text_norway'] = $this->language->get('text_norway');
-		$data['text_finland'] = $this->language->get('text_finland');
-		$data['text_denmark'] = $this->language->get('text_denmark');
-		$data['text_germany'] = $this->language->get('text_germany');
-		$data['text_netherlands'] = $this->language->get('text_netherlands');
+            $this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+        }
 
-		$data['entry_merchant'] = $this->language->get('entry_merchant');
-		$data['entry_secret'] = $this->language->get('entry_secret');
-		$data['entry_server'] = $this->language->get('entry_server');
-		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
-		$data['entry_accepted_status'] = $this->language->get('entry_accepted_status');
-		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+        $data['heading_title'] = $this->language->get('heading_title');
 
-		$data['help_merchant'] = $this->language->get('help_merchant');
-		$data['help_secret'] = $this->language->get('help_secret');
-		$data['help_total'] = $this->language->get('help_total');
+        $data['text_edit']        = $this->language->get('text_edit');
+        $data['text_enabled']     = $this->language->get('text_enabled');
+        $data['text_disabled']    = $this->language->get('text_disabled');
+        $data['text_all_zones']   = $this->language->get('text_all_zones');
+        $data['text_live']        = $this->language->get('text_live');
+        $data['text_beta']        = $this->language->get('text_beta');
+        $data['text_sweden']      = $this->language->get('text_sweden');
+        $data['text_norway']      = $this->language->get('text_norway');
+        $data['text_finland']     = $this->language->get('text_finland');
+        $data['text_denmark']     = $this->language->get('text_denmark');
+        $data['text_germany']     = $this->language->get('text_germany');
+        $data['text_netherlands'] = $this->language->get('text_netherlands');
 
-		$data['button_save'] = $this->language->get('button_save');
-        $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');		
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_clear'] = $this->language->get('button_clear');
+        $data['entry_merchant']        = $this->language->get('entry_merchant');
+        $data['entry_secret']          = $this->language->get('entry_secret');
+        $data['entry_server']          = $this->language->get('entry_server');
+        $data['entry_total']           = $this->language->get('entry_total');
+        $data['entry_pending_status']  = $this->language->get('entry_pending_status');
+        $data['entry_accepted_status'] = $this->language->get('entry_accepted_status');
+        $data['entry_geo_zone']        = $this->language->get('entry_geo_zone');
+        $data['entry_status']          = $this->language->get('entry_status');
+        $data['entry_sort_order']      = $this->language->get('entry_sort_order');
 
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_log'] = $this->language->get('tab_log');
+        $data['help_merchant'] = $this->language->get('help_merchant');
+        $data['help_secret']   = $this->language->get('help_secret');
+        $data['help_total']    = $this->language->get('help_total');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+        $data['button_save']      = $this->language->get('button_save');
+        $data['button_savenew']   = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
+        $data['button_cancel']    = $this->language->get('button_cancel');
+        $data['button_clear']     = $this->language->get('button_clear');
 
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
+        $data['tab_general'] = $this->language->get('tab_general');
+        $data['tab_log']     = $this->language->get('tab_log');
 
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-		
-		$data['breadcrumbs'] = array();
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
-		);
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'] = array();
 
-		$data['action'] = $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL');
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_payment'),
+            'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['countries'] = array();
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['countries'][] = array(
-			'name' => $this->language->get('text_germany'),
-			'code' => 'DEU'
-		);
+        $data['action'] = $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['countries'][] = array(
-			'name' => $this->language->get('text_netherlands'),
-			'code' => 'NLD'
-		);
+        $data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['countries'][] = array(
-			'name' => $this->language->get('text_denmark'),
-			'code' => 'DNK'
-		);
+        $data['countries'] = array();
 
-		$data['countries'][] = array(
-			'name' => $this->language->get('text_sweden'),
-			'code' => 'SWE'
-		);
+        $data['countries'][] = array(
+            'name' => $this->language->get('text_germany'),
+            'code' => 'DEU'
+        );
 
-		$data['countries'][] = array(
-			'name' => $this->language->get('text_norway'),
-			'code' => 'NOR'
-		);
+        $data['countries'][] = array(
+            'name' => $this->language->get('text_netherlands'),
+            'code' => 'NLD'
+        );
 
-		$data['countries'][] = array(
-			'name' => $this->language->get('text_finland'),
-			'code' => 'FIN'
-		);
+        $data['countries'][] = array(
+            'name' => $this->language->get('text_denmark'),
+            'code' => 'DNK'
+        );
 
-		if (isset($this->request->post['klarna_invoice'])) {
-			$data['klarna_invoice'] = $this->request->post['klarna_invoice'];
-		} else {
-			$data['klarna_invoice'] = $this->config->get('klarna_invoice');
-		}
+        $data['countries'][] = array(
+            'name' => $this->language->get('text_sweden'),
+            'code' => 'SWE'
+        );
 
-		$this->load->model('localisation/geo_zone');
+        $data['countries'][] = array(
+            'name' => $this->language->get('text_norway'),
+            'code' => 'NOR'
+        );
 
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+        $data['countries'][] = array(
+            'name' => $this->language->get('text_finland'),
+            'code' => 'FIN'
+        );
 
-		$this->load->model('localisation/order_status');
+        if (isset($this->request->post['klarna_invoice'])) {
+            $data['klarna_invoice'] = $this->request->post['klarna_invoice'];
+        } else {
+            $data['klarna_invoice'] = $this->config->get('klarna_invoice');
+        }
 
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+        $this->load->model('localisation/geo_zone');
 
-		$file = DIR_LOG . 'klarna_invoice.log';
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (file_exists($file)) {
-			$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
-		} else {
-			$data['log'] = '';
-		}
+        $this->load->model('localisation/order_status');
 
-		$data['clear'] = $this->url->link('payment/klarna_invoice/clear', 'token=' . $this->session->data['token'], 'SSL');
+        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        $file = DIR_LOG . 'klarna_invoice.log';
 
-		$this->response->setOutput($this->load->view('payment/klarna_invoice.tpl', $data));
-	}
+        if (file_exists($file)) {
+            $data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+        } else {
+            $data['log'] = '';
+        }
 
-	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/klarna_invoice')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
+        $data['clear'] = $this->url->link('payment/klarna_invoice/clear', 'token=' . $this->session->data['token'], 'SSL');
 
-		return !$this->error;
-	}
+        $data['header']      = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer']      = $this->load->controller('common/footer');
 
-	private function parseResponse($node, $document) {
-		$child = $node;
+        $this->response->setOutput($this->load->view('payment/klarna_invoice.tpl', $data));
+    }
 
-		switch ($child->nodeName) {
-			case 'string':
-				$value = $child->nodeValue;
-				break;
+    private function validate()
+    {
+        if (!$this->user->hasPermission('modify', 'payment/klarna_invoice')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
 
-			case 'boolean':
-				$value = (string)$child->nodeValue;
+        return !$this->error;
+    }
 
-				if ($value == '0') {
-					$value = false;
-				} elseif ($value == '1') {
-					$value = true;
-				} else {
-					$value = null;
-				}
+    private function parseResponse($node, $document)
+    {
+        $child = $node;
 
-				break;
+        switch ($child->nodeName) {
+            case 'string':
+                $value = $child->nodeValue;
+                break;
 
-			case 'integer':
-			case 'int':
-			case 'i4':
-			case 'i8':
-				$value = (int)$child->nodeValue;
-				break;
+            case 'boolean':
+                $value = (string) $child->nodeValue;
 
-			case 'array':
-				$value = array();
+                if ($value == '0') {
+                    $value = false;
+                } elseif ($value == '1') {
+                    $value = true;
+                } else {
+                    $value = null;
+                }
 
-				$xpath = new DOMXPath($document);
-				$entries = $xpath->query('.//array/data/value', $child);
+                break;
 
-				for ($i = 0; $i < $entries->length; $i++) {
-					$value[] = $this->parseResponse($entries->item($i)->firstChild, $document);
-				}
+            case 'integer':
+            case 'int':
+            case 'i4':
+            case 'i8':
+                $value = (int) $child->nodeValue;
+                break;
 
-				break;
+            case 'array':
+                $value = array();
 
-			default:
-				$value = null;
-		}
+                $xpath   = new DOMXPath($document);
+                $entries = $xpath->query('.//array/data/value', $child);
 
-		return $value;
-	}
+                for ($i = 0; $i < $entries->length; $i++) {
+                    $value[] = $this->parseResponse($entries->item($i)->firstChild, $document);
+                }
 
-	public function clear() {
-		$this->load->language('payment/klarna_invoice');
+                break;
 
-		$file = DIR_LOG . 'klarna_invoice.log';
+            default:
+                $value = null;
+        }
 
-		$handle = fopen($file, 'w+');
+        return $value;
+    }
 
-		fclose($handle);
+    public function clear()
+    {
+        $this->load->language('payment/klarna_invoice');
 
-		$this->session->data['success'] = $this->language->get('text_success');
+        $file = DIR_LOG . 'klarna_invoice.log';
 
-		$this->response->redirect($this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'));
-	}
+        $handle = fopen($file, 'w+');
+
+        fclose($handle);
+
+        $this->session->data['success'] = $this->language->get('text_success');
+
+        $this->response->redirect($this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], 'SSL'));
+    }
 }

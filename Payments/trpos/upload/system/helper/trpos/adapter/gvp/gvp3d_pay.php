@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
-  
+
 class gvp3dPay
 {
     private function createHash($terminal_id, $oid, $amount, $okUrl, $failUrl, $type, $instalment, $storekey, $provaut_password)
@@ -28,7 +28,6 @@ class gvp3dPay
         $amount = (int) ($bank['total'] * 100);
         $hash   = $this->createHash($bank['gvp_terminal_id'], $bank['order_id'], $amount, $bank['success_url'], $bank['fail_url'], "sales", $instalment, $bank['gvp_3D_storekey'], $bank['gvp_provaut_password']);
 
-        $inputs = array();
         $inputs = array('secure3dsecuritylevel' => "3D_PAY", //3D_PAY,3D_FULL,3D_HALF @TODO: should create a variable for this
                         'cardnumber'            => $bank['cc_number'],
                         'cardexpiredatemonth'   => $bank['cc_expire_date_month'],
@@ -79,8 +78,7 @@ class gvp3dPay
     {
         $response         = array();
         $response['form'] = $this->createForm($bank);
-        //$response['redirect']=;
-        //$response['error']=;
+
         return $response;
     }
 
@@ -120,7 +118,7 @@ class gvp3dPay
             $response['message'] .= $bank_response['mderrormessage'];
 
         }
-        //print_r($response);
+
         return $response;
     }
 }

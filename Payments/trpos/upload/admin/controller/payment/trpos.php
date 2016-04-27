@@ -6,7 +6,7 @@
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
- class ControllerPaymentTrPos extends Controller
+class ControllerPaymentTrPos extends Controller
 {
     private $error = array();
 
@@ -22,18 +22,9 @@
             $this->model_setting_setting->editSetting('trpos', $this->request->post);
 
             $this->session->data['success'] = $this->language->get('text_success');
-            
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $route = $this->request->get['route'];
-                $module_id = '';
-                
-                if (isset($this->request->get['module_id'])) {
-                    $module_id = '&module_id=' . $this->request->get['module_id'];
-                } elseif ($this->db->getLastId()) {
-                    $module_id = '&module_id=' . $this->db->getLastId();
-                }
-                
-                $this->response->redirect($this->url->link($route, 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+                $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], 'SSL'));
             }
 
             $this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));

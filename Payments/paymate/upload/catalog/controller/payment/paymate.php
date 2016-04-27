@@ -1,119 +1,128 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
-class ControllerPaymentPaymate extends Controller {
-	public function index() {
-		$data['button_confirm'] = $this->language->get('button_confirm');
+<?php
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
 
-		if (!$this->config->get('paymate_test')) {
-			$data['action'] = 'https://www.paymate.com/PayMate/ExpressPayment';
-		} else {
-			$data['action'] = 'https://www.paymate.com.au/PayMate/TestExpressPayment';
-		}
+class ControllerPaymentPaymate extends Controller
+{
+    public function index()
+    {
+        $data['button_confirm'] = $this->language->get('button_confirm');
 
-		$this->load->model('checkout/order');
+        if (!$this->config->get('paymate_test')) {
+            $data['action'] = 'https://www.paymate.com/PayMate/ExpressPayment';
+        } else {
+            $data['action'] = 'https://www.paymate.com.au/PayMate/TestExpressPayment';
+        }
 
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+        $this->load->model('checkout/order');
 
-		$data['mid'] = $this->config->get('paymate_username');
-		$data['amt'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+        $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data['currency'] = $order_info['currency_code'];
-		$data['ref'] = $order_info['order_id'];
+        $data['mid'] = $this->config->get('paymate_username');
+        $data['amt'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
-		$data['pmt_sender_email'] = $order_info['email'];
-		$data['pmt_contact_firstname'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
-		$data['pmt_contact_surname'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-		$data['pmt_contact_phone'] = $order_info['telephone'];
-		$data['pmt_country'] = $order_info['payment_iso_code_2'];
+        $data['currency'] = $order_info['currency_code'];
+        $data['ref']      = $order_info['order_id'];
 
-		$data['regindi_address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
-		$data['regindi_address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
-		$data['regindi_sub'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
-		$data['regindi_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
-		$data['regindi_pcode'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
+        $data['pmt_sender_email']      = $order_info['email'];
+        $data['pmt_contact_firstname'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
+        $data['pmt_contact_surname']   = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+        $data['pmt_contact_phone']     = $order_info['telephone'];
+        $data['pmt_country']           = $order_info['payment_iso_code_2'];
 
-		$data['return'] = $this->url->link('payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('paymate_password')));
+        $data['regindi_address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
+        $data['regindi_address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
+        $data['regindi_sub']      = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
+        $data['regindi_state']    = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
+        $data['regindi_pcode']    = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paymate.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/paymate.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/paymate.tpl', $data);
-		}
-	}
+        $data['return'] = $this->url->link('payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('paymate_password')));
 
-	public function callback() {
-		$this->load->language('payment/paymate');
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paymate.tpl')) {
+            return $this->load->view($this->config->get('config_template') . '/template/payment/paymate.tpl', $data);
+        } else {
+            return $this->load->view('default/template/payment/paymate.tpl', $data);
+        }
+    }
 
-		if (isset($this->request->post['ref'])) {
-			$order_id = $this->request->post['ref'];
-		} else {
-			$order_id = 0;
-		}
+    public function callback()
+    {
+        $this->load->language('payment/paymate');
 
-		$this->load->model('checkout/order');
+        if (isset($this->request->post['ref'])) {
+            $order_id = $this->request->post['ref'];
+        } else {
+            $order_id = 0;
+        }
 
-		$order_info = $this->model_checkout_order->getOrder($order_id);
+        $this->load->model('checkout/order');
 
-		if ($order_info) {
-			$error = '';
+        $order_info = $this->model_checkout_order->getOrder($order_id);
 
-			if (!isset($this->request->post['responseCode']) || !isset($this->request->get['hash'])) {
-				$error = $this->language->get('text_unable');
-			} elseif ($this->request->get['hash'] != md5($order_info['order_id'] . $this->currency->format($this->request->post['paymentAmount'], $this->request->post['currency'], 1.0000000, false) . $this->request->post['currency'] . $this->config->get('paymate_password'))) {
-				$error = $this->language->get('text_unable');
-			} elseif ($this->request->post['responseCode'] != 'PA' && $this->request->post['responseCode'] != 'PP') {
-				$error = $this->language->get('text_declined');
-			}
-		} else {
-			$error = $this->language->get('text_unable');
-		}
+        if ($order_info) {
+            $error = '';
 
-		if ($error) {
-			$data['breadcrumbs'] = array();
+            if (!isset($this->request->post['responseCode']) || !isset($this->request->get['hash'])) {
+                $error = $this->language->get('text_unable');
+            } elseif ($this->request->get['hash'] != md5($order_info['order_id'] . $this->currency->format($this->request->post['paymentAmount'], $this->request->post['currency'], 1.0000000, false) . $this->request->post['currency'] . $this->config->get('paymate_password'))) {
+                $error = $this->language->get('text_unable');
+            } elseif ($this->request->post['responseCode'] != 'PA' && $this->request->post['responseCode'] != 'PP') {
+                $error = $this->language->get('text_declined');
+            }
+        } else {
+            $error = $this->language->get('text_unable');
+        }
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home')
-			);
+        if ($error) {
+            $data['breadcrumbs'] = array();
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_basket'),
-				'href' => $this->url->link('checkout/cart')
-			);
+            $data['breadcrumbs'][] = array(
+                'text' => $this->language->get('text_home'),
+                'href' => $this->url->link('common/home')
+            );
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_checkout'),
-				'href' => $this->url->link('checkout/checkout', '', 'SSL')
-			);
+            $data['breadcrumbs'][] = array(
+                'text' => $this->language->get('text_basket'),
+                'href' => $this->url->link('checkout/cart')
+            );
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_failed'),
-				'href' => $this->url->link('checkout/success')
-			);
+            $data['breadcrumbs'][] = array(
+                'text' => $this->language->get('text_checkout'),
+                'href' => $this->url->link('checkout/checkout', '', 'SSL')
+            );
 
-			$data['heading_title'] = $this->language->get('text_failed');
+            $data['breadcrumbs'][] = array(
+                'text' => $this->language->get('text_failed'),
+                'href' => $this->url->link('checkout/success')
+            );
 
-			$data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, $this->url->link('information/contact'));
+            $data['heading_title'] = $this->language->get('text_failed');
 
-			$data['button_continue'] = $this->language->get('button_continue');
+            $data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, $this->url->link('information/contact'));
 
-			$data['continue'] = $this->url->link('common/home');
+            $data['button_continue'] = $this->language->get('button_continue');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');
+            $data['continue'] = $this->url->link('common/home');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
-			}
-		} else {
-			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paymate_order_status_id'));
+            $data['column_left']    = $this->load->controller('common/column_left');
+            $data['column_right']   = $this->load->controller('common/column_right');
+            $data['content_top']    = $this->load->controller('common/content_top');
+            $data['content_bottom'] = $this->load->controller('common/content_bottom');
+            $data['footer']         = $this->load->controller('common/footer');
+            $data['header']         = $this->load->controller('common/header');
 
-			$this->response->redirect($this->url->link('checkout/success'));
-		}
-	}
+            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+                $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
+            } else {
+                $this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
+            }
+        } else {
+            $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paymate_order_status_id'));
+
+            $this->response->redirect($this->url->link('checkout/success'));
+        }
+    }
 }

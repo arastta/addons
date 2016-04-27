@@ -76,8 +76,10 @@
         <div class="col-sm-12">
             <div class="pull-right">
                 <?php ?>
-                <button type="button" id="<?php echo $button_id; ?>" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success add-new-bank"><i class="fa fa-check"></i></button>
-                <button type="button" data-dismiss="modal" aria-hidden="true" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></button>
+                <button type="button" id="<?php echo $button_id; ?>" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success add-new-bank">
+                    <i class="fa fa-check"></i></button>
+                <button type="button" data-dismiss="modal" aria-hidden="true" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default">
+                    <i class="fa fa-times-circle text-danger"></i></button>
             </div>
         </div>
     </div>

@@ -1,90 +1,99 @@
 <?php
-class ControllerToolOpencart extends Controller {
-	private $error = array();
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
+
+class ControllerToolOpencart extends Controller
+{
+    private $error = array();
     private $ocPrefix;
 
-	public function index() {
-		$this->load->language('tool/opencart');
+    public function index()
+    {
+        $this->load->language('tool/opencart');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('tool/opencart');
+        $this->load->model('tool/opencart');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'tool/opencart')) {
-			if (is_uploaded_file($this->request->files['import']['tmp_name'])) {
-				$content = file_get_contents($this->request->files['import']['tmp_name']);
-			} else {
-				$content = false;
-			}
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'tool/opencart')) {
+            if (is_uploaded_file($this->request->files['import']['tmp_name'])) {
+                $content = file_get_contents($this->request->files['import']['tmp_name']);
+            } else {
+                $content = false;
+            }
 
-			if ($content) {
-				$this->model_tool_opencart->restore($content);
+            if ($content) {
+                $this->model_tool_opencart->restore($content);
 
-				$this->session->data['success'] = $this->language->get('text_success');
+                $this->session->data['success'] = $this->language->get('text_success');
 
-				$this->response->redirect($this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL'));
-			} else {
-				$this->error['warning'] = $this->language->get('error_empty');
-			}
-		}
+                $this->response->redirect($this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL'));
+            } else {
+                $this->error['warning'] = $this->language->get('error_empty');
+            }
+        }
 
-		$data['heading_title'] = $this->language->get('heading_title');
+        $data['heading_title'] = $this->language->get('heading_title');
 
         $data['text_loading'] = $this->language->get('text_loading');
 
-        $data['entry_upload'] = $this->language->get('entry_upload');
+        $data['entry_upload']   = $this->language->get('entry_upload');
         $data['entry_progress'] = $this->language->get('entry_progress');
 
         $data['help_upload'] = $this->language->get('help_upload');
 
-        $data['button_upload'] = $this->language->get('button_upload');
-        $data['button_clear'] = $this->language->get('button_clear');
+        $data['button_upload']   = $this->language->get('button_upload');
+        $data['button_clear']    = $this->language->get('button_clear');
         $data['button_continue'] = $this->language->get('button_continue');
 
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
+        if (isset($this->session->data['error'])) {
+            $data['error_warning'] = $this->session->data['error'];
 
-			unset($this->session->data['error']);
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+            unset($this->session->data['error']);
+        } elseif (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
 
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
 
-		$data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = array();
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['restore'] = $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL');
+        $data['restore'] = $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['backup'] = $this->url->link('tool/opencart/backup', 'token=' . $this->session->data['token'], 'SSL');
+        $data['backup'] = $this->url->link('tool/opencart/backup', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->data['token'];
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        $data['header']      = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer']      = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('tool/opencart.tpl', $data));
-	}
+        $this->response->setOutput($this->load->view('tool/opencart.tpl', $data));
+    }
 
-    public function upload(){
+    public function upload()
+    {
         $this->load->language('tool/opencart');
 
         $path = 'temp-' . md5(mt_rand());
@@ -138,7 +147,8 @@ class ControllerToolOpencart extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function create(){
+    public function create()
+    {
         $this->load->language('tool/opencart');
         $this->load->model('tool/opencart');
 
@@ -150,7 +160,8 @@ class ControllerToolOpencart extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function migrationStart(){
+    public function migrationStart()
+    {
         $this->load->language('tool/opencart');
         $this->load->model('tool/opencart');
 
@@ -163,7 +174,8 @@ class ControllerToolOpencart extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function migrationEnd(){
+    public function migrationEnd()
+    {
         $this->load->language('tool/opencart');
         $this->load->model('tool/opencart');
 
@@ -176,7 +188,8 @@ class ControllerToolOpencart extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function remove() {
+    public function remove()
+    {
         $this->load->language('tool/opencart');
         $this->load->model('tool/opencart');
 
@@ -238,7 +251,8 @@ class ControllerToolOpencart extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function ocPrefix(){
+    public function ocPrefix()
+    {
         $sqlFile = fopen(DIR_UPLOAD . $this->request->post['path'] . "/install.sql", "r") or die("Unable to open file!");
 
         $sql = fgets($sqlFile);
@@ -247,5 +261,4 @@ class ControllerToolOpencart extends Controller {
 
         $this->ocPrefix = $sql[0];
     }
-
 }

@@ -8,7 +8,6 @@
 
 class EventAppPplogin extends Event
 {
-
     public function postCustomerLogout()
     {
         $this->load->controller("module/pp_login/logout");

@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class gvp3dModel
 {
     private function createHash($terminal_id, $oid, $amount, $okUrl, $failUrl, $type, $instalment, $storekey, $provaut_password)
@@ -28,7 +28,6 @@ class gvp3dModel
         $amount = (int) ($bank['total'] * 100);
         $hash   = $this->createHash($bank['gvp_terminal_id'], $bank['order_id'], $amount, $bank['success_url'], $bank['fail_url'], "sales", $instalment, $bank['gvp_3D_storekey'], $bank['gvp_provaut_password']);
 
-        $inputs = array();
         $inputs = array('secure3dsecuritylevel' => "3D",
                         'cardnumber'            => $bank['cc_number'],
                         'cardexpiredatemonth'   => $bank['cc_expire_date_month'],
@@ -79,8 +78,7 @@ class gvp3dModel
     {
         $response         = array();
         $response['form'] = $this->createForm($bank);
-        //$response['redirect']=;
-        //$response['error']=;
+
         return $response;
     }
 
@@ -94,12 +92,11 @@ class gvp3dModel
 
         if (in_array($mdStatus, $mdArray)) {
             $response['message'] .= '3D Onayı Başarılı.<br/>';
-            //field
-            //hash
+
             $secData = strtoupper(sha1($bank['gvp_provaut_password'] . "0" . $bank_response['clientid']));
             $hashstr = $bank_response['orderid'] . $bank_response['clientid'] . $bank_response['txnamount'] . $secData;
             $hash    = strtoupper(sha1($hashstr));
-            //
+
             $xml_fields = array('mode'         => $bank_response['mode'],
                                 'version'      => $bank_response['apiversion'],
                                 'terminal_id'  => $bank_response['clientid'],
@@ -120,7 +117,7 @@ class gvp3dModel
                                 'md'           => $bank_response['md'],
                                 'url'          => $bank['gvp_classic_url']
             );
-            //field
+
             $xml_response = $this->xmlSend($xml_fields);
             $xml          = simplexml_load_string($xml_response);
 
@@ -146,7 +143,7 @@ class gvp3dModel
             $response['message'] .= $bank_response['mderrormessage'];
 
         }
-        //print_r($response);
+
         return $response;
     }
 

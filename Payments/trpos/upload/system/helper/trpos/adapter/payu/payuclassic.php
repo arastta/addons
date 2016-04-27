@@ -5,10 +5,9 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class payuClassic
 {
-
     public function methodResponse($bank)
     {
         $response            = array();
