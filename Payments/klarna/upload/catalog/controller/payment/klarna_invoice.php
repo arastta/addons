@@ -1,4 +1,10 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package		Arastta eCommerce
+ * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license		GNU General Public License version 3; see LICENSE.txt
+ */
+
 class ControllerPaymentKlarnaInvoice extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
@@ -382,7 +388,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 				curl_setopt($curl, CURLOPT_URL, $url);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
