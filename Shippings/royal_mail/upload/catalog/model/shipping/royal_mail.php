@@ -1,4 +1,10 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package		Arastta eCommerce
+ * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license		GNU General Public License version 3; see LICENSE.txt
+ */
+
 /*
 List of Royal Mail support Countries
 
@@ -37,7 +43,7 @@ Brazil = BR
 British Indian Ocean Territory = IO
 British Virgin Islands = VG
 Brunei = BN
-Bulgaria = BG 
+Bulgaria = BG
 Burkina Faso = BF
 Burundi = BI
 Cambodia = KH
@@ -79,17 +85,17 @@ Falkland Islands = FK
 Faroe Islands = FO
 Fiji = FJ
 Finland = FI
-France = FR 
+France = FR
 French Guiana = GF
 French Polynesia = PF
 French South Antarctic Territory = TF
 Gabon = GA
 Gambia = GM
 Georgia = GE
-Germany = DE 
+Germany = DE
 Ghana = GH
 Gibraltar = GI
-Greece = GR 
+Greece = GR
 Greenland = GL
 Grenada = GD
 Guadeloupe = GP
@@ -100,7 +106,7 @@ Guyana = GY
 Haiti = HT
 Honduras = HN
 Hong Kong = HK
-Hungary = HU 
+Hungary = HU
 Iceland = IS
 India = IN
 Indonesia = ID
@@ -108,7 +114,7 @@ Iran (Islamic Republic of) = IR
 Iraq = IQ
 Ireland (Republic of) = IE
 Israel = IL
-Italy = IT 
+Italy = IT
 Ivory Coast (Cote D'Ivoire) = CI
 Jamaica = JM
 Japan = JP
@@ -127,7 +133,7 @@ Liberia = LR
 Libya = LY
 Liechtenstein = LI
 Lithuania = LT
-Luxembourg = LU 
+Luxembourg = LU
 Macau = MO
 Macedonia = MK
 Madagascar = MG
@@ -140,7 +146,7 @@ Malta = MT
 Martinique = MQ
 Mauritania = MR
 Mauritius = MU
-Melilla = XL 
+Melilla = XL
 Mexico = MX
 Moldova = MD
 Mongolia = MN
@@ -170,8 +176,8 @@ Paraguay = PY
 Peru = PE
 Philippines = PH
 Pitcairn Island = PN
-Poland = PL 
-Portugal = PT 
+Poland = PL
+Portugal = PT
 Puerto Rico = PR
 Qatar = QA
 Reunion Island = RE
@@ -186,7 +192,7 @@ Serbia = CS
 Seychelles = SC
 Sierra Leone = SL
 Singapore = SG
-Slovak Republic = SK 
+Slovak Republic = SK
 Slovenia = SI
 Solomon Islands = SB
 Somalia = SO
@@ -259,7 +265,7 @@ class ModelShippingRoyalMail extends Model {
 		if ($status) {
 			$weight = $this->cart->getWeight();
 			$sub_total = $this->cart->getSubTotal();
-			
+
 			// Special Delivery > 500
 			if ($this->config->get('royal_mail_special_delivery_500_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
@@ -328,7 +334,7 @@ class ModelShippingRoyalMail extends Model {
 
 					if ($this->config->get('royal_mail_display_insurance')) {
 						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(1000) . ')';
-						
+
 					}
 
 					$quote_data['special_delivery_1000'] = array(
@@ -380,7 +386,7 @@ class ModelShippingRoyalMail extends Model {
 					);
 				}
 			}
-		
+
 			// 1st Class Signed
 			if ($this->config->get('royal_mail_1st_class_signed_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
@@ -579,7 +585,7 @@ class ModelShippingRoyalMail extends Model {
 				'UZ',
 				'VA'
 			);
-			
+
 			$non_eu = array(
 				'AL',
 				'AD',
@@ -610,7 +616,7 @@ class ModelShippingRoyalMail extends Model {
 				'UZ',
 				'VA'
 			);
-			
+
 			$zone_1 = array(
 				'AF',
 				'NA',
@@ -765,9 +771,9 @@ class ModelShippingRoyalMail extends Model {
 				'EH',
 				'YE',
 				'ZM',
-				'ZW'		
+				'ZW'
 			);
-			
+
 			$zone_2 = array(
 				'AU',
 				'IO',
@@ -797,19 +803,19 @@ class ModelShippingRoyalMail extends Model {
 			// International Standard
 			if ($this->config->get('royal_mail_international_standard_status') && $address['iso_code_2'] != 'GB') {
 				$cost = 0;
-				
+
 				$rates = array();
-				
+
 				// EU
 				if (in_array($address['iso_code_2'], $europe)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_standard_eu_rate'));
 				}
-				
+
 				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_standard_zone_1_rate'));
 				}
-				
+
 				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_standard_zone_2_rate'));
@@ -843,10 +849,10 @@ class ModelShippingRoyalMail extends Model {
 					);
 				}
 			}
-			
+
 			// International Tracked & Signed
 			$tracked_signed = array(
-				'AD', 
+				'AD',
 				'AR',
 				'AT',
 				'BY',
@@ -889,22 +895,22 @@ class ModelShippingRoyalMail extends Model {
 				'US',
 				'VA'
 			);
-				
+
 			if ($this->config->get('royal_mail_international_tracked_signed_status') && in_array($address['iso_code_2'], $tracked_signed)) {
 				$cost = 0;
-				
+
 				$rates = array();
-				
+
 				// EU
 				if (in_array($address['iso_code_2'], $europe)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_eu_rate'));
 				}
-				
+
 				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_zone_1_rate'));
 				}
-				
+
 				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_zone_2_rate'));
@@ -938,7 +944,7 @@ class ModelShippingRoyalMail extends Model {
 					);
 				}
 			}
-	
+
 			// International Tracked
 			$tracked = array(
 				'AD',
@@ -974,8 +980,8 @@ class ModelShippingRoyalMail extends Model {
 				'SE',
 				'CH',
 				'US'
-			);	
-					
+			);
+
 			if ($this->config->get('royal_mail_international_tracked_status') && in_array($address['iso_code_2'], $tracked)) {
 				$cost = 0;
 
@@ -985,17 +991,17 @@ class ModelShippingRoyalMail extends Model {
 				if (in_array($address['iso_code_2'], $europe) && !in_array($address['iso_code_2'], $non_eu)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_eu_rate'));
 				}
-				
+
 				// Non EU
 				if (in_array($address['iso_code_2'], $non_eu)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_non_eu_rate'));
 				}
-				
-				// World Zones 1				
+
+				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_zone_1_rate'));
 				}
-				
+
 				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_zone_2_rate'));
@@ -1224,28 +1230,28 @@ class ModelShippingRoyalMail extends Model {
 				'YE',
 				'ZM',
 				'ZW'
-			);				
+			);
 
 			if ($this->config->get('royal_mail_international_signed_status') && in_array($address['iso_code_2'], $signed)) {
 				$cost = 0;
 
 				$rates = array();
-				
+
 				// EU
 				if (in_array($address['iso_code_2'], $europe)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_signed_eu_rate'));
 				}
-				
-				// World Zones 1	
+
+				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_signed_zones_1_rate'));
 				}
-				
-				// World Zones 2	
+
+				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_signed_zones_2_rate'));
 				}
-				
+
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
 
@@ -1310,7 +1316,7 @@ class ModelShippingRoyalMail extends Model {
 				}
 			}
 		}
-		
+
 		$method_data = array();
 
 		if ($quote_data) {
