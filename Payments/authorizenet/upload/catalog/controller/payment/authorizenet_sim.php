@@ -8,7 +8,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
+        $data['action'] = ($this->config->get('authorizenet_sim_test')) ? 'https://test.authorize.net/gateway/transact.dll' : 'https://secure2.authorize.net/gateway/transact.dll';
 		$data['x_login'] = $this->config->get('authorizenet_sim_merchant');
 		$data['x_fp_sequence'] = $this->session->data['order_id'];
 		$data['x_fp_timestamp'] = time();
@@ -54,8 +54,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		if (md5($this->config->get('authorizenet_sim_response_key') . $this->request->post['x_login'] . $this->request->post['x_trans_id'] . $this->request->post['x_amount']) == strtolower($this->request->post['x_MD5_Hash'])) {
 			$this->load->model('checkout/order');
 
-			$order_info = $this->model_checkout_order->getOrder($details['x_invoice_num']);
-
+            $order_info = $this->model_checkout_order->getOrder($this->request->post['x_invoice_num']);
 			if ($order_info && $this->request->post['x_response_code'] == '1') {
 				$message = '';
 
