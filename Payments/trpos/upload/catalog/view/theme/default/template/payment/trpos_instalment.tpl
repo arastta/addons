@@ -12,14 +12,12 @@
     <?php foreach ($banks as $bank) {
     if(!empty($bank['instalment']) || $bank['instalment']!=''){
     ?>
-
     <div class="col-sm-4">
         <?php if (!empty($bank['image'])) {?>
         <img src="<?php echo $bank['image']; ?>"/>
         <?php } else { ?>
         <strong><?php echo $bank['name']; ?></strong>
         <?php } ?>
-
         <?php foreach($bank['instalments'] as $instalment) { ?>
         <div class="radio">
             <label>
@@ -35,20 +33,19 @@
     <input type="hidden" name="payment_method" value="trpos" checked="checked">
 </div>
 <div class="col-sm-12" id="form-trpos-confirm"></div>
-
-<script type="text/javascript">
+<script type="text/javascript"><!--
     $(document).on('change', 'input[name=\'instalment\']:checked', function () {
         $.ajax({
-            url: 'index.php?route=payment/trpos/confirm',
-            type: 'post',
-            data: $('#form-trpos :input'),
+            url     : 'index.php?route=payment/trpos/confirm',
+            type    : 'post',
+            data    : $('#form-trpos :input'),
             dataType: 'html',
-            cache: false,
-            success: function(html) {
+            cache   : false,
+            success : function (html) {
                 $('#form-trpos-confirm').html(html);
             }
         });
     });
 
     $('input[name=\'instalment\']:checked').trigger("change");
-</script>
+//--></script>

@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class boaClassic
 {
     public function methodResponse($bank)
@@ -145,6 +145,7 @@ class boaClassic
         /*if (strpos( $result, "<KuveytTurkVPosResponse>" )!==true){
             $result='<KuveytTurkVPosResponse><ResponseMessage>XML Error: '.$result.'</ResponseMessage></KuveytTurkVPosResponse>';
         }*/
+
         return $result;
     }
 }

@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class ModelPaymentTrPos extends Model
 {
     public function install()
@@ -28,7 +28,7 @@ class ModelPaymentTrPos extends Model
     {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "trpos_bank`;");
     }
-    
+
     public function addBank($data)
     {
         $this->db->query("INSERT INTO " . DB_PREFIX . "trpos_bank SET name = '" . $this->db->escape($data['name']) . "', image = '" . $this->db->escape($data['image']) . "', method = '" . $this->db->escape($data['method']) . "', model = '" . $this->db->escape($data['model']) . "', short = '" . $this->db->escape($data['short']) . "', status = '" . (int) $data['status'] . "'");
@@ -103,7 +103,6 @@ class ModelPaymentTrPos extends Model
             }
         }
 
-
         return $result;
     }
 
@@ -121,7 +120,7 @@ class ModelPaymentTrPos extends Model
         $bank = array();
 
         if ($query->num_rows) {
-            $bank  = $query->row;
+            $bank = $query->row;
 
             if (!isset($this->request->request['bank_id'])) {
                 return $bank;

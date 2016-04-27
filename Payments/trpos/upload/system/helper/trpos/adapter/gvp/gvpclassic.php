@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class gvpClassic
 {
     private function createHash($oid, $terminal_id, $cardnumber, $amount, $provaut_password)
@@ -39,27 +39,27 @@ class gvpClassic
             }
         }
 
-        $hash            = $this->createHash($bank['order_id'], $bank['gvp_terminal_id'], $bank['cc_number'], $amount, $bank['gvp_provaut_password']);
-        $expiredate      = $bank['cc_expire_date_month'] . $bank['cc_expire_date_year'];
-        $xml_fields      = array('mode'         => "PROD",
-                                 'version'      => "v0.01",
-                                 'prov_user_id' => "PROVAUT",
-                                 'hash'         => $hash,
-                                 'user_id'      => $bank['gvp_user_name'],
-                                 'terminal_id'  => $bank['gvp_terminal_id'],
-                                 'merchant_id'  => $bank['gvp_merchant_id'],
-                                 'customer_ip'  => $bank['customer_ip'],
-                                 'email'        => "",
-                                 'cardnumber'   => $bank['cc_number'],
-                                 'expiredate'   => $expiredate,
-                                 'cvv2'         => $bank['cc_cvv2'],
-                                 'oid'          => $bank['order_id'],
-                                 'type'         => "sales",
-                                 'instalment'   => $instalment,
-                                 'amount'       => $amount,
-                                 'currency'     => "949",
-                                 'url'          => $action,
-                                 'bank_id'      => $bank['bank_id']
+        $hash       = $this->createHash($bank['order_id'], $bank['gvp_terminal_id'], $bank['cc_number'], $amount, $bank['gvp_provaut_password']);
+        $expiredate = $bank['cc_expire_date_month'] . $bank['cc_expire_date_year'];
+        $xml_fields = array('mode'         => "PROD",
+                            'version'      => "v0.01",
+                            'prov_user_id' => "PROVAUT",
+                            'hash'         => $hash,
+                            'user_id'      => $bank['gvp_user_name'],
+                            'terminal_id'  => $bank['gvp_terminal_id'],
+                            'merchant_id'  => $bank['gvp_merchant_id'],
+                            'customer_ip'  => $bank['customer_ip'],
+                            'email'        => "",
+                            'cardnumber'   => $bank['cc_number'],
+                            'expiredate'   => $expiredate,
+                            'cvv2'         => $bank['cc_cvv2'],
+                            'oid'          => $bank['order_id'],
+                            'type'         => "sales",
+                            'instalment'   => $instalment,
+                            'amount'       => $amount,
+                            'currency'     => "949",
+                            'url'          => $action,
+                            'bank_id'      => $bank['bank_id']
         );
 
         $xml_response    = $this->xmlSend($xml_fields);
@@ -80,7 +80,7 @@ class gvpClassic
             $response['message'] .= 'ErrMsg : ' . (string) $xml->Transaction->Response->SysErrMsg . '<br/>';
             $response['error'] = (string) $xml->Transaction->Response->SysErrMsg;
         }
-        //$response['form']=;
+
         return $response;
     }
 

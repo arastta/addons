@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class posnet3DModel
 {
     public function methodResponse($bank)
@@ -18,9 +18,7 @@ class posnet3DModel
         } else {
             $response['form'] = $getResult;
         }
-        //$response['redirect']=;
-        //$response['error']=;
-        //$response['form'];
+
         return $response;
     }
 
@@ -217,5 +215,4 @@ class posnet3DModel
 
         return $result;
     }
-
 }

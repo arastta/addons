@@ -5,7 +5,7 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class gvpHosting
 {
     private function createHash($terminal_id, $oid, $amount, $okUrl, $failUrl, $type, $instalment, $storekey, $provaut_password)
@@ -28,7 +28,6 @@ class gvpHosting
         $amount       = (int) ($bank['total'] * 100);
         $hash         = $this->createHash($bank['gvp_terminal_id'], $bank['order_id'], $amount, $bank['success_url'], $bank['fail_url'], "sales", $instalment, $bank['gvp_3D_storekey'], $bank['gvp_provaut_password']);
         $txntimestamp = microtime();
-        $inputs       = array();
         $inputs       = array('secure3dsecuritylevel' => "OOS_PAY",
                               'mode'                  => "PROD",
                               'apiversion'            => "v0.01",
@@ -54,7 +53,7 @@ class gvpHosting
                               'oid'                   => $bank['order_id']
         );
 
-        $action       = '';
+        $action = '';
 
         if ($bank['mode'] == 'live') {
             $action = $bank['gvp_3D_url'];
@@ -79,8 +78,7 @@ class gvpHosting
     {
         $response         = array();
         $response['form'] = $this->createForm($bank);
-        //$response['redirect']=;
-        //$response['error']=;
+
         return $response;
     }
 
@@ -103,7 +101,7 @@ class gvpHosting
             $response['message'] .= 'Response : ' . $Response . '<br/>';
             $response['message'] .= 'ErrMsg : ' . $bank_response['errmsg'] . '<br/>';
         }
-        //print_r($response);
+
         return $response;
     }
 }

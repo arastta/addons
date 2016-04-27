@@ -5,10 +5,9 @@
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
- 
+
 class nestpay3DHosting
 {
-
     private function createHash($clientId, $storekey, $okUrl, $failUrl, $oid, $amount, $rnd, $transactionType, $instalment, $callbackUrl)
     {
         $hashstr = $clientId . $oid . $amount . $okUrl . $failUrl . $transactionType . $instalment . $rnd . $storekey;
@@ -39,7 +38,6 @@ class nestpay3DHosting
         $transactionType = "Auth";
         $hash            = $this->createHash($clientId, $storekey, $okUrl, $failUrl, $oid, $amount, $rnd, $transactionType, $taksit, $callbackUrl);
 
-        $inputs = array();
         //test info pan: 4508034508034509 expire: 12/16 cv2:000 3dpass:a
         $inputs = array('clientid'    => $bank['nestpay_client_id'],
                         'amount'      => $amount,
@@ -64,6 +62,7 @@ class nestpay3DHosting
                         'fulkekod'    => $bank['order_info']['shipping_iso_code_2'],
                         'bank_id'     => $bank['bank_id']
         );
+
         $action = '';
 
         if ($bank['mode'] == 'live') {
@@ -89,8 +88,7 @@ class nestpay3DHosting
     {
         $response         = array();
         $response['form'] = $this->createForm($bank);
-        //$response['redirect']=;
-        //$response['error']=;
+
         return $response;
     }
 
@@ -145,7 +143,7 @@ class nestpay3DHosting
                 $response['message'] .= $bank_response['mdErrorMsg'];
             }
         }
-        //print_r($response);
+
         return $response;
     }
 }
