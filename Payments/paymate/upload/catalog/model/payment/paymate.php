@@ -1,43 +1,51 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
-class ModelPaymentPayMate extends Model {
-	public function getMethod($address, $total) {
-		$this->load->language('payment/paymate');
+<?php
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('paymate_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+class ModelPaymentPayMate extends Model
+{
+    public function getMethod($address, $total)
+    {
+        $this->load->language('payment/paymate');
 
-		if ($this->config->get('paymate_total') > 0 && $this->config->get('paymate_total') > $total) {
-			$status = false;
-		} elseif (!$this->config->get('paymate_geo_zone_id')) {
-			$status = true;
-		} elseif ($query->num_rows) {
-			$status = true;
-		} else {
-			$status = false;
-		}
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('paymate_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
-		$currencies = array(
-			'AUD',
-			'NZD',
-			'USD',
-			'EUR',
-			'GBP'
-		);
+        if ($this->config->get('paymate_total') > 0 && $this->config->get('paymate_total') > $total) {
+            $status = false;
+        } elseif (!$this->config->get('paymate_geo_zone_id')) {
+            $status = true;
+        } elseif ($query->num_rows) {
+            $status = true;
+        } else {
+            $status = false;
+        }
 
-		if (!in_array(strtoupper($this->currency->getCode()), $currencies)) {
-			$status = false;
-		}
+        $currencies = array(
+            'AUD',
+            'NZD',
+            'USD',
+            'EUR',
+            'GBP'
+        );
 
-		$method_data = array();
+        if (!in_array(strtoupper($this->currency->getCode()), $currencies)) {
+            $status = false;
+        }
 
-		if ($status) {
-			$method_data = array(
-				'code'       => 'paymate',
-				'title'      => $this->language->get('text_title'),
-				'terms'      => '',
-				'sort_order' => $this->config->get('paymate_sort_order')
-			);
-		}
+        $method_data = array();
 
-		return $method_data;
-	}
+        if ($status) {
+            $method_data = array(
+                'code'       => 'paymate',
+                'title'      => $this->language->get('text_title'),
+                'terms'      => '',
+                'sort_order' => $this->config->get('paymate_sort_order')
+            );
+        }
+
+        return $method_data;
+    }
 }
