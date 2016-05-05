@@ -3,4 +3,4 @@ and as distributed, it includes or is derivative of works licensed under the
 GNU General Public License or other Free or Open Source software licenses,
 including works copyrighted by any or all of the following:
 
-- Iyzico			(C) https://www.iyzico.com
+- Iyzico v-2.1.0		(C) https://www.iyzico.com
