@@ -45,7 +45,7 @@
                     <div class="form-group required">
                         <label class="col-sm-2 control-label" for="entry-password"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
                         <div class="col-sm-10">
-                            <input type="text" name="pp_payflow_password" value="<?php echo $pp_payflow_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
+                            <input type="password" name="pp_payflow_password" value="<?php echo $pp_payflow_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
                             <?php if ($error_password) { ?>
                             <div class="text-danger"><?php echo $error_password; ?></div>
                             <?php } ?>
