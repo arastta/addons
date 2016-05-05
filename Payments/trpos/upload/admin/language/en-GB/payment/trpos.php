@@ -45,6 +45,7 @@ $_['entry_method']       = 'Method:';
 $_['entry_model']        = 'Model:';
 $_['entry_short']        = 'Shortname:';
 $_['entry_image']        = 'Image:';
+$_['entry_installment']  = 'Installment';
 $_['entry_status']       = 'Status';
 
 // Entry EST

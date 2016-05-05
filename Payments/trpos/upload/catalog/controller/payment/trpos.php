@@ -31,6 +31,8 @@ class ControllerPaymentTrPos extends Controller
                 $trpos_single_title = $this->language->get('text_no_commision') . '(%' . $trpos_single_ratio . ')';
             }
         }
+        
+        $data['installment'] = $this->config->get('trpos_installment');
 
         $trpos_total = $order_total + ($order_total * $trpos_single_ratio / 100);
 
@@ -42,7 +44,6 @@ class ControllerPaymentTrPos extends Controller
         $new_banks = array();
 
         foreach ($data['banks'] as $bank) {
-
             if ($bank['status'] != 0) {
 
                 $new_banks[$bank['bank_id']] = $bank;
@@ -95,6 +96,8 @@ class ControllerPaymentTrPos extends Controller
             $this->session->data['instalment']    = $this->request->post['instalment'];
             $bank_array                           = explode('_', $this->request->post['instalment']);
             $this->session->data['trpos_bank_id'] = $bank_array[0];
+        } else {
+             $this->session->data['trpos_bank_id'] = $this->config->get('trpos_other_id');
         }
 
         $this->load->language('payment/trpos');
@@ -138,6 +141,7 @@ class ControllerPaymentTrPos extends Controller
         $data['cc_types'][] = array('text' => 'AMEX', 'value' => '3');//American Express
 
         $bank_id = $this->session->data['trpos_bank_id'];
+        
         $bank    = $this->getbank($bank_id);
 
         $data['payment_model'] = $bank['model'];

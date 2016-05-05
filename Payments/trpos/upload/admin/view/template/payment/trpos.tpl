@@ -126,6 +126,20 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-installment"><?php echo $entry_installment; ?></label>
+                                <div class="col-sm-10">
+                                    <select name="trpos_installment" id="input-installment" class="form-control">
+                                        <?php if ($trpos_installment) { ?>
+                                        <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                                        <option value="0"><?php echo $text_disabled; ?></option>
+                                        <?php } else { ?>
+                                        <option value="1"><?php echo $text_enabled; ?></option>
+                                        <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
                                 <div class="col-sm-10">
                                     <select name="trpos_status" id="input-status" class="form-control">

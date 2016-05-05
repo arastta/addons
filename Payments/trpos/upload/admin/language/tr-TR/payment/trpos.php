@@ -45,6 +45,7 @@ $_['entry_method']       = 'Method:';
 $_['entry_model']        = 'Model:';
 $_['entry_short']        = 'Kısaltma:';
 $_['entry_image']        = 'Image:';
+$_['entry_installment']  = 'Taksit';
 $_['entry_status']       = 'Status';
 
 // Entry EST

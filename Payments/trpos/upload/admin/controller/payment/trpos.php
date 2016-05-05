@@ -118,6 +118,12 @@ class ControllerPaymentTrPos extends Controller
             $data['trpos_other_id'] = $this->config->get('trpos_other_id');
         }
 
+        if (isset($this->request->post['trpos_installment'])) {
+            $data['trpos_installment'] = $this->request->post['trpos_installment'];
+        } else {
+            $data['trpos_installment'] = $this->config->get('trpos_installment');
+        }
+
         if (isset($this->request->post['trpos_order_status_id'])) {
             $data['trpos_order_status_id'] = $this->request->post['trpos_order_status_id'];
         } else {

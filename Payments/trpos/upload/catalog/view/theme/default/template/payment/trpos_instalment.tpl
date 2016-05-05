@@ -1,3 +1,4 @@
+<?php if ($installment) { ?>
 <div class="row" id="form-trpos">
     <?php if ($banks) { ?>
     <div class="col-sm-12">
@@ -32,7 +33,9 @@
     <?php } ?>
     <input type="hidden" name="payment_method" value="trpos" checked="checked">
 </div>
+<?php } ?>
 <div class="col-sm-12" id="form-trpos-confirm"></div>
+<?php if ($installment) { ?>
 <script type="text/javascript"><!--
     $(document).on('change', 'input[name=\'instalment\']:checked', function () {
         $.ajax({
@@ -49,3 +52,19 @@
 
     $('input[name=\'instalment\']:checked').trigger("change");
 //--></script>
+<?php } else { ?>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    $.ajax({
+        url     : 'index.php?route=payment/trpos/confirm',
+        type    : 'post',
+        data    : $('#form-trpos :input'),
+        dataType: 'html',
+        cache   : false,
+        success : function (html) {
+            $('#form-trpos-confirm').html(html);
+        }
+    });
+});
+//--></script>
+<?php } ?>
