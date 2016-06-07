@@ -2,8 +2,8 @@
 <modification>
     <name>Affiliate, Compare, Reward Points, Wishlist Feature Disable</name>
     <code>disable_functions</code>
-    <version>1.0.0</version>
-    <link>https://www.arastta.org</link>
+    <version>1.0.1</version>
+    <link><![CDATA[https://extensions.arastta.pro/tools/disable-functions]]></link>
     <author>Arastta E-Commerce</author>
 
     <file path="admin/controller/setting/setting.php">
@@ -447,25 +447,50 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
     </file>
 
     <file path="admin/view/theme/basic/template/sale/order_form.tpl">
-        <operation error="log">
+        <operation error="skip">
             <search><![CDATA[<label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
             <add position="before" offset="1"><![CDATA[                                <?php if ($config_reward_point_status) { ?>]]></add>
         </operation>
 
-        <operation error="log">
+        <operation error="skip">
+            <search><![CDATA[<label class="col-sm-12" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
+            <add position="before" offset="1"><![CDATA[                                <?php if ($config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="skip">
             <search><![CDATA[<label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
             <add position="after" offset="8"><![CDATA[                                <?php } else { ?>
                                     <input type="hidden" name="reward" value="<?php echo $reward; ?>" id="input-reward" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
                                 <?php } ?>]]></add>
         </operation>
 
-        <operation error="log">
+        <operation error="skip">
+            <search><![CDATA[<label class="col-sm-12" for="input-reward"><?php echo $entry_reward; ?></label>]]></search>
+            <add position="after" offset="8"><![CDATA[                                <?php } else { ?>
+                                    <input type="hidden" name="reward" value="<?php echo $reward; ?>" id="input-reward" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
+                                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="skip">
             <search><![CDATA[<label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
             <add position="before" offset="1"><![CDATA[                                <?php if ($config_affiliate_status) { ?>]]></add>
         </operation>
 
-        <operation error="log">
+        <operation error="skip">
+            <search><![CDATA[<label class="col-sm-12" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
+            <add position="before" offset="1"><![CDATA[                                <?php if ($config_affiliate_status) { ?>]]></add>
+        </operation>
+
+        <operation error="skip">
             <search><![CDATA[<label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
+            <add position="after" offset="5"><![CDATA[                                <?php } else { ?>
+                                        <input type="hidden" name="affiliate" value="<?php echo $affiliate; ?>" id="input-affiliate" class="form-control" />
+                                        <input type="hidden" name="affiliate_id" value="<?php echo $affiliate_id; ?>" />
+                                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[<label class="col-sm-12" for="input-affiliate"><?php echo $entry_affiliate; ?></label>]]></search>
             <add position="after" offset="5"><![CDATA[                                <?php } else { ?>
                                         <input type="hidden" name="affiliate" value="<?php echo $affiliate; ?>" id="input-affiliate" class="form-control" />
                                         <input type="hidden" name="affiliate_id" value="<?php echo $affiliate_id; ?>" />
@@ -498,8 +523,13 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
     </file>
 
     <file path="admin/controller/catalog/product.php">
-        <operation error="log">
+        <operation error="skip">
             <search><![CDATA[$data['language_code'] = $this->config->get('config_admin_language');]]></search>
+            <add position="before"><![CDATA[        $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[$data['language_code'] = isset($this->session->data['admin_language']) ? $this->session->data['admin_language'] : $this->config->get('config_admin_language');]]></search>
             <add position="before"><![CDATA[        $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
         </operation>
     </file>
@@ -525,20 +555,6 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
                                 <input type="hidden" name="product_reward[<?php echo $customer_group['customer_group_id']; ?>][points]" value="<?php echo isset($product_reward[$customer_group['customer_group_id']]) ? $product_reward[$customer_group['customer_group_id']]['points'] : ''; ?>" class="form-control hidden" />
                                 <?php } ?>
                         <?php } ?>]]></add>
-        </operation>
-    </file>
-
-    <file path="catalog/controller/product/product.php">
-        <operation error="log">
-            <search><![CDATA[$data['reward'] = $product_info['reward'];]]></search>
-            <add position="after"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
-        </operation>
-    </file>
-
-    <file path="catalog/view/theme/*/template/product/product.tpl">
-        <operation error="log">
-            <search><![CDATA[<?php if ($reward) { ?>]]></search>
-            <add position="replace"><![CDATA[<?php if ($reward && $config_reward_point_status) { ?>]]></add>
         </operation>
     </file>
 
@@ -570,7 +586,7 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         </operation>
     </file>
 
-	<file path="catalog/controller/checkout/cart.tpl">
+	<file path="catalog/controller/checkout/cart.php">
         <operation error="log">
             <search><![CDATA[$data['vouchers'] = array();]]></search>
             <add position="before" offset="1"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
@@ -592,7 +608,7 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
     <file path="catalog/controller/affiliate/login.php">
         <operation error="log">
             <search><![CDATA[$this->load->language('affiliate/login');]]></search>
-            <add position="before"><![CDATA[        if(!$this->config->get('config_affiliate_status')) {
+            <add position="before"><![CDATA[        if (!$this->config->get('config_affiliate_status')) {
             $this->response->redirect($this->url->link('account/login', '', 'SSL'));
         }
         ]]></add>
@@ -601,8 +617,8 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
 
     <file path="catalog/controller/affiliate/account.php">
         <operation error="log">
-            <search><![CDATA[$this->load->language('affiliate/login');]]></search>
-            <add position="before"><![CDATA[        if(!$this->config->get('config_affiliate_status')) {
+            <search><![CDATA[if (!$this->affiliate->isLogged())]]></search>
+            <add position="before"><![CDATA[        if (!$this->config->get('config_affiliate_status')) {
             $this->response->redirect($this->url->link('account/login', '', 'SSL'));
         }
         ]]></add>
@@ -611,8 +627,8 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
 
     <file path="catalog/controller/affiliate/register.php">
         <operation error="log">
-            <search><![CDATA[$this->load->language('affiliate/login');]]></search>
-            <add position="before"><![CDATA[        if(!$this->config->get('config_affiliate_status')) {
+            <search><![CDATA[if ($this->affiliate->isLogged())]]></search>
+            <add position="before"><![CDATA[        if (!$this->config->get('config_affiliate_status')) {
             $this->response->redirect($this->url->link('account/login', '', 'SSL'));
         }
         ]]></add>
@@ -935,44 +951,65 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         <operation error="log">
             <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>]]></search>
             <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
-                <?php } ?>]]></add>
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                            <?php } ?>]]></add>
         </operation>
 
         <operation error="log">
             <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
             <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
-                <?php } ?>]]></add>
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                            <?php } ?>]]></add>
         </operation>
     </file>
 
     <file path="catalog/controller/product/product.php">
         <operation error="log">
+            <search><![CDATA[$data['reward'] = $product_info['reward'];]]></search>
+            <add position="after"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
+        </operation>
+
+        <operation error="log">
             <search><![CDATA[$data['heading_title'] = $product_info['name'];]]></search>
-            <add position="before"><![CDATA[        if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
-            $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
-        } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
-            $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
-        }
+            <add position="before"><![CDATA[            if (!$this->config->get('config_compare_status') && !$this->config->get('config_wishlist_status')) {
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/buttons.css');
+            } else if (!$this->config->get('config_compare_status') || !$this->config->get('config_wishlist_status')) {
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/button.css');
+            }
         ]]></add>
         </operation>
 
         <operation error="log">
             <search><![CDATA[$data['products'] = array();]]></search>
             <add position="before"><![CDATA[            $data['config_compare_status'] = $this->config->get('config_compare_status');
-            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');]]></add>
+            $data['config_wishlist_status'] = $this->config->get('config_wishlist_status');
+            ]]></add>
         </operation>
     </file>
 
     <file path="catalog/view/theme/*/template/product/product.tpl">
         <operation error="log">
+            <search><![CDATA[<?php if ($reward) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($reward && $config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="skip">
             <search><![CDATA[<div class="btn-group">]]></search>
             <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_compare_status) { ?>]]></add>
         </operation>
 
-        <operation error="log">
+        <operation error="skip">
+            <search><![CDATA[<div class="btn-group pull-right">]]></search>
+            <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_compare_status) { ?>]]></add>
+        </operation>
+
+        <operation error="skip">
             <search><![CDATA[<div class="btn-group">]]></search>
+            <add position="after" offset="3"><![CDATA[                    <?php } ?>]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[<div class="btn-group pull-right">]]></search>
             <add position="after" offset="3"><![CDATA[                    <?php } ?>]]></add>
         </operation>
 
