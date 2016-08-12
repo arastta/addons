@@ -289,7 +289,7 @@ class ControllerPaymentKlarnaInvoice extends Controller
                         'goods' => array(
                             'artno'    => $product['model'],
                             'title'    => $product['name'],
-                            'price'    => (int) str_replace('.', '', $this->currency->format($product['price'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
+                            'price'    => (int) str_replace('.', '', $this->currency->format($product['price'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)) * (100/(pow(10,$this->currency->getDecimalPlace($country_to_currency[$order_info['payment_iso_code_3']])))),
                             'vat'      => (float) $product['tax_rate'],
                             'discount' => 0.0,
                             'flags'    => 0
@@ -310,7 +310,7 @@ class ControllerPaymentKlarnaInvoice extends Controller
                             'goods' => array(
                                 'artno'    => '',
                                 'title'    => $total['title'],
-                                'price'    => (int) str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
+                                'price'    => (int) str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)) * (100/(pow(10,$this->currency->getDecimalPlace($country_to_currency[$order_info['payment_iso_code_3']])))),
                                 'vat'      => (float) $total['tax_rate'],
                                 'discount' => 0.0,
                                 'flags'    => 0
