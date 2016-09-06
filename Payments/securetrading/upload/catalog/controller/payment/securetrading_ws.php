@@ -103,7 +103,8 @@ class ControllerPaymentSecureTradingWs extends Controller
 
                 $billing_node = $request_node->addChild('billing');
 
-                $amount_node = $billing_node->addChild('amount', str_replace('.', '', $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)));
+                //$amount_node = $billing_node->addChild('amount', str_replace('.', '', $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)));
+                $amount_node = $billing_node->addChild('amount', str_replace('.', '', $this->model_extension_payment_securetrading_ws->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'])));
                 $amount_node->addAttribute('currencycode', $order_info['currency_code']);
 
                 $billing_node->addChild('premise', $order_info['payment_address_1']);
@@ -212,7 +213,8 @@ class ControllerPaymentSecureTradingWs extends Controller
                 $name_node->addChild('first', $order_info['payment_firstname']);
                 $name_node->addChild('last', $order_info['payment_lastname']);
 
-                $amount_node = $billing_node->addChild('amount', str_replace('.', '', $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)));
+                //$amount_node = $billing_node->addChild('amount', str_replace('.', '', $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)));
+                $amount_node = $billing_node->addChild('amount', str_replace('.', '', $this->model_extension_payment_securetrading_ws->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'])));
                 $amount_node->addAttribute('currencycode', $order_info['currency_code']);
 
                 $payment_node = $billing_node->addChild('payment');
