@@ -9,6 +9,20 @@ class ControllerPaymentFirstdata extends Controller
 {
     private $error = array();
 
+    public function install()
+    {
+        $this->load->model('payment/firstdata');
+
+        $this->model_payment_firstdata->install();
+    }
+
+    public function uninstall()
+    {
+        $this->load->model('payment/firstdata');
+
+        $this->model_payment_firstdata->uninstall();
+    }    
+    
     public function index()
     {
         $this->load->language('payment/firstdata');

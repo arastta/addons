@@ -51,6 +51,13 @@ class ModelPaymentFirstdataRemote extends Model
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
     }
 
+    public function uninstall()
+    {
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "firstdata_remote_order`;");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "firstdata_remote_order_transaction`;");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "firstdata_remote_card`;");
+    }
+
     public function call($xml)
     {
         $ch = curl_init();

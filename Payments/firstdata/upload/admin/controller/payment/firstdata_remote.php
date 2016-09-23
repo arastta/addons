@@ -9,6 +9,20 @@ class ControllerPaymentFirstdataRemote extends Controller
 {
     private $error = array();
 
+    public function install()
+    {
+        $this->load->model('payment/firstdata_remote');
+
+        $this->model_payment_firstdata_remote->install();
+    }
+
+    public function uninstall()
+    {
+        $this->load->model('payment/firstdata_remote');
+
+        $this->model_payment_firstdata_remote->uninstall();
+    }    
+    
     public function index()
     {
         $this->load->language('payment/firstdata_remote');
