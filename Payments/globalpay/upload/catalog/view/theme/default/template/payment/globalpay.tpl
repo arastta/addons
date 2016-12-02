@@ -12,7 +12,7 @@
   <input type=hidden name="SHIPPING_CODE" value="<?php echo $shipping_code; ?>">
   <input type=hidden name="SHIPPING_CO" value="<?php echo $shipping_country; ?>">
   <input type=hidden name="MERCHANT_RESPONSE_URL" value="<?php echo $response_url; ?>">
-  <input type=hidden name="COMMENT1" value="OpenCart">
+  <input type=hidden name="COMMENT1" value="Arastta">
   <?php if ($card_select == true) { ?>
   <fieldset id="payment">
     <div class="form-group required">
