@@ -697,7 +697,7 @@ class ControllerPaymentLaybuy extends Controller
 
             $data['currency_symbol_right'] = $this->currency->getSymbolRight($transaction_info['currency']);
 
-            $data['store_url'] = HTTP_CATALOG;
+            $data['store_url'] = HTTPS_CATALOG;
 
             $data['api_key'] = $this->getApiKey();
 
@@ -1071,7 +1071,7 @@ class ControllerPaymentLaybuy extends Controller
 
             $data['text_payment_info'] = $this->language->get('text_payment_info');
 
-            $data['store_url'] = HTTP_CATALOG;
+            $data['store_url'] = HTTPS_CATALOG;
 
             $data['api_key'] = $this->getApiKey();
 
