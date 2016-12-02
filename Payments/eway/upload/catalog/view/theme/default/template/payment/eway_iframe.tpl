@@ -2,7 +2,7 @@
     <div class="alert alert-danger">Payment Error: <?php echo $error; ?></div>
   <?php } else { ?>
 
-  <?php if (isset($text_testing)) { ?>
+  <?php if ($sandbox) { ?>
     <div class="alert alert-warning"><?php echo $text_testing; ?></div>
   <?php } ?>
 
