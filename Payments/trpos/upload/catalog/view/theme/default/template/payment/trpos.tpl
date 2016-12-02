@@ -1,9 +1,10 @@
+<h2><?php echo $text_credit_card; ?></h2>
 <form class="form-horizontal">
     <fieldset id="payment">
         <?php if($payment_model=="3d_hosting" || $payment_model=="hosting"){ ?>
-        <label class="col-sm-3 control-label"><?php echo $text_3d_hosting; ?></label>
+        <label class="col-sm-12 control-label"><?php echo $text_3d_hosting; ?></label>
         <?php } else { ?>
-        <legend><?php echo $text_credit_card; ?></legend>
+        <legend></legend>
         <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-cc-owner"><?php echo $entry_cc_owner; ?></label>
             <div class="col-sm-10">
@@ -87,3 +88,14 @@
         });
     });
 //--></script>
+<style>
+#form-trpos-confirm .form-horizontal {
+    margin-top: -15px;
+}
+
+@media screen and (max-width: 768px) {
+   #form-trpos-confirm h2 {
+        margin-top: 40px;
+   }
+}
+</style>
