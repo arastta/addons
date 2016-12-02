@@ -165,6 +165,10 @@ class ModelShippingFedex extends Model
 
             if ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'ERROR') {
                 $error = $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue;
+                $error .= ' - Code: ';
+                $error .= $dom->getElementsByTagName('Code')->item(0)->nodeValue;
+                $error .= '<br />';
+                $error .= $dom->getElementsByTagName('Message')->item(0)->nodeValue;
 
                 $this->log->write('FEDEX :: ' . $response);
             } else {
