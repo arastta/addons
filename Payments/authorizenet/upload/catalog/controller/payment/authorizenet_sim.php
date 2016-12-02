@@ -50,7 +50,8 @@ class ControllerPaymentAuthorizeNetSim extends Controller
         $data['x_email']              = $order_info['email'];
         $data['x_relay_response']     = 'true';
 
-        $data['x_fp_hash'] = hash_hmac('md5', $data['x_login'] . '^' . $data['x_fp_sequence'] . '^' . $data['x_fp_timestamp'] . '^' . $data['x_amount'] . '^' . $data['x_currency_code'], $this->config->get('authorizenet_sim_transaction_key'));
+
+        $data['x_fp_hash'] = hash_hmac('md5', $data['x_login'] . '^' . $data['x_fp_sequence'] . '^' . $data['x_fp_timestamp'] . '^' . $data['x_amount'] . '^' . $data['x_currency_code'], $this->config->get('authorizenet_sim_key'));
 
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl')) {
             return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl', $data);
