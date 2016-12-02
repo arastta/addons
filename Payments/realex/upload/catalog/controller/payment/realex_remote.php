@@ -91,6 +91,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		if (isset($json['error'])) {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
+            $this->response->output();
 			die();
 		}
 
