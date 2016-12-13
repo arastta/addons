@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <name><![CDATA[Optipn Model/SKU/Reward Points]]></name>
+  <code>option_model_sku_reward_points</code>
+  <version>1.0.0</version>
+  <author>Arastta eCommerce</author>
+  <link>http://arastta.org</link>
+
+  <file path="system/library/cart.php">
+    <operation>
+      <search><![CDATA[$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");]]></search>
+      <add position="replace"><![CDATA[$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, pov.model, pov.sku FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");]]></add>
+    </operation>
+
+    <operation>
+      <search index="0,1"><![CDATA['type'                    => $option_query->row['type'],]]></search>
+      <add position="after"><![CDATA[                                        'model'                   => $option_value_query->row['model'],
+                                        'sku'                     => $option_value_query->row['sku'],]]></add>
+    </operation>
+
+    <operation>
+      <search index="2"><![CDATA['type'                    => $option_query->row['type'],]]></search>
+      <add position="after"><![CDATA[                                        'model'                   => '',
+                                        'sku'                     => '',]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA['weight_prefix'           => $option_value_query->row['weight_prefix']]]></search>
+      <add position="after" offset="1"><![CDATA[                                    $option_model = $option_value_query->row['model'];]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA['weight_prefix'           => '']]></search>
+      <add position="after" offset="1"><![CDATA[
+                                if (!isset($option_model)) {
+                                    $option_model = '';
+                                }]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");]]></search>
+      <add position="replace"><![CDATA[$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, pov.model, pov.sku FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA['model'           => $product_query->row['model'],]]></search>
+      <add position="replace"><![CDATA['model'           => ($option_model) ? $option_model : $product_query->row['model'],]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/controller/catalog/product.php">
+    <operation>
+      <search index="0"><![CDATA['option_value_id'         => $product_option_value['option_value_id'],]]></search>
+      <add position="after"><![CDATA[                        'model'                   => $product_option_value['model'],
+                        'sku'                     => $product_option_value['sku'],]]></add>
+    </operation>
+
+    <operation>
+      <search index="1"><![CDATA['option_value_id'         => $product_option_value['option_value_id'],]]></search>
+      <add position="after"><![CDATA[                        'model'                   => $product_option_value['model'],
+                        'sku'                     => $product_option_value['sku'],]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/controller/sale/order.php">
+    <operation>
+      <search><![CDATA[$product_info = $this->model_catalog_product->getProduct($product['product_id']);]]></search>
+      <add position="after"><![CDATA[                    $options_info = $this->model_catalog_product->getProductOptions($product['product_id']);
+
+                    foreach ($options_info as $option_info) {
+                        if ($option['product_option_id'] != $option_info['product_option_id']) {
+                            continue;
+                        }
+
+                        foreach ($option_info['product_option_value'] as $option_info_value) {
+                            if ($option['product_option_value_id'] != $option_info_value['product_option_value_id']) {
+                                continue;
+                            }
+
+                            $option_model = $option_info_value['model'];
+                            $option_sku = $option_info_value['sku'];
+
+                            $product_info['weight'] += $option_info_value['weight'];
+                        }
+                    }]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA['model'    => $product_info['model'],]]></search>
+      <add position="replace"><![CDATA['model'    => !empty($option_model) ? $option_model : $product_info['model'],]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA['sku'      => $product_info['sku'],]]></search>
+      <add position="replace"><![CDATA['sku'      => !empty($option_sku) ? $option_sku : $product_info['sku'],]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/model/catalog/product.php">
+    <operation>
+      <search><![CDATA[$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");]]></search>
+      <add position="after"><![CDATA[$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', model = '" . $this->db->escape($product_option_value['model']) . "', sku = '" . $this->db->escape($product_option_value['sku']) . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "', product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");]]></search>
+      <add position="replace"><![CDATA[$this->db->query("INSERT INTO " . DB_PREFIX . "product_option_value SET product_option_value_id = '" . (int)$product_option_value['product_option_value_id'] . "', product_option_id = '" . (int)$product_option_id . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', option_value_id = '" . (int)$product_option_value['option_value_id'] . "', model = '" . $this->db->escape($product_option_value['model']) . "', sku = '" . $this->db->escape($product_option_value['sku']) . "', quantity = '" . (int)$product_option_value['quantity'] . "', subtract = '" . (int)$product_option_value['subtract'] . "', price = '" . (float)$product_option_value['price'] . "', price_prefix = '" . $this->db->escape($product_option_value['price_prefix']) . "', points = '" . (int)$product_option_value['points'] . "', points_prefix = '" . $this->db->escape($product_option_value['points_prefix']) . "', weight = '" . (float)$product_option_value['weight'] . "', weight_prefix = '" . $this->db->escape($product_option_value['weight_prefix']) . "'");]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA['option_value_id'         => $product_option_value['option_value_id'],]]></search>
+      <add position="after"><![CDATA[                    'model'                   => $product_option_value['model'],
+                    'sku'                     => $product_option_value['sku'],]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/view/template/catalog/product_form.tpl">
+    <operation>
+      <search><![CDATA[<td class="text-left"><?php echo $entry_option_value; ?></td>]]></search>
+      <add position="after"><![CDATA[                                                        <td class="text-right"><?php echo $entry_model; ?></td>
+                                                        <td class="text-right"><?php echo $entry_sku; ?></td>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<input type="hidden" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][product_option_value_id]" value="<?php echo $product_option_value['product_option_value_id']; ?>" /></td>]]></search>
+      <add position="after"><![CDATA[                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][model]" value="<?php echo $product_option_value['model']; ?>" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][sku]" value="<?php echo $product_option_value['sku']; ?>" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<td colspan="6"></td>]]></search>
+      <add position="replace"><![CDATA[<td colspan="8"></td>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[html += '        <td class="text-left"><?php echo $entry_option_value; ?></td>';]]></search>
+      <add position="after"><![CDATA[                html += '        <td class="text-right"><?php echo $entry_model; ?></td>';
+                html += '        <td class="text-right"><?php echo $entry_sku; ?></td>';]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[html += '        <td colspan="6"></td>';]]></search>
+      <add position="replace"><![CDATA[html += '        <td colspan="8"></td>';]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';]]></search>
+      <add position="after"><![CDATA[        html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][model]" value="" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>';
+        html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][sku]" value="" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>';]]></add>
+    </operation>
+  </file>
+
+  <file path="catalog/controller/product/product.php">
+    <operation>
+      <search><![CDATA[public function getRecurringDescription()]]></search>
+      <add position="before"><![CDATA[
+    public function livePrice()
+    {
+        $this->language->load('product/product');
+
+        $this->load->model('catalog/product');
+
+        if (isset($this->request->post['product_id'])) {
+            $product_id = $this->request->post['product_id'];
+        } else {
+            $product_id = 0;
+        }
+
+        if (isset($this->request->post['quantity'])) {
+            $quantity = $this->request->post['quantity'];
+        } else {
+            $quantity = 1;
+        }
+
+        if (isset($this->request->post['option'])) {
+            $options = array_filter($this->request->post['option']);
+        } else {
+            $options = array();
+        }
+
+        $product_info = $this->model_catalog_product->getProduct($product_id);
+
+        if (!$product_info) {
+            return false;
+        }
+
+        $model = $product_info['model'];
+        $price = $product_info['price'];
+        $special = $product_info['special'];
+        $points = $product_info['points'];
+        $option_quantity = $product_info['quantity'];
+
+        foreach ($this->model_catalog_product->getProductOptions($product_id) as $option) {
+            if (!array_key_exists($option['product_option_id'], $options)) {
+                continue;
+            }
+
+            if ($option['product_option_value']) {
+                foreach ($option['product_option_value'] as $product_option_value) {
+                    if (!in_array($product_option_value['product_option_value_id'], $options[$option['product_option_id']])) {
+                        continue;
+                    }
+
+                    $model = $product_option_value['model'];
+                    $option_quantity = $product_option_value['quantity'];
+
+                    if ($product_option_value['price_prefix'] == '+') {
+                        $price += $product_option_value['price'];
+                        $special += $product_option_value['price'];
+                    } elseif ($product_option_value['price_prefix'] == '-') {
+                        $price -= $product_option_value['price'];
+                        $special -= $product_option_value['price'];
+                    }
+
+                    if ($product_option_value['points_prefix'] == '+') {
+                        $points += $product_option_value['points'];
+                    } elseif ($product_option_value['points_prefix'] == '-') {
+                        $points -= $product_option_value['points'];
+                    }
+                }
+            }
+        }
+
+        $json = array();
+
+        if (isset($model)) {
+            $json['model'] = $this->language->get('text_model') . ' ' . $model;
+        } else {
+            $json['model'] = false;
+        }
+
+        if ($option_quantity <= 0) {
+            $json['stock'] = $this->language->get('text_stock') . ' <span class="stock-status" style="color: ' . $product_info['stock_color'] . ';">' . $product_info['stock_status'] . '</span>';
+        } elseif ($this->config->get('config_stock_display')) {
+            $json['stock'] = $this->language->get('text_stock') . ' <span class="stock-status" style="color: #008000;">' . $option_quantity . '</span>';
+        } else {
+            $json['stock'] = $this->language->get('text_stock') . ' <span class="stock-status" style="color: #008000;">' . $this->language->get('text_instock') . '</span>';
+        }
+
+        if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+            $json['price'] = $this->currency->format($this->tax->calculate($price, $product_info['tax_class_id'], $this->config->get('config_tax')) * $quantity);
+        } else {
+            $json['price'] = false;
+        }
+
+        if ((float) $product_info['special']) {
+            $json['special'] = $this->currency->format($this->tax->calculate($special, $product_info['tax_class_id'], $this->config->get('config_tax')) * $quantity);
+        } else {
+            $json['special'] = false;
+        }
+
+        if ($this->config->get('config_tax')) {
+            $json['tax'] = $this->language->get('text_tax') . ' ' . $this->currency->format(((float) $product_info['special'] ? $special : $price) * $quantity);
+        } else {
+            $json['tax'] = false;
+        }
+
+        if ($points) {
+            $json['points'] = $this->language->get('text_points') . ' ' . $points;
+        } else {
+            $json['points'] = false;
+        }
+
+        $this->response->setOutput(json_encode($json));
+    }
+]]></add>
+    </operation>
+  </file>
+
+  <file path="catalog/model/catalog/product.php">
+    <operation>
+      <search><![CDATA['image'                   => $product_option_value['image'],]]></search>
+      <add position="after"><![CDATA[                    'model'                   => $product_option_value['model'],
+                    'sku'                     => $product_option_value['sku'],]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA['price_prefix'            => $product_option_value['price_prefix'],]]></search>
+      <add position="after"><![CDATA[                    'points'                  => $product_option_value['points'],
+                    'points_prefix'           => $product_option_value['points_prefix'],]]></add>
+    </operation>
+  </file>
+
+  <file path="catalog/view/theme/*/template/product/product.tpl">
+    <operation>
+      <search><![CDATA[<li><?php echo $text_model; ?> <?php echo $model; ?></li>]]></search>
+      <add position="replace"><![CDATA[<li class="product-model"><?php echo $text_model; ?> <?php echo $model; ?></li>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<li><?php echo $text_stock; ?> <span class="stock-status"><?php echo $stock; ?></span></li>]]></search>
+      <add position="replace"><![CDATA[<li class="product-stock"><?php echo $text_stock; ?> <span class="stock-status"><?php echo $stock; ?></span></li>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<h2><?php echo $price; ?></h2>]]></search>
+      <add position="replace"><![CDATA[<h2 class="product-price"><?php echo $price; ?></h2>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<li><span style="text-decoration: line-through;"><?php echo $price; ?></span></li>]]></search>
+      <add position="replace"><![CDATA[<li><span class="product-price" style="text-decoration: line-through;"><?php echo $price; ?></span></li>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<h2><?php echo $special; ?></h2>]]></search>
+      <add position="replace"><![CDATA[<h2 class="product-special"><?php echo $special; ?></h2>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<li><?php echo $text_tax; ?> <?php echo $tax; ?></li>]]></search>
+      <add position="replace"><![CDATA[<li class="product-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></li>]]></add>
+    </operation>
+
+    <operation>
+      <search><![CDATA[<li><?php echo $text_points; ?> <?php echo $points; ?></li>]]></search>
+      <add position="replace"><![CDATA[<li class="product-points"><?php echo $text_points; ?> <?php echo $points; ?></li>]]></add>
+    </operation>
+  </file>
+</modification>
