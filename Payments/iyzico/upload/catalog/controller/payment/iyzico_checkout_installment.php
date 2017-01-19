@@ -103,7 +103,7 @@ class ControllerPaymentIyzicoCheckoutInstallment extends Controller
             $request->setPaidPrice($cart_total_amount);
             $request->setBasketId($unique_conversation_id);
             $request->setPaymentGroup(\Iyzipay\Client\Ecom\Payment\Enumtype\PaymentGroupRequestType::PRODUCT);
-            $request->setPaymentSource(\Iyzipay\Client\Ecom\Payment\Enumtype\PaymentSourceRequestType::ARASTTA . '-' . VERSION);
+            $request->setPaymentSource(\Iyzipay\Client\Ecom\Payment\Enumtype\PaymentSourceRequestType::ARASTTA);
             $request->setCallbackUrl($callback_url);
 
             $customer_address = trim($order_info['payment_address_1'] . " " . $order_info['payment_address_2']);
