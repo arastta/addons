@@ -5,11 +5,11 @@
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-$_['text_title']             = 'Kredi Kartı ( PAYTR ile Güvenli Alışveriş )';
-$_['text_credit_card']       = 'Kredi Kartı Bilgileri';
-$_['text_start_date']        = '(mümkünse)';
-$_['text_wait']              = 'Lütfen Bekleyiniz!';
-$_['text_title_in_checkout'] = 'Kredi Kartı';
+$_['text_title']             = 'Credit Card';
+$_['text_credit_card']       = 'Credit Card Details';
+$_['text_start_date']        = '(if applicable)';
+$_['text_wait']              = 'Please wait..';
+$_['text_title_in_checkout'] = 'Credit Card';
 
-$_['orderId_text']       = 'Sipariş id\'si';
-$_['Error_message_curl'] = 'Sunucunuzda PHP CURL Eklentisinin aktif olması gerekmektedir.';
+$_['orderId_text']       = 'Order ID';
+$_['Error_message_curl'] = 'cURL extension must be installed on your server.';

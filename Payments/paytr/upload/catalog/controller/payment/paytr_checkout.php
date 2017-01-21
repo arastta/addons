@@ -126,7 +126,7 @@ class ControllerPaymentPaytrCheckout extends Controller
         $merchant['salt']               = $this->config->get('paytr_checkout_merchant_salt');
 
         $merchant['user_ip']            = $this->GetIP();
-        $merchant['oid']                = uniqid().'PAYTROC2'.$order_info['order_id'];
+        $merchant['oid']                = uniqid().'PAYTRARASTTA'.$order_info['order_id'];
         $merchant['email']              = $order_info['email'];
 
         $merchant['payment_amount']     = ( $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100 );
@@ -174,7 +174,7 @@ class ControllerPaymentPaytrCheckout extends Controller
                 'tl'
             );
 
-            $post_vals['lang'] = (in_array(strtolower($this->session->data['language'] , $lang_arr) ? 'tr': 'en');
+            $post_vals['lang'] = (in_array(strtolower($this->session->data['language'] , $lang_arr) ? 'tr': 'en'));
         } else {
             $post_vals['lang'] = ($this->config->get('paytr_checkout_lang') == 2 ? 'en' : 'tr');
         }
@@ -182,14 +182,14 @@ class ControllerPaymentPaytrCheckout extends Controller
         if (function_exists('curl_version')) {
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, "https://www.paytr.com/odeme/api/get-token" );
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
-            curl_setopt($ch, CURLOPT_POST, 1 ) ;
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vals );
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0 );
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0 );
+            curl_setopt($ch, CURLOPT_URL, "https://www.paytr.com/odeme/api/get-token");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1) ;
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vals);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 20 );
+            curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 
             $result = @curl_exec($ch);
 
@@ -298,7 +298,7 @@ class ControllerPaymentPaytrCheckout extends Controller
             die('merchant_oid Not Found!');
         }
 
-        $order_id = explode('PAYTROC2', $_POST['merchant_oid']);
+        $order_id = explode('PAYTRARASTTA', $_POST['merchant_oid']);
 
         $this->load->model('checkout/order');
 
