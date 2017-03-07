@@ -10,7 +10,7 @@ class EventMenuAffiliate extends Event
     public function preAdminMenuRender(&$menu)
     {
         if ($this->config->get('config_affiliate_status')) {
-            //return true;
+            return true;
         }
 
         // Affilate
