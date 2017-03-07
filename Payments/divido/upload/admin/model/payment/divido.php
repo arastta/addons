@@ -1,9 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @credits        See CREDITS.txt for credits and other copyright notices.
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 require_once (DIR_SYSTEM . 'library/divido/Divido.php');
@@ -68,21 +69,21 @@ class ModelPaymentDivido extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "divido_product` (
-			  `product_id` INT(11) NOT NULL,
-			  `display` CHAR(7) NOT NULL,
-			  `plans` text,
-			  PRIMARY KEY (`product_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "divido_product` (
+              `product_id` INT(11) NOT NULL,
+              `display` CHAR(7) NOT NULL,
+              `plans` text,
+              PRIMARY KEY (`product_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "divido_lookup` (
-			  `order_id` INT(11) NOT NULL,
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "divido_lookup` (
+              `order_id` INT(11) NOT NULL,
               `salt` CHAR(64) NOT NULL,
               `proposal_id` CHAR(40),
               `application_id` CHAR(40),
-			  PRIMARY KEY (`order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+              PRIMARY KEY (`order_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
     }
 
     public function uninstall()

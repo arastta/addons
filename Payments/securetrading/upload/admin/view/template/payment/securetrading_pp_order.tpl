@@ -129,7 +129,7 @@ $("#btn_release").click(function () {
             type    : 'POST',
             dataType: 'json',
             data    : {'order_id': <?php echo $order_id; ?>, 'amount': $('#release_amount').val()},
-				url: 'index.php?route=payment/securetrading_pp/release&token=
+                url: 'index.php?route=payment/securetrading_pp/release&token=
         <?php echo $token; ?>',
     beforeSend: function() {
         $('#btn_release').hide();
@@ -185,7 +185,7 @@ $("#btn_rebate").click(function () {
             type    : 'POST',
             dataType: 'json',
             data    : {'order_id': <?php echo $order_id; ?>, 'amount': $('#rebate_amount').val()},
-				url: 'index.php?route=payment/securetrading_pp/rebate&token=
+                url: 'index.php?route=payment/securetrading_pp/rebate&token=
         <?php echo $token; ?>',
     beforeSend: function() {
         $('#btn_rebate').hide();

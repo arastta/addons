@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
+ */
+
 /*
  * Container class for credentials used to log in via Payson API.
  */
@@ -35,7 +43,7 @@ class PaysonCredentials {
         return $this->applicationId;
     }
     
-	public function ModuleInfo(){
+    public function ModuleInfo(){
         return $this->moduleInfo;
     }
 
@@ -44,9 +52,8 @@ class PaysonCredentials {
             'PAYSON-SECURITY-USERID:   ' . $this->UserId(),
             'PAYSON-SECURITY-PASSWORD: ' . $this->Password(),
             'PAYSON-APPLICATION-ID:    ' . $this->ApplicationId(),
-        	'PAYSON-MODULE-INFO:       ' . $this->ModuleInfo()
+            'PAYSON-MODULE-INFO:       ' . $this->ModuleInfo()
             );
     }
 }
 
-?>

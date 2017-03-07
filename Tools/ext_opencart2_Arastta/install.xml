@@ -7,37 +7,37 @@
   <link>http://arastta.org</link>
   
   <file path="admin/controller/common/menu.php">
-	<operation error="skip">
+    <operation error="skip">
       <search error="skip"><![CDATA[$data['order_status'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], 'SSL');]]></search>
-      <add position="after"><![CDATA[		$data['opencart'] = $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL');]]></add>
+      <add position="after"><![CDATA[        $data['opencart'] = $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL');]]></add>
     </operation>
-	
-	<operation error="skip">
+    
+    <operation error="skip">
       <search error="skip"><![CDATA[$data['preturn_upload'] = $this->user->hasPermission('access','tool/upload');]]></search>
-      <add position="after"><![CDATA[		$data['preturn_opencart'] = $this->user->hasPermission('access','tool/opencart');]]></add>
+      <add position="after"><![CDATA[        $data['preturn_opencart'] = $this->user->hasPermission('access','tool/opencart');]]></add>
     </operation>
   </file>
 
   <file path="admin/controller/common/menu.php">
-	<operation  error="skip">
+    <operation  error="skip">
       <search  error="skip"><![CDATA['system_info' => array(]]></search>
       <add position="after" offset="5"><![CDATA[,
-			'opencart' => array(
-				'text' => $data['text_opencart'],
-				'href' => $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 7,
-				'permission' => $preturn_opencart
-			)]]></add>
+            'opencart' => array(
+                'text' => $data['text_opencart'],
+                'href' => $this->url->link('tool/opencart', 'token=' . $this->session->data['token'], 'SSL'),
+                'position' => 7,
+                'permission' => $preturn_opencart
+            )]]></add>
     </operation>
-	
-	<operation  error="skip">
+    
+    <operation  error="skip">
       <search  error="skip"><![CDATA[$p_return_system_info = $this->user->hasPermission('access','tool/system_info');]]></search>
-      <add position="after"><![CDATA[		$preturn_opencart = $this->user->hasPermission('access','tool/opencart');]]></add>
+      <add position="after"><![CDATA[        $preturn_opencart = $this->user->hasPermission('access','tool/opencart');]]></add>
     </operation>
   </file>
   
   <file path="admin/view/template/common/menu.tpl">
-	<operation error="skip">
+    <operation error="skip">
       <search error="skip"><![CDATA[<?php if($preturn_error_log) { ?>]]></search>
       <add position="before"><![CDATA[            <?php if($preturn_opencart) { ?>
                 <li><a href="<?php echo $opencart; ?>"><?php echo $text_opencart; ?></a></li>
@@ -46,9 +46,9 @@
   </file>
 
   <file path="admin/language/*/common/menu.php">
-	<operation>
+    <operation>
       <search ><![CDATA[$_['text_order_status']]]></search>
-      <add position="after"><![CDATA[$_['text_opencart']               	   = 'Opencart 2 Migration';]]></add>
+      <add position="after"><![CDATA[$_['text_opencart']                      = 'Opencart 2 Migration';]]></add>
     </operation>
   </file>
 </modification>

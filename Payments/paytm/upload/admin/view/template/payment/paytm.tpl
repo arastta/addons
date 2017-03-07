@@ -32,18 +32,18 @@
               <span class="error"><?php echo $error_merchant; ?></span>
               <?php } ?></div>
           </div>
-		  
-		  <div class="form-group required">
+          
+          <div class="form-group required">
             <label class="control-label col-sm-3" for="paytm_key"><span data-toggle="tooltip" title="<?php echo $entry_merchantkey_help; ?>"><?php echo $entry_merchantkey; ?></span></label>
             <div class="col-sm-9"><input type="text" name="paytm_key" value="<?php echo $paytm_key; ?>" class="form-control"/>
               <?php if ($error_key) { ?>
               <span class="error"><?php echo $error_key; ?></span>
               <?php } ?></div>
           </div>
-	  <div class="form-group required">
-		<label class="control-label col-sm-3" for="paytm_environment"><span data-toggle="tooltip" title="<?php echo $entry_environment_help; ?>"><?php echo $entry_environment; ?></span></label>
-		<div class="col-sm-9"><select name="paytm_environment" class="form-control">
-		<?php if ($paytm_environment == "P") { ?>
+      <div class="form-group required">
+        <label class="control-label col-sm-3" for="paytm_environment"><span data-toggle="tooltip" title="<?php echo $entry_environment_help; ?>"><?php echo $entry_environment; ?></span></label>
+        <div class="col-sm-9"><select name="paytm_environment" class="form-control">
+        <?php if ($paytm_environment == "P") { ?>
                 <option value="P" selected="selected"><?php echo $text_env_production; ?></option>
                 <option value="T"><?php echo $text_env_test; ?></option>
                 <?php } else { ?>
@@ -51,27 +51,27 @@
                 <option value="T" selected="selected"><?php echo $text_env_test; ?></option>
                 <?php } ?>
               </select></div>
-	  </div>
-		  
-		  <div class="form-group required">
+      </div>
+          
+          <div class="form-group required">
             <label class="control-label col-sm-3" for="paytm_website"><span data-toggle="tooltip" title="<?php echo $entry_website_help; ?>"><?php echo $entry_website; ?></span></label>
             <div class="col-sm-9"><input type="text" name="paytm_website" value="<?php echo $paytm_website; ?>" class="form-control"/>
               <?php if ($error_website) { ?>
               <span class="error"><?php echo $error_website; ?></span>
               <?php } ?></div>
           </div>
-		  
-		  
-		   <div class="form-group required">
+          
+          
+           <div class="form-group required">
             <label class="control-label col-sm-3" for="paytm_industry"><span data-toggle="tooltip" title="<?php echo $entry_industry_help; ?>"><?php echo $entry_industry; ?></span></label>
             <div class="col-sm-9"><input type="text" name="paytm_industry" value="<?php echo $paytm_industry; ?>" class="form-control"/>
               <?php if ($error_industry) { ?>
               <span class="error"><?php echo $error_industry; ?></span>
               <?php } ?></div>
           </div>
-		  
           
-		  <div class="form-group">
+          
+          <div class="form-group">
             <label class="control-label col-sm-3" for="paytm_order_status_id"><?php echo $entry_order_status; ?></label>
             <div class="col-sm-9"><select name="paytm_order_status_id" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
@@ -83,8 +83,8 @@
                 <?php } ?>
               </select></div>
           </div>
-		  
-		  
+          
+          
           <div class="form-group">
             <label class="control-label col-sm-3" for="paytm_status"><?php echo $entry_status; ?></label>
             <div class="col-sm-9"><select name="paytm_status" class="form-control">
@@ -97,8 +97,8 @@
                 <?php } ?>
               </select></div>
           </div>
-		  
-		  <div class="form-group">
+          
+          <div class="form-group">
             <label class="control-label col-sm-3" for="paytm_callbackurl"><?php echo $callbackurl_status; ?></label>
             <div class="col-sm-9"><select name="paytm_callbackurl" class="form-control">
                 <?php if ($paytm_callbackurl) { ?>
@@ -110,12 +110,12 @@
                 <?php } ?>
               </select></div>
           </div>
-		  
-		  
-		  <div class="form-group">
-			<label class="control-label col-sm-3" for="paytm_checkstatus"><span data-toggle="tooltip" title="<?php echo $entry_checkstatus_help; ?>"><?php echo $entry_checkstatus; ?></span></label>
-			<div class="col-sm-9"><select name="paytm_checkstatus" class="form-control">
-			<?php if ($paytm_checkstatus) { ?>
+          
+          
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="paytm_checkstatus"><span data-toggle="tooltip" title="<?php echo $entry_checkstatus_help; ?>"><?php echo $entry_checkstatus; ?></span></label>
+            <div class="col-sm-9"><select name="paytm_checkstatus" class="form-control">
+            <?php if ($paytm_checkstatus) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -123,8 +123,8 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select></div>
-		  </div>
-		  </form>
+          </div>
+          </form>
       </div>
     </div>
   </div>

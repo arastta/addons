@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentAmazonCheckout extends Model
@@ -10,42 +12,42 @@ class ModelPaymentAmazonCheckout extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE `" . DB_PREFIX . "order_amazon` (
-				`order_id` int(11) NOT NULL,
-				`amazon_order_id` varchar(255) NOT NULL,
-				`free_shipping`  tinyint NOT NULL DEFAULT 0,
-				KEY `amazon_order_id` (`amazon_order_id`),
-				PRIMARY KEY `order_id` (`order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-		");
+            CREATE TABLE `" . DB_PREFIX . "order_amazon` (
+                `order_id` int(11) NOT NULL,
+                `amazon_order_id` varchar(255) NOT NULL,
+                `free_shipping`  tinyint NOT NULL DEFAULT 0,
+                KEY `amazon_order_id` (`amazon_order_id`),
+                PRIMARY KEY `order_id` (`order_id`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+        ");
 
         $this->db->query("
-			CREATE TABLE `" . DB_PREFIX . "order_amazon_product` (
-			`order_product_id`  int NOT NULL ,
-			`amazon_order_item_code`  varchar(255) NOT NULL,
-			PRIMARY KEY (`order_product_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-		");
+            CREATE TABLE `" . DB_PREFIX . "order_amazon_product` (
+            `order_product_id`  int NOT NULL ,
+            `amazon_order_item_code`  varchar(255) NOT NULL,
+            PRIMARY KEY (`order_product_id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+        ");
 
         $this->db->query("
-			CREATE TABLE `" . DB_PREFIX . "order_amazon_report` (
-				`order_id`  int NOT NULL ,
-				`submission_id`  varchar(255) NOT NULL ,
-				`status` enum('processing','error','success') NOT NULL ,
-				`text`  text NOT NULL,
-				PRIMARY KEY (`submission_id`),
-				INDEX (`order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-		");
+            CREATE TABLE `" . DB_PREFIX . "order_amazon_report` (
+                `order_id`  int NOT NULL ,
+                `submission_id`  varchar(255) NOT NULL ,
+                `status` enum('processing','error','success') NOT NULL ,
+                `text`  text NOT NULL,
+                PRIMARY KEY (`submission_id`),
+                INDEX (`order_id`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+        ");
 
         $this->db->query("
-			CREATE TABLE `" . DB_PREFIX . "order_total_tax` (
-				`order_total_id`  INT,
-				`code` VARCHAR(255),
-				`tax` DECIMAL(10, 4) NOT NULL,
-				PRIMARY KEY (`order_total_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-		");
+            CREATE TABLE `" . DB_PREFIX . "order_total_tax` (
+                `order_total_id`  INT,
+                `code` VARCHAR(255),
+                `tax` DECIMAL(10, 4) NOT NULL,
+                PRIMARY KEY (`order_total_id`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+        ");
     }
 
     public function uninstall()
@@ -98,7 +100,7 @@ class ModelPaymentAmazonCheckout extends Model
             $order['products'] = array();
 
             $results = $this->db->query("SELECT oap.order_product_id, amazon_order_item_code, op.quantity FROM " . DB_PREFIX . "order_amazon_product oap JOIN " . DB_PREFIX . "order_product op USING(order_product_id) WHERE order_id = " . (int) $order_id . "
-			")->rows;
+            ")->rows;
 
             foreach ($results as $result) {
                 $order['products'][$result['order_product_id']] = array(

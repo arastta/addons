@@ -1,9 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @credits        See CREDITS.txt for credits and other copyright notices.
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentEway extends Model
@@ -11,43 +12,43 @@ class ModelPaymentEway extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_order` (
-			  `eway_order_id` int(11) NOT NULL AUTO_INCREMENT,
-			  `order_id` int(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
-			  `amount` DECIMAL( 10, 2 ) NOT NULL,
-			  `currency_code` CHAR(3) NOT NULL,
-			  `transaction_id` VARCHAR(24) NOT NULL,
-			  `debug_data` TEXT,
-			  `capture_status` INT(1) DEFAULT NULL,
-			  `void_status` INT(1) DEFAULT NULL,
-			  `refund_status` INT(1) DEFAULT NULL,
-			  PRIMARY KEY (`eway_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_order` (
+              `eway_order_id` int(11) NOT NULL AUTO_INCREMENT,
+              `order_id` int(11) NOT NULL,
+              `created` DATETIME NOT NULL,
+              `modified` DATETIME NOT NULL,
+              `amount` DECIMAL( 10, 2 ) NOT NULL,
+              `currency_code` CHAR(3) NOT NULL,
+              `transaction_id` VARCHAR(24) NOT NULL,
+              `debug_data` TEXT,
+              `capture_status` INT(1) DEFAULT NULL,
+              `void_status` INT(1) DEFAULT NULL,
+              `refund_status` INT(1) DEFAULT NULL,
+              PRIMARY KEY (`eway_order_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_transactions` (
-			  `eway_order_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-			  `eway_order_id` int(11) NOT NULL,
-			  `transaction_id` VARCHAR(24) NOT NULL,
-			  `created` DATETIME NOT NULL,
-			  `type` ENUM('auth', 'payment', 'refund', 'void') DEFAULT NULL,
-			  `amount` DECIMAL( 10, 2 ) NOT NULL,
-			  PRIMARY KEY (`eway_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_transactions` (
+              `eway_order_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+              `eway_order_id` int(11) NOT NULL,
+              `transaction_id` VARCHAR(24) NOT NULL,
+              `created` DATETIME NOT NULL,
+              `type` ENUM('auth', 'payment', 'refund', 'void') DEFAULT NULL,
+              `amount` DECIMAL( 10, 2 ) NOT NULL,
+              PRIMARY KEY (`eway_order_transaction_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_card` (
-			  `card_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `customer_id` INT(11) NOT NULL,
-			  `order_id` INT(11) NOT NULL,
-			  `token` VARCHAR(50) NOT NULL,
-			  `digits` VARCHAR(4) NOT NULL,
-			  `expiry` VARCHAR(5) NOT NULL,
-			  `type` VARCHAR(50) NOT NULL,
-			  PRIMARY KEY (`card_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_card` (
+              `card_id` INT(11) NOT NULL AUTO_INCREMENT,
+              `customer_id` INT(11) NOT NULL,
+              `order_id` INT(11) NOT NULL,
+              `token` VARCHAR(50) NOT NULL,
+              `digits` VARCHAR(4) NOT NULL,
+              `expiry` VARCHAR(5) NOT NULL,
+              `type` VARCHAR(50) NOT NULL,
+              PRIMARY KEY (`card_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
     }
 
     public function uninstall()

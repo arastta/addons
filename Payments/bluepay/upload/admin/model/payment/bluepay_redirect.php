@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentBluepayredirect extends Model
@@ -10,40 +12,40 @@ class ModelPaymentBluepayredirect extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_redirect_order` (
-			  `bluepay_redirect_order_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `order_id` INT(11) NOT NULL,
-			  `transaction_id` VARCHAR(50),
-			  `date_added` DATETIME NOT NULL,
-			  `date_modified` DATETIME NOT NULL,
-			  `release_status` INT(1) DEFAULT 0,
-			  `void_status` INT(1) DEFAULT 0,
-			  `rebate_status` INT(1) DEFAULT 0,
-			  `currency_code` CHAR(3) NOT NULL,
-			  `total` DECIMAL( 10, 2 ) NOT NULL,
-			  PRIMARY KEY (`bluepay_redirect_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_redirect_order` (
+              `bluepay_redirect_order_id` INT(11) NOT NULL AUTO_INCREMENT,
+              `order_id` INT(11) NOT NULL,
+              `transaction_id` VARCHAR(50),
+              `date_added` DATETIME NOT NULL,
+              `date_modified` DATETIME NOT NULL,
+              `release_status` INT(1) DEFAULT 0,
+              `void_status` INT(1) DEFAULT 0,
+              `rebate_status` INT(1) DEFAULT 0,
+              `currency_code` CHAR(3) NOT NULL,
+              `total` DECIMAL( 10, 2 ) NOT NULL,
+              PRIMARY KEY (`bluepay_redirect_order_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_redirect_order_transaction` (
-			  `bluepay_redirect_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `bluepay_redirect_order_id` INT(11) NOT NULL,
-			  `date_added` DATETIME NOT NULL,
-			  `type` ENUM('auth', 'sale', 'rebate', 'void') DEFAULT NULL,
-			  `amount` DECIMAL( 10, 2 ) NOT NULL,
-			  PRIMARY KEY (`bluepay_redirect_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_redirect_order_transaction` (
+              `bluepay_redirect_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
+              `bluepay_redirect_order_id` INT(11) NOT NULL,
+              `date_added` DATETIME NOT NULL,
+              `type` ENUM('auth', 'sale', 'rebate', 'void') DEFAULT NULL,
+              `amount` DECIMAL( 10, 2 ) NOT NULL,
+              PRIMARY KEY (`bluepay_redirect_order_transaction_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_redirect_card` (
-			  `card_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `customer_id` INT(11) NOT NULL,
-			  `token` VARCHAR(50) NOT NULL,
-			  `digits` VARCHAR(4) NOT NULL,
-			  `expiry` VARCHAR(5) NOT NULL,
-			  `type` VARCHAR(50) NOT NULL,
-			  PRIMARY KEY (`card_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_redirect_card` (
+              `card_id` INT(11) NOT NULL AUTO_INCREMENT,
+              `customer_id` INT(11) NOT NULL,
+              `token` VARCHAR(50) NOT NULL,
+              `digits` VARCHAR(4) NOT NULL,
+              `expiry` VARCHAR(5) NOT NULL,
+              `type` VARCHAR(50) NOT NULL,
+              PRIMARY KEY (`card_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
     }
 
     public function uninstall()

@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ControllerPaymentLiqPay extends Controller
@@ -18,16 +20,16 @@ class ControllerPaymentLiqPay extends Controller
         $data['action'] = 'https://liqpay.com/?do=clickNbuy';
 
         $xml = '<request>';
-        $xml .= '	<version>1.2</version>';
-        $xml .= '	<result_url>' . $this->url->link('checkout/success', '', 'SSL') . '</result_url>';
-        $xml .= '	<server_url>' . $this->url->link('payment/liqpay/callback', '', 'SSL') . '</server_url>';
-        $xml .= '	<merchant_id>' . $this->config->get('liqpay_merchant') . '</merchant_id>';
-        $xml .= '	<order_id>' . $this->session->data['order_id'] . '</order_id>';
-        $xml .= '	<amount>' . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . '</amount>';
-        $xml .= '	<currency>' . $order_info['currency_code'] . '</currency>';
-        $xml .= '	<description>' . $this->config->get('config_name') . ' ' . $order_info['payment_firstname'] . ' ' . $order_info['payment_address_1'] . ' ' . $order_info['payment_address_2'] . ' ' . $order_info['payment_city'] . ' ' . $order_info['email'] . '</description>';
-        $xml .= '	<default_phone></default_phone>';
-        $xml .= '	<pay_way>' . $this->config->get('liqpay_type') . '</pay_way>';
+        $xml .= '    <version>1.2</version>';
+        $xml .= '    <result_url>' . $this->url->link('checkout/success', '', 'SSL') . '</result_url>';
+        $xml .= '    <server_url>' . $this->url->link('payment/liqpay/callback', '', 'SSL') . '</server_url>';
+        $xml .= '    <merchant_id>' . $this->config->get('liqpay_merchant') . '</merchant_id>';
+        $xml .= '    <order_id>' . $this->session->data['order_id'] . '</order_id>';
+        $xml .= '    <amount>' . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . '</amount>';
+        $xml .= '    <currency>' . $order_info['currency_code'] . '</currency>';
+        $xml .= '    <description>' . $this->config->get('config_name') . ' ' . $order_info['payment_firstname'] . ' ' . $order_info['payment_address_1'] . ' ' . $order_info['payment_address_2'] . ' ' . $order_info['payment_city'] . ' ' . $order_info['email'] . '</description>';
+        $xml .= '    <default_phone></default_phone>';
+        $xml .= '    <pay_way>' . $this->config->get('liqpay_type') . '</pay_way>';
         $xml .= '</request>';
 
         $data['xml']       = base64_encode($xml);

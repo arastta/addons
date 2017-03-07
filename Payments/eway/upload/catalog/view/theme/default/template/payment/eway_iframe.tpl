@@ -14,31 +14,31 @@
 
 <script src="https://secure.ewaypayments.com/scripts/eCrypt.js"></script>
 <script type="text/javascript">//<!--
-	/**
-	 * eWAY Rapid IFrame config object.
-	 */
-	var eWAYConfig = {
-		sharedPaymentUrl: "<?php echo $SharedPaymentUrl; ?>"
-	};
+    /**
+     * eWAY Rapid IFrame config object.
+     */
+    var eWAYConfig = {
+        sharedPaymentUrl: "<?php echo $SharedPaymentUrl; ?>"
+    };
 
-	/**
-	 * eWAY Rapid IFrame callback
-	 */
-	function resultCallback(result, transactionID, errors) {
-		if (result == "Complete") {
-			window.location.href = "<?php echo $callback; ?>";
-		} else if (result == "Error") {
-			$('#button-confirm').button('reset');
-			alert("There was a problem completing the payment: " + result);
-		} else {
-			$('#button-confirm').button('reset');
-		}
-	}
+    /**
+     * eWAY Rapid IFrame callback
+     */
+    function resultCallback(result, transactionID, errors) {
+        if (result == "Complete") {
+            window.location.href = "<?php echo $callback; ?>";
+        } else if (result == "Error") {
+            $('#button-confirm').button('reset');
+            alert("There was a problem completing the payment: " + result);
+        } else {
+            $('#button-confirm').button('reset');
+        }
+    }
 
-	$('#button-confirm').bind('click', function() {
-		$('#button-confirm').button('loading');
+    $('#button-confirm').bind('click', function() {
+        $('#button-confirm').button('loading');
 
-		eCrypt.showModalPayment(eWAYConfig, resultCallback);
-	});
+        eCrypt.showModalPayment(eWAYConfig, resultCallback);
+    });
 //--></script>
 <?php } ?>

@@ -1,23 +1,23 @@
 .divido-calculator {
-	padding10px 20px 20px 20px;
-	text-shadownone;
-	-webkit-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
-	-moz-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
-	-ms-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
-	-o-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
-	box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
-	-webkit-border-radius 5px;
-	-moz-border-radius 5px;
-	-ms-border-radius 5px;
-	-o-border-radius 5px;
-	border-radius 5px;
-	border 1px solid #555;
-	border-color #d9d7ce #c8c6c1 #B0AEA6;
-	margin20px;
+    padding10px 20px 20px 20px;
+    text-shadownone;
+    -webkit-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
+    -moz-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
+    -ms-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
+    -o-box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
+    box-shadow rgba(0, 0, 0, 0.2) 0 1px 2px 0, rgba(0, 0, 0, 0.05) 0 0 0 5px;
+    -webkit-border-radius 5px;
+    -moz-border-radius 5px;
+    -ms-border-radius 5px;
+    -o-border-radius 5px;
+    border-radius 5px;
+    border 1px solid #555;
+    border-color #d9d7ce #c8c6c1 #B0AEA6;
+    margin20px;
 }
 
 #divido-checkout {
-	margin0px;
+    margin0px;
 }
 
 .divido-calculator h1 {
@@ -32,16 +32,16 @@
 }
 
 .divido-calculator dl {
-	width 100%;
-	overflow hidden;
-	padding 0;
-	margin 0
+    width 100%;
+    overflow hidden;
+    padding 0;
+    margin 0
 }
 
 .divido-calculator dt,.divido-calculator dd {
-	float left;
-	padding 2px 0px;
-	margin 0
+    float left;
+    padding 2px 0px;
+    margin 0
 }
 
 
@@ -96,37 +96,37 @@
 }
 
 @media screen and (min-width 1080px) {
-	.divido-calculator div.divido-info dl dt {
-		width 30%;
-	}
-	.divido-calculator div.divido-info dl dd {
-		width 70%;
-	}
+    .divido-calculator div.divido-info dl dt {
+        width 30%;
+    }
+    .divido-calculator div.divido-info dl dd {
+        width 70%;
+    }
 }
 
 .divido-calculator input[type=range]{
-	-webkit-appearance none;
-	displayinline-block;
-	width80%;
-	border0px;
-	padding0px;
+    -webkit-appearance none;
+    displayinline-block;
+    width80%;
+    border0px;
+    padding0px;
 }
 
 @media screen and (min-width 450px) {
     .divido-calculator input[type=range]{
-	    width85%;
+        width85%;
     }
 }
 
 @media screen and (min-width 550px) {
     .divido-calculator input[type=range]{
-	    width90%;
+        width90%;
     }
 }
 
 .divido-calculator select {
-	text-transform none;
-	width 100%;
+    text-transform none;
+    width 100%;
 }
 
 @media screen and (min-width 960px) {
@@ -136,157 +136,157 @@
 }
 
 .divido-calculator div.description {
-	font-size13px;
-	margin-top15px;
-	margin-bottom20px;
+    font-size13px;
+    margin-top15px;
+    margin-bottom20px;
 }
 
 .divido-calculator .divido-info {
-	-webkit-border-radius 5px;
-	-moz-border-radius 5px;
-	-ms-border-radius 5px;
-	-o-border-radius 5px;
-	border-radius 5px;
+    -webkit-border-radius 5px;
+    -moz-border-radius 5px;
+    -ms-border-radius 5px;
+    -o-border-radius 5px;
+    border-radius 5px;
 }
 
 .divido-calculator .divido-deposit span {
-	displayinline-block;
-	margin-left4px;
-	line-height15px;
-	vertical-aligntop;
+    displayinline-block;
+    margin-left4px;
+    line-height15px;
+    vertical-aligntop;
 }
 
 .divido-calculator input[type=range]-webkit-slider-runnable-track {
-	height 5px;
-	border none;
-	border-radius 3px;
+    height 5px;
+    border none;
+    border-radius 3px;
 }
 
 .divido-calculator label {
-	displayblock;
-	clearboth;
-	font-weightbold;
+    displayblock;
+    clearboth;
+    font-weightbold;
 }
 
 .divido-calculator input[type=range]-webkit-slider-thumb {
-	-webkit-appearance none;
-	border none;
-	height 16px;
-	width 16px;
-	border-radius 50%;
-	margin-top -4px;
+    -webkit-appearance none;
+    border none;
+    height 16px;
+    width 16px;
+    border-radius 50%;
+    margin-top -4px;
 }
 
 .divido-calculator input[type=range]focus {
-	outline none !important;
-	border0px !important;
+    outline none !important;
+    border0px !important;
 }
 
 .divido-calculator .divido-logo {
-	width 140px;
-	height 42px;
-	display block;
-	font-size 20px;
-	line-height 1;
-	text-indent -9999px;
-	background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-black-140x42.png');
-	background-repeat no-repeat;
-	background-size cover;
+    width 140px;
+    height 42px;
+    display block;
+    font-size 20px;
+    line-height 1;
+    text-indent -9999px;
+    background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-black-140x42.png');
+    background-repeat no-repeat;
+    background-size cover;
 }
 
 .divido-calculator .divido-logo-sm {
-	width 75px;
-	height 23px;
-	background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-black-75x23.png');
+    width 75px;
+    height 23px;
+    background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-black-75x23.png');
 }
 
 .divido-calculator .divido-info {
-	padding20px;
+    padding20px;
 }
 
 
- 			
+             
 
 .divido-them-light .divido-info {
-	background#f9f9f9;
+    background#f9f9f9;
 }
 
 .divido-theme-light a.divido-logo {
-	background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-blue-140x42.png');
+    background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-blue-140x42.png');
 }
 .divido-theme-light a.divido-logo-sm {
-	background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-blue-75x23.png');
+    background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-blue-75x23.png');
 }
 
 .divido-theme-light {
-	background-color#fff;
-	color#3E4F8B;
+    background-color#fff;
+    color#3E4F8B;
 }
 
 .divido-theme-light p {
-	color#3E4F8B !important;
+    color#3E4F8B !important;
 }
 
 .divido-theme-light input[type=range]focus-webkit-slider-runnable-track {
-	background #ccc;
+    background #ccc;
 }
 
 .divido-theme-light input[type=range] {
-	background-colortransparent;
+    background-colortransparent;
 }
 
 .divido-theme-light input[type=range]-webkit-slider-runnable-track {
-	background #999;
+    background #999;
 }
 
 .divido-theme-light input[type=range]-webkit-slider-thumb {
-	background #3E4F8B;
+    background #3E4F8B;
 }
 
 
- 			
+             
 
 .divido-theme-blue .divido-info {
-	background#f9f9f9;
-	color#000;
+    background#f9f9f9;
+    color#000;
 }
 
 .divido-theme-blue a.divido-logo {
-	background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-white-140x42.png');
+    background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-white-140x42.png');
 }
 
 .divido-theme-blue a.divido-logo-sm {
-	background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-white-75x23.png');
+    background-imageurl('content.divido.com.s3-eu-west-1.amazonaws.comimageslogo-white-75x23.png');
 }
 
 .divido-theme-blue {
-	background-color#3E4F8B;
-	color#fff;
+    background-color#3E4F8B;
+    color#fff;
 }
 
 .divido-theme-blue p {
-	color#fff !important;
+    color#fff !important;
 }
 
 .divido-theme-blue input[type=range]focus-webkit-slider-runnable-track {
-	background #ccc;
+    background #ccc;
 }
 
 .divido-theme-blue input[type=range] {
-	background-colortransparent;
+    background-colortransparent;
 }
 
 .divido-theme-blue input[type=range]-webkit-slider-runnable-track {
-	background #999;
+    background #999;
 }
 
 .divido-theme-blue input[type=range]-webkit-slider-thumb {
-	background #fff;
+    background #fff;
 }
 
 
 .divido-btn {
-	-webkit-border-radius 4	;
+    -webkit-border-radius 4    ;
     -moz-border-radius 4;
     border-radius 4px;
     font-family Arial;

@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
+ */
 
 class Divido_ApiRequestor
 {
@@ -227,14 +234,14 @@ class Divido_ApiRequestor
     if (!self::$_preFlight) {
       self::$_preFlight = $this->checkSslCert($this->apiUrl());
     }
-	
-	$myApiKey = $this->_apiKey;
+    
+    $myApiKey = $this->_apiKey;
     if (!$myApiKey)
       $myApiKey = Divido::$apiKey;
       
-	if (!isset($params['merchant'])) {
-		$params['merchant'] = $myApiKey;
-	}
+    if (!isset($params['merchant'])) {
+        $params['merchant'] = $myApiKey;
+    }
 
     $curl = curl_init();
     $method = strtolower($method);
@@ -349,9 +356,9 @@ class Divido_ApiRequestor
    */
   private function checkSslCert($url)
   {
-	
-	return true;
-	
+    
+    return true;
+    
     if (version_compare(PHP_VERSION, '5.3.0', '<')) {
       error_log(
           'Warning: This version of PHP is too old to check SSL certificates '.

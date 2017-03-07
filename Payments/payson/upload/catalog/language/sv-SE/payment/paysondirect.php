@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
+ */
 
 $_['text_title']  = '<img src="https://www.payson.se/sites/all/files/images/external/payson150x55.png" style="width:150px;height:55px;clear:right" alt="Payson All in One - Visa, MasterCard, Direct bank" title="Payson" />';
 $_['text_title_SMS']  = '<img src="https://www.payson.se/sites/all/files/images/external/Payson_logo_checkout.png" style="width:122px;height:90px;clear:right" alt="Payson All in One - Visa, MasterCard, Direkt bank and Faktura" title="Payson" />';
@@ -17,4 +24,3 @@ $_['text_invoice_terms']  = '<div style="padding: 3px; margin-bottom: 5px;"><h2>
 $_['text_gift_card'] = 'Presentkort';
 
 $_['text_wait'] = 'Vänligen vänta....';
-?>

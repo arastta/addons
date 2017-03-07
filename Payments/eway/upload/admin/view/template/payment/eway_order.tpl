@@ -54,110 +54,110 @@
   </tr>
 </table>
 <script type="text/javascript"><!--
-	$("#btn-refund").bind('click', function () {
-		if ($('#eway-refund-amount').val() != '' && confirm('<?php echo $text_confirm_refund; ?>')) {
-			$.ajax({
-				type:'POST',
-				dataType: 'json',
-				data: {
-					'order_id': <?php echo $order_id; ?>,
-					'refund_amount': $("#eway-refund-amount").val()
-				},
-				url: 'index.php?route=payment/eway/refund&token=<?php echo $token; ?>',
-				beforeSend: function(xhr, opts) {
-					$('#btn-refund').hide();
-					$('#img-loading-refund').show();
-					$('#eway-transaction-msg').hide();
-					$('#eway-refund-amount').hide();
-				},
-				success: function(data) {
-					if (data.error == false) {
-						html = '';
-						html += '<tr>';
-						html += '<td class="text-left">'+data.data.transactionid+'</td>';
-						html += '<td class="text-left">'+data.data.created+'</td>';
-						html += '<td class="text-left">refund</td>';
-						html += '<td class="text-left">'+data.data.amount+'</td>';
-						html += '</tr>';
-						$('#eway-transactions tr:last').after(html);
+    $("#btn-refund").bind('click', function () {
+        if ($('#eway-refund-amount').val() != '' && confirm('<?php echo $text_confirm_refund; ?>')) {
+            $.ajax({
+                type:'POST',
+                dataType: 'json',
+                data: {
+                    'order_id': <?php echo $order_id; ?>,
+                    'refund_amount': $("#eway-refund-amount").val()
+                },
+                url: 'index.php?route=payment/eway/refund&token=<?php echo $token; ?>',
+                beforeSend: function(xhr, opts) {
+                    $('#btn-refund').hide();
+                    $('#img-loading-refund').show();
+                    $('#eway-transaction-msg').hide();
+                    $('#eway-refund-amount').hide();
+                },
+                success: function(data) {
+                    if (data.error == false) {
+                        html = '';
+                        html += '<tr>';
+                        html += '<td class="text-left">'+data.data.transactionid+'</td>';
+                        html += '<td class="text-left">'+data.data.created+'</td>';
+                        html += '<td class="text-left">refund</td>';
+                        html += '<td class="text-left">'+data.data.amount+'</td>';
+                        html += '</tr>';
+                        $('#eway-transactions tr:last').after(html);
 
-						$('#eway-total-refunded').text(data.data.total_refunded_formatted);
+                        $('#eway-total-refunded').text(data.data.total_refunded_formatted);
 
-						if (data.data.refund_status != 1) {
-							$('#btn-refund').show();
-							$('#eway-refund-amount').show();
-							$('#eway-refund-amount').val('');
-							$('#eway-refund-amount').attr('placeholder',data.data.remaining);
-						}
+                        if (data.data.refund_status != 1) {
+                            $('#btn-refund').show();
+                            $('#eway-refund-amount').show();
+                            $('#eway-refund-amount').val('');
+                            $('#eway-refund-amount').attr('placeholder',data.data.remaining);
+                        }
 
-						if (data.message != '') {
-							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
-						}
-					}
-					if (data.error == true) {
-						alert(data.message);
-						$('#btn-refund').show();
-						$('#eway-refund-amount').show();
-					}
+                        if (data.message != '') {
+                            $('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
+                        }
+                    }
+                    if (data.error == true) {
+                        alert(data.message);
+                        $('#btn-refund').show();
+                        $('#eway-refund-amount').show();
+                    }
 
-					$('#img-loading-refund').hide();
-				}
-			});
-		}
-	});
+                    $('#img-loading-refund').hide();
+                }
+            });
+        }
+    });
 //-->
 </script>
 <script type="text/javascript"><!--
-	$("#btn-capture").bind('click', function () {
-		if ($('#eway-capture-amount').val() != '' && confirm('<?php echo $text_confirm_capture; ?>')) {
-			$.ajax({
-				type:'POST',
-				dataType: 'json',
-				data: {
-					'order_id': <?php echo $order_id; ?>,
-					'capture_amount': $("#eway-capture-amount").val()
-				},
-				url: 'index.php?route=payment/eway/capture&token=<?php echo $token; ?>',
-				beforeSend: function(xhr, opts) {
-					$('#btn-capture').hide();
-					$('#img-loading-capture').show();
-					$('#eway-transaction-msg').hide();
-					$('#eway-capture-amount').hide();
-				},
-				success: function(data) {
-					if (data.error == false) {
-						html = '';
-						html += '<tr>';
-						html += '<td class="text-left">'+data.data.transactionid+'</td>';
-						html += '<td class="text-left">'+data.data.created+'</td>';
-						html += '<td class="text-left">payment</td>';
-						html += '<td class="text-left">'+data.data.amount+'</td>';
-						html += '</tr>';
-						$('#eway-transactions tr:last').after(html);
+    $("#btn-capture").bind('click', function () {
+        if ($('#eway-capture-amount').val() != '' && confirm('<?php echo $text_confirm_capture; ?>')) {
+            $.ajax({
+                type:'POST',
+                dataType: 'json',
+                data: {
+                    'order_id': <?php echo $order_id; ?>,
+                    'capture_amount': $("#eway-capture-amount").val()
+                },
+                url: 'index.php?route=payment/eway/capture&token=<?php echo $token; ?>',
+                beforeSend: function(xhr, opts) {
+                    $('#btn-capture').hide();
+                    $('#img-loading-capture').show();
+                    $('#eway-transaction-msg').hide();
+                    $('#eway-capture-amount').hide();
+                },
+                success: function(data) {
+                    if (data.error == false) {
+                        html = '';
+                        html += '<tr>';
+                        html += '<td class="text-left">'+data.data.transactionid+'</td>';
+                        html += '<td class="text-left">'+data.data.created+'</td>';
+                        html += '<td class="text-left">payment</td>';
+                        html += '<td class="text-left">'+data.data.amount+'</td>';
+                        html += '</tr>';
+                        $('#eway-transactions tr:last').after(html);
 
-						$('#eway-total-captured').text(data.data.total_captured_formatted);
+                        $('#eway-total-captured').text(data.data.total_captured_formatted);
 
-						if (data.data.capture_status != 1) {
-							$('#btn-capture').show();
-							$('#eway-capture-amount').show();
-							$("#eway-capture-amount").val('');
-							$("#eway-capture-amount").attr('placeholder',data.data.remaining);
-						}
+                        if (data.data.capture_status != 1) {
+                            $('#btn-capture').show();
+                            $('#eway-capture-amount').show();
+                            $("#eway-capture-amount").val('');
+                            $("#eway-capture-amount").attr('placeholder',data.data.remaining);
+                        }
 
-						if (data.message != '') {
-							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
-						}
-					}
-					if (data.error == true) {
-						alert(data.message);
-						$('#btn-capture').show();
-						$('#eway-capture-amount').show();
-					}
+                        if (data.message != '') {
+                            $('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
+                        }
+                    }
+                    if (data.error == true) {
+                        alert(data.message);
+                        $('#btn-capture').show();
+                        $('#eway-capture-amount').show();
+                    }
 
-					$('#img-loading-capture').hide();
-				}
-			});
-		}
-	});
+                    $('#img-loading-capture').hide();
+                }
+            });
+        }
+    });
 //-->
 </script>

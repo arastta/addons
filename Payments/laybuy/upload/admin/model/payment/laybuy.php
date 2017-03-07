@@ -1,9 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @credits        See CREDITS.txt for credits and other copyright notices.
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentLaybuy extends Model
@@ -281,65 +282,65 @@ class ModelPaymentLaybuy extends Model
     public function install()
     {
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "laybuy_transaction` (
-			`laybuy_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-			`order_id` int(11) NOT NULL DEFAULT '0',
-			`firstname` varchar(32) NOT NULL DEFAULT '',
-			`lastname` varchar(32) NOT NULL DEFAULT '',
-			`address` text,
-			`suburb` varchar(128) NOT NULL DEFAULT '',
-			`state` varchar(128) NOT NULL DEFAULT '',
-			`country` varchar(32) NOT NULL DEFAULT '',
-			`postcode` varchar(10) NOT NULL DEFAULT '',
-			`email` varchar(96) NOT NULL DEFAULT '',
-			`amount` double NOT NULL,
-			`currency` varchar(5) NOT NULL,
-			`downpayment` double NOT NULL,
-			`months` int(11) NOT NULL,
-			`downpayment_amount` double NOT NULL,
-			`payment_amounts` double NOT NULL,
-			`first_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			`last_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			`store_id` int(11) NOT NULL DEFAULT '0',
-			`status` int(11) NOT NULL DEFAULT '1',
-			`report` text,
-			`transaction` int(11) NOT NULL DEFAULT '2',
-			`paypal_profile_id` varchar(250) NOT NULL DEFAULT '',
-			`laybuy_ref_no` int(11) NOT NULL DEFAULT '0',
-			`date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			PRIMARY KEY (`laybuy_transaction_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+            `laybuy_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+            `order_id` int(11) NOT NULL DEFAULT '0',
+            `firstname` varchar(32) NOT NULL DEFAULT '',
+            `lastname` varchar(32) NOT NULL DEFAULT '',
+            `address` text,
+            `suburb` varchar(128) NOT NULL DEFAULT '',
+            `state` varchar(128) NOT NULL DEFAULT '',
+            `country` varchar(32) NOT NULL DEFAULT '',
+            `postcode` varchar(10) NOT NULL DEFAULT '',
+            `email` varchar(96) NOT NULL DEFAULT '',
+            `amount` double NOT NULL,
+            `currency` varchar(5) NOT NULL,
+            `downpayment` double NOT NULL,
+            `months` int(11) NOT NULL,
+            `downpayment_amount` double NOT NULL,
+            `payment_amounts` double NOT NULL,
+            `first_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+            `last_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+            `store_id` int(11) NOT NULL DEFAULT '0',
+            `status` int(11) NOT NULL DEFAULT '1',
+            `report` text,
+            `transaction` int(11) NOT NULL DEFAULT '2',
+            `paypal_profile_id` varchar(250) NOT NULL DEFAULT '',
+            `laybuy_ref_no` int(11) NOT NULL DEFAULT '0',
+            `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+            PRIMARY KEY (`laybuy_transaction_id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
 
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "laybuy_revise_request` (
-			`laybuy_revise_request_id` int(11) NOT NULL AUTO_INCREMENT,
-			`laybuy_transaction_id` int(11) DEFAULT '0',
-			`type` varchar(250) NOT NULL DEFAULT '',
-			`order_id` int(11) NOT NULL DEFAULT '0',
-			`firstname` varchar(32) NOT NULL DEFAULT '',
-			`lastname` varchar(32) NOT NULL DEFAULT '',
-			`address` text,
-			`suburb` varchar(128) NOT NULL DEFAULT '',
-			`state` varchar(128) NOT NULL DEFAULT '',
-			`country` varchar(32) NOT NULL DEFAULT '',
-			`postcode` varchar(10) NOT NULL DEFAULT '',
-			`email` varchar(96) NOT NULL DEFAULT '',
-			`amount` double NOT NULL,
-			`currency` varchar(5) NOT NULL,
-			`downpayment` double NOT NULL,
-			`months` int(11) NOT NULL,
-			`downpayment_amount` double NOT NULL,
-			`payment_amounts` double NOT NULL,
-			`first_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			`last_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			`store_id` int(11) NOT NULL DEFAULT '0',
-			`status` int(11) NOT NULL DEFAULT '1',
-			`report` text,
-			`transaction` int(11) NOT NULL DEFAULT '2',
-			`paypal_profile_id` varchar(250) NOT NULL DEFAULT '',
-			`laybuy_ref_no` int(11) NOT NULL DEFAULT '0',
-			`payment_type` tinyint(1) NOT NULL DEFAULT '1',
-			`date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			PRIMARY KEY (`laybuy_revise_request_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+            `laybuy_revise_request_id` int(11) NOT NULL AUTO_INCREMENT,
+            `laybuy_transaction_id` int(11) DEFAULT '0',
+            `type` varchar(250) NOT NULL DEFAULT '',
+            `order_id` int(11) NOT NULL DEFAULT '0',
+            `firstname` varchar(32) NOT NULL DEFAULT '',
+            `lastname` varchar(32) NOT NULL DEFAULT '',
+            `address` text,
+            `suburb` varchar(128) NOT NULL DEFAULT '',
+            `state` varchar(128) NOT NULL DEFAULT '',
+            `country` varchar(32) NOT NULL DEFAULT '',
+            `postcode` varchar(10) NOT NULL DEFAULT '',
+            `email` varchar(96) NOT NULL DEFAULT '',
+            `amount` double NOT NULL,
+            `currency` varchar(5) NOT NULL,
+            `downpayment` double NOT NULL,
+            `months` int(11) NOT NULL,
+            `downpayment_amount` double NOT NULL,
+            `payment_amounts` double NOT NULL,
+            `first_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+            `last_payment_due` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+            `store_id` int(11) NOT NULL DEFAULT '0',
+            `status` int(11) NOT NULL DEFAULT '1',
+            `report` text,
+            `transaction` int(11) NOT NULL DEFAULT '2',
+            `paypal_profile_id` varchar(250) NOT NULL DEFAULT '',
+            `laybuy_ref_no` int(11) NOT NULL DEFAULT '0',
+            `payment_type` tinyint(1) NOT NULL DEFAULT '1',
+            `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+            PRIMARY KEY (`laybuy_revise_request_id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
     }
 
     public function log($data, $step = 6)

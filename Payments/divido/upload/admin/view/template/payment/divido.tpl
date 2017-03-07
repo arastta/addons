@@ -171,31 +171,31 @@
         divido.initialize();
     });
 
-	$('input[name="category"]').autocomplete({
-		source: function(request, response) {
-			$.ajax({
-				url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-				dataType: 'json',
-				success: function(json) {
-					response($.map(json, function(item) {
-						return {
-							label: item['name'],
-							value: item['category_id']
-						}
-					}));
-				}
-			});
-		},
-		select: function(item) {
-			$('input[name=\'category\']').val('');
-			$('#divido-category' + item['value']).remove();
-			$('#divido-category').append('<div id="divido-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="divido_categories[]" value="' + item['value'] + '" /></div>');
-		}
-	});
+    $('input[name="category"]').autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['category_id']
+                        }
+                    }));
+                }
+            });
+        },
+        select: function(item) {
+            $('input[name=\'category\']').val('');
+            $('#divido-category' + item['value']).remove();
+            $('#divido-category').append('<div id="divido-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="divido_categories[]" value="' + item['value'] + '" /></div>');
+        }
+    });
 
-	$('#divido-category').delegate('.fa-minus-circle', 'click', function() {
-		$(this).parent().remove();
-	});
+    $('#divido-category').delegate('.fa-minus-circle', 'click', function() {
+        $(this).parent().remove();
+    });
 
 })(jQuery);
 </script>

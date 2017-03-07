@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentPPPayflowIFrame extends Model
@@ -10,26 +12,26 @@ class ModelPaymentPPPayflowIFrame extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE `" . DB_PREFIX . "paypal_payflow_iframe_order` (
-				`order_id` int(11) DEFAULT NULL,
-				`secure_token_id` varchar(255) NOT NULL,
-				`transaction_reference` varchar(255) DEFAULT NULL,
-				`transaction_type` varchar(1) DEFAULT NULL,
-				`complete` tinyint(4) NOT NULL DEFAULT '0',
-				PRIMARY KEY(`order_id`),
-				KEY `secure_token_id` (`secure_token_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci");
+            CREATE TABLE `" . DB_PREFIX . "paypal_payflow_iframe_order` (
+                `order_id` int(11) DEFAULT NULL,
+                `secure_token_id` varchar(255) NOT NULL,
+                `transaction_reference` varchar(255) DEFAULT NULL,
+                `transaction_type` varchar(1) DEFAULT NULL,
+                `complete` tinyint(4) NOT NULL DEFAULT '0',
+                PRIMARY KEY(`order_id`),
+                KEY `secure_token_id` (`secure_token_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci");
 
         $this->db->query("
-			CREATE TABLE `" . DB_PREFIX . "paypal_payflow_iframe_order_transaction` (
-				`order_id` int(11) NOT NULL,
-				`transaction_reference` varchar(255) NOT NULL,
-				`transaction_type` char(1) NOT NULL,
-				`time` datetime NOT NULL,
-				`amount` decimal(10,4) DEFAULT NULL,
-				PRIMARY KEY (`transaction_reference`),
-				KEY `order_id` (`order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
+            CREATE TABLE `" . DB_PREFIX . "paypal_payflow_iframe_order_transaction` (
+                `order_id` int(11) NOT NULL,
+                `transaction_reference` varchar(255) NOT NULL,
+                `transaction_type` char(1) NOT NULL,
+                `time` datetime NOT NULL,
+                `amount` decimal(10,4) DEFAULT NULL,
+                PRIMARY KEY (`transaction_reference`),
+                KEY `order_id` (`order_id`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
     }
 
     public function uninstall()
@@ -62,39 +64,39 @@ class ModelPaymentPPPayflowIFrame extends Model
     public function updateOrderStatus($order_id, $status)
     {
         $this->db->query("
-			UPDATE " . DB_PREFIX . "paypal_payflow_iframe_order
-			SET `complete` = " . (int) $status . "
-			WHERE order_id = '" . (int) $order_id . "'
-		");
+            UPDATE " . DB_PREFIX . "paypal_payflow_iframe_order
+            SET `complete` = " . (int) $status . "
+            WHERE order_id = '" . (int) $order_id . "'
+        ");
     }
 
     public function addTransaction($data)
     {
         $this->db->query("
-			INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			SET order_id = " . (int) $data['order_id'] . ",
-				transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
-				transaction_type = '" . $this->db->escape($data['type']) . "',
-				`time` = NOW(),
-				`amount` = '" . $this->db->escape($data['amount']) . "'
-		");
+            INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
+            SET order_id = " . (int) $data['order_id'] . ",
+                transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
+                transaction_type = '" . $this->db->escape($data['type']) . "',
+                `time` = NOW(),
+                `amount` = '" . $this->db->escape($data['amount']) . "'
+        ");
     }
 
     public function getTransactions($order_id)
     {
         return $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			WHERE order_id = " . (int) $order_id . "
-			ORDER BY `time` ASC")->rows;
+            SELECT *
+            FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
+            WHERE order_id = " . (int) $order_id . "
+            ORDER BY `time` ASC")->rows;
     }
 
     public function getTransaction($transaction_reference)
     {
         $result = $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			WHERE transaction_reference = '" . $this->db->escape($transaction_reference) . "'")->row;
+            SELECT *
+            FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
+            WHERE transaction_reference = '" . $this->db->escape($transaction_reference) . "'")->row;
 
         if ($result) {
             $transaction = $result;

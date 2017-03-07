@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentPPPayflowIframe extends Model
@@ -58,12 +60,12 @@ class ModelPaymentPPPayflowIframe extends Model
     public function updateOrder($data)
     {
         $this->db->query("
-			UPDATE `" . DB_PREFIX . "paypal_payflow_iframe_order`
-			SET `transaction_reference` = '" . $this->db->escape($data['transaction_reference']) . "',
-				`transaction_type` = '" . $this->db->escape($data['transaction_type']) . "',
-				`complete` = " . (int) $data['complete'] . "
-			WHERE `secure_token_id` = '" . $this->db->escape($data['secure_token_id']) . "'
-		");
+            UPDATE `" . DB_PREFIX . "paypal_payflow_iframe_order`
+            SET `transaction_reference` = '" . $this->db->escape($data['transaction_reference']) . "',
+                `transaction_type` = '" . $this->db->escape($data['transaction_type']) . "',
+                `complete` = " . (int) $data['complete'] . "
+            WHERE `secure_token_id` = '" . $this->db->escape($data['secure_token_id']) . "'
+        ");
     }
 
     public function call($data)
@@ -114,13 +116,13 @@ class ModelPaymentPPPayflowIframe extends Model
     public function addTransaction($data)
     {
         $this->db->query("
-			INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			SET order_id = " . (int) $data['order_id'] . ",
-				transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
-				transaction_type = '" . $this->db->escape($data['type']) . "',
-				`time` = NOW(),
-				`amount` = '" . $this->db->escape($data['amount']) . "'
-		");
+            INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
+            SET order_id = " . (int) $data['order_id'] . ",
+                transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
+                transaction_type = '" . $this->db->escape($data['type']) . "',
+                `time` = NOW(),
+                `amount` = '" . $this->db->escape($data['amount']) . "'
+        ");
     }
 
     public function log($message)

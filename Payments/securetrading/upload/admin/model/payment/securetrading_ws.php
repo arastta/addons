@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentSecureTradingWs extends Model
@@ -10,31 +12,31 @@ class ModelPaymentSecureTradingWs extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_ws_order` (
-			  `securetrading_ws_order_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `order_id` INT(11) NOT NULL,
-			  `md` varchar(1024) DEFAULT NULL,
-			  `transaction_reference` varchar(127) DEFAULT NULL,
-			  `created` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
-			  `release_status` INT(1) DEFAULT NULL,
-			  `void_status` INT(1) DEFAULT NULL,
-			  `settle_type` INT(1) DEFAULT NULL,
-			  `rebate_status` INT(1) DEFAULT NULL,
-			  `currency_code` CHAR(3) NOT NULL,
-			  `total` DECIMAL( 10, 2 ) NOT NULL,
-			  PRIMARY KEY (`securetrading_ws_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_ws_order` (
+              `securetrading_ws_order_id` INT(11) NOT NULL AUTO_INCREMENT,
+              `order_id` INT(11) NOT NULL,
+              `md` varchar(1024) DEFAULT NULL,
+              `transaction_reference` varchar(127) DEFAULT NULL,
+              `created` DATETIME NOT NULL,
+              `modified` DATETIME NOT NULL,
+              `release_status` INT(1) DEFAULT NULL,
+              `void_status` INT(1) DEFAULT NULL,
+              `settle_type` INT(1) DEFAULT NULL,
+              `rebate_status` INT(1) DEFAULT NULL,
+              `currency_code` CHAR(3) NOT NULL,
+              `total` DECIMAL( 10, 2 ) NOT NULL,
+              PRIMARY KEY (`securetrading_ws_order_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_ws_order_transaction` (
-			  `securetrading_ws_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
-			  `securetrading_ws_order_id` INT(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
-			  `type` ENUM('auth', 'payment', 'rebate', 'reversed') DEFAULT NULL,
-			  `amount` DECIMAL( 10, 2 ) NOT NULL,
-			  PRIMARY KEY (`securetrading_ws_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_ws_order_transaction` (
+              `securetrading_ws_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
+              `securetrading_ws_order_id` INT(11) NOT NULL,
+              `created` DATETIME NOT NULL,
+              `type` ENUM('auth', 'payment', 'rebate', 'reversed') DEFAULT NULL,
+              `amount` DECIMAL( 10, 2 ) NOT NULL,
+              PRIMARY KEY (`securetrading_ws_order_transaction_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
     }
 
     public function uninstall()

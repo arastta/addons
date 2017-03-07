@@ -273,10 +273,10 @@
                                     <label class="control-label" for="date-from"><?php echo $entry_date_from; ?></label>
                                     <div class="input-group datetime">
                                         <input type="text" name="date_from" value="<?php echo date('Y-m-d'); ?>" placeholder="<?php echo $entry_date_from; ?>" data-date-format="YYYY-MM-DD" id="date-from" class="form-control"/>
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default">
                                                     <i class="fa fa-calendar"></i></button>
-											</span>
+                                            </span>
                                     </div>
                                 </div>
                             </div>
@@ -309,10 +309,10 @@
                                     <label class="control-label" for="date-to"><?php echo $entry_date_to; ?></label>
                                     <div class="input-group datetime">
                                         <input type="text" name="date_to" value="<?php echo date('Y-m-d'); ?>" placeholder="<?php echo $entry_date_to; ?>" data-date-format="YYYY-MM-DD" id="date-to" class="form-control"/>
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default">
                                                     <i class="fa fa-calendar"></i></button>
-											</span>
+                                            </span>
                                     </div>
                                 </div>
                             </div>

@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentSagePayServer extends Model
@@ -381,10 +383,10 @@ class ModelPaymentSagePayServer extends Model
     protected function getProfiles()
     {
         $sql = "
-			SELECT `or`.order_recurring_id
-			FROM `" . DB_PREFIX . "order_recurring` `or`
-			JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`)
-			WHERE o.payment_code = 'sagepay_server'";
+            SELECT `or`.order_recurring_id
+            FROM `" . DB_PREFIX . "order_recurring` `or`
+            JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`)
+            WHERE o.payment_code = 'sagepay_server'";
 
         $qry = $this->db->query($sql);
 

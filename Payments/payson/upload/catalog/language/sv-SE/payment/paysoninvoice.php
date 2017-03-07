@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
+ */
 
 $_['text_title']   = '<img src="https://www.payson.se/sites/all/files/images/external/payson_faktura.png" style="width:140px;height:55px;clear:right" alt="Payson Faktura" title="Paysoninvoice" />  - (Fakturaavgift inkl moms: %s SEK)';
 $_['text_denied'] = 'Betalningen blev nekad.';
@@ -6,4 +13,3 @@ $_['text_invoice_terms']  = '<div style="padding: 3px; margin-bottom: 5px;"><h2>
 $_['text_payson_payment_method'] = ' Testa med en annan betalningsmetod.';
 $_['text_payson_payment_error'] = 'Ett fel har uppstått. Vänligen försök igen eller pröva med en annan betalmetod';
 $_['text_wait'] = 'Vänligen vänta....';
-?>

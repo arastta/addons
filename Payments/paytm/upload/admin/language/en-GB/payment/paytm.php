@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
+ */
+
 // Heading
 $_['heading_title']      = 'Paytm Payments';
 
@@ -37,4 +45,3 @@ $_['error_key']          = 'Merchant Key Required!';
 $_['error_industry']     = 'Industry Type Required!';
 
 $_['error_website']          = 'Website Name Required!';
-?>

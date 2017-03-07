@@ -264,11 +264,11 @@
 </div>
 <style type="text/css">
 .form-horizontal .control-label {
-	padding-top: 0;
+    padding-top: 0;
 }
 
 .amount_remaining {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 </style>
 <script type="text/javascript"><!--
@@ -276,202 +276,202 @@ var token = '';
 
 // Login to the API
 $.ajax({
-	url: '<?php echo $store_url; ?>index.php?route=api/login',
-	type: 'post',
-	dataType: 'json',
-	data: 'key=<?php echo $api_key; ?>',
-	crossDomain: true,
-	success: function(json) {
+    url: '<?php echo $store_url; ?>index.php?route=api/login',
+    type: 'post',
+    dataType: 'json',
+    data: 'key=<?php echo $api_key; ?>',
+    crossDomain: true,
+    success: function(json) {
         if (json['error']) {
-    		if (json['error']['key']) {
-    			alert(json['error']['key']);
-    		}
+            if (json['error']['key']) {
+                alert(json['error']['key']);
+            }
 
             if (json['error']['ip']) {
-    			alert(json['error']['ip']);
-    		}
+                alert(json['error']['ip']);
+            }
         }
 
         if (json['token']) {
-			token = json['token'];
-		}
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
+            token = json['token'];
+        }
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#cancel-plan').on('click', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	$.ajax({
-		url: 'index.php?route=payment/laybuy/cancel&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
-		type: 'post',
-		dataType: 'json',
-		cache: false,
-		beforeSend: function() {
-			$('#cancel-plan, #revise-plan').attr('disabled', true);
-			$('#cancel-plan').after('<span class="laybuy-loading fa fa-spinner" style="margin-left:2px"></span>');
-		},
-		complete: function() {
-			$('#cancel-plan, #revise-plan').attr('disabled', false);
-			$('.laybuy-loading').remove();
-		},
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			}
+    $.ajax({
+        url: 'index.php?route=payment/laybuy/cancel&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        beforeSend: function() {
+            $('#cancel-plan, #revise-plan').attr('disabled', true);
+            $('#cancel-plan').after('<span class="laybuy-loading fa fa-spinner" style="margin-left:2px"></span>');
+        },
+        complete: function() {
+            $('#cancel-plan, #revise-plan').attr('disabled', false);
+            $('.laybuy-loading').remove();
+        },
+        success: function(json) {
+            if (json['error']) {
+                alert(json['error']);
+            }
 
-			if (json['success']) {
-				if (token) {
-					// Send order history to the API
-					$.ajax({
-						url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=' + token + '&order_id=' + json['order_id'],
-						type: 'post',
-						dataType: 'json',
-						data: 'order_status_id=' + json['order_status_id'] + '&notify=1&override=0&append=0&comment=' + encodeURIComponent(json['comment']),
-						success: function(json) {
-							if (json['error']) {
-								alert(json['error']);
-							}
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-						}
-					});
-				}
+            if (json['success']) {
+                if (token) {
+                    // Send order history to the API
+                    $.ajax({
+                        url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=' + token + '&order_id=' + json['order_id'],
+                        type: 'post',
+                        dataType: 'json',
+                        data: 'order_status_id=' + json['order_status_id'] + '&notify=1&override=0&append=0&comment=' + encodeURIComponent(json['comment']),
+                        success: function(json) {
+                            if (json['error']) {
+                                alert(json['error']);
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }
 
-				alert(json['success']);
+                alert(json['success']);
 
-				location = json['reload'].replace(/&amp;/g, '&');
-			}
-		},
-	 	error: function(xhr, ajaxOptions, thrownError) {
-	 		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+                location = json['reload'].replace(/&amp;/g, '&');
+            }
+        },
+         error: function(xhr, ajaxOptions, thrownError) {
+             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#revise-plan').on('click', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	$.ajax({
-		url: 'index.php?route=payment/laybuy/revise&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
-		type: 'post',
-		data: $('#payment-type, #amount, #down-payment, #months'),
-		dataType: 'json',
-		cache: false,
-		beforeSend: function() {
-			$('#cancel-plan, #revise-plan').attr('disabled', true);
-			$('#revise-plan').after('<div class="laybuy-loading fa fa-spinner" style="margin-left:2px"></div>');
-		},
-		complete: function() {
-			$('#cancel-plan, #revise-plan').attr('disabled', false);
-			$('.laybuy-loading').remove();
-		},
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			}
+    $.ajax({
+        url: 'index.php?route=payment/laybuy/revise&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
+        type: 'post',
+        data: $('#payment-type, #amount, #down-payment, #months'),
+        dataType: 'json',
+        cache: false,
+        beforeSend: function() {
+            $('#cancel-plan, #revise-plan').attr('disabled', true);
+            $('#revise-plan').after('<div class="laybuy-loading fa fa-spinner" style="margin-left:2px"></div>');
+        },
+        complete: function() {
+            $('#cancel-plan, #revise-plan').attr('disabled', false);
+            $('.laybuy-loading').remove();
+        },
+        success: function(json) {
+            if (json['error']) {
+                alert(json['error']);
+            }
 
-			if (json['success']) {
-				alert(json['success']);
+            if (json['success']) {
+                alert(json['success']);
 
-				location = json['reload'].replace(/&amp;/g, '&');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+                location = json['reload'].replace(/&amp;/g, '&');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#payment-type').on('change', function() {
-	var payment_type = $('#payment-type').val();
+    var payment_type = $('#payment-type').val();
 
-	if (payment_type == '1') {
-		$('.laybuy_section').show();
-	} else {
-		$('.laybuy_section').hide();
-	}
+    if (payment_type == '1') {
+        $('.laybuy_section').show();
+    } else {
+        $('.laybuy_section').hide();
+    }
 });
 //--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-	$('#tab-modify').on('change', 'select', function() {
-   		calculate($('#down-payment').val(), $('#months').val());
-	});
+    $('#tab-modify').on('change', 'select', function() {
+           calculate($('#down-payment').val(), $('#months').val());
+    });
 
-	var symbol_left = "<?php echo $currency_symbol_left; ?>";
-	var symbol_right = "<?php echo $currency_symbol_right; ?>";
-	var order = <?php echo json_encode($order_info); ?>;
-	var total = parseFloat(parseFloat(<?php echo $total; ?>) * parseFloat(order.currency_value)).toFixed(4);
+    var symbol_left = "<?php echo $currency_symbol_left; ?>";
+    var symbol_right = "<?php echo $currency_symbol_right; ?>";
+    var order = <?php echo json_encode($order_info); ?>;
+    var total = parseFloat(parseFloat(<?php echo $total; ?>) * parseFloat(order.currency_value)).toFixed(4);
 
-	calculate($('#down-payment').val(), $('#months').val());
+    calculate($('#down-payment').val(), $('#months').val());
 
-	function calculate(dp, months) {
-		var down_payment = getPercent(dp, total);
+    function calculate(dp, months) {
+        var down_payment = getPercent(dp, total);
 
-		var remainder = total - down_payment;
+        var remainder = total - down_payment;
 
-		var payments = getPayments(remainder, months);
-			payments[0] = {
-			payment: '<?php echo $text_downpayment; ?>',
-			dueDate: '<?php echo $text_today; ?>',
-			amount: parseFloat(down_payment).toFixed(2)
-		};
+        var payments = getPayments(remainder, months);
+            payments[0] = {
+            payment: '<?php echo $text_downpayment; ?>',
+            dueDate: '<?php echo $text_today; ?>',
+            amount: parseFloat(down_payment).toFixed(2)
+        };
 
-		replaceRows(payments);
-	}
+        replaceRows(payments);
+    }
 
-	function getPercent(percent, value) {
-		var result = (percent / 100) * value;
+    function getPercent(percent, value) {
+        var result = (percent / 100) * value;
 
-		return result.toFixed(4);
-	}
+        return result.toFixed(4);
+    }
 
-	function getPayments(amount, months) {
-		var payment_amount = amount / months;
+    function getPayments(amount, months) {
+        var payment_amount = amount / months;
 
-		var payments = {};
+        var payments = {};
 
-		for (i = 1; i <= months; i++) {
-			var new_date = new Date();
+        for (i = 1; i <= months; i++) {
+            var new_date = new Date();
 
-			new_date.setMonth(new_date.getMonth() + i);
+            new_date.setMonth(new_date.getMonth() + i);
 
-			payments[i] = {
-				payment: '<?php echo $text_month; ?> ' + i,
-				dueDate: ('0' + new_date.getDate()).slice(-2) + '/' + ('0' + (new_date.getMonth() + 1)).slice(-2) + '/' + new_date.getFullYear(),
-				amount: parseFloat(payment_amount).toFixed(2)
-			}
-		}
+            payments[i] = {
+                payment: '<?php echo $text_month; ?> ' + i,
+                dueDate: ('0' + new_date.getDate()).slice(-2) + '/' + ('0' + (new_date.getMonth() + 1)).slice(-2) + '/' + new_date.getFullYear(),
+                amount: parseFloat(payment_amount).toFixed(2)
+            }
+        }
 
-		return payments;
-	}
+        return payments;
+    }
 
-	function replaceRows(payments) {
-		$('#payment-table').find('tbody').html('');
+    function replaceRows(payments) {
+        $('#payment-table').find('tbody').html('');
 
-		for (payment in payments) {
-			addRow(payments[payment]);
-		}
-	}
+        for (payment in payments) {
+            addRow(payments[payment]);
+        }
+    }
 
-	function addRow(payment) {
-		var row;
+    function addRow(payment) {
+        var row;
 
-		row = '<tr>';
-		row += '<td>' + payment.payment + '</td>';
-		row += '<td>' + payment.dueDate + '</td>';
-		row += '<td class="text-right">' + symbol_left + payment.amount + symbol_right + '</td>';
-		row += '</tr>';
+        row = '<tr>';
+        row += '<td>' + payment.payment + '</td>';
+        row += '<td>' + payment.dueDate + '</td>';
+        row += '<td class="text-right">' + symbol_left + payment.amount + symbol_right + '</td>';
+        row += '</tr>';
 
-		$('#payment-table').find('tbody').append(row);
-	}
+        $('#payment-table').find('tbody').append(row);
+    }
 });
 //--></script>
 <?php echo $footer; ?>

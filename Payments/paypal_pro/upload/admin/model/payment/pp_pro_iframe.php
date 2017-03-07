@@ -1,8 +1,10 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package     Arastta eCommerce
+ * @copyright   2015-2017 Arastta Association. All rights reserved.
+ * @copyright   See CREDITS.txt for credits and other copyright notices.
+ * @license     GNU GPL version 3; see LICENSE.txt
+ * @link        https://arastta.org
  */
 
 class ModelPaymentPPProIframe extends Model
@@ -10,37 +12,37 @@ class ModelPaymentPPProIframe extends Model
     public function install()
     {
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_iframe_order` (
-			  `paypal_iframe_order_id` int(11) NOT NULL AUTO_INCREMENT,
-			  `order_id` int(11) NOT NULL,
-			  `date_added` DATETIME NOT NULL,
-			  `date_modified` DATETIME NOT NULL,
-			  `capture_status` ENUM('Complete','NotComplete') DEFAULT NULL,
-			  `currency_code` CHAR(3) NOT NULL,
-			  `authorization_id` VARCHAR(30) NOT NULL,
-			  `total` DECIMAL( 10, 2 ) NOT NULL,
-			  PRIMARY KEY (`paypal_iframe_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_iframe_order` (
+              `paypal_iframe_order_id` int(11) NOT NULL AUTO_INCREMENT,
+              `order_id` int(11) NOT NULL,
+              `date_added` DATETIME NOT NULL,
+              `date_modified` DATETIME NOT NULL,
+              `capture_status` ENUM('Complete','NotComplete') DEFAULT NULL,
+              `currency_code` CHAR(3) NOT NULL,
+              `authorization_id` VARCHAR(30) NOT NULL,
+              `total` DECIMAL( 10, 2 ) NOT NULL,
+              PRIMARY KEY (`paypal_iframe_order_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
         $this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_iframe_order_transaction` (
-			  `paypal_iframe_order_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-			  `paypal_iframe_order_id` int(11) NOT NULL,
-			  `transaction_id` CHAR(20) NOT NULL,
-			  `parent_transaction_id` CHAR(20) NOT NULL,
-			  `date_added` DATETIME NOT NULL,
-			  `note` VARCHAR(255) NOT NULL,
-			  `msgsubid` CHAR(38) NOT NULL,
-			  `receipt_id` CHAR(20) NOT NULL,
-			  `payment_type` ENUM('none','echeck','instant', 'refund', 'void') DEFAULT NULL,
-			  `payment_status` CHAR(20) NOT NULL,
-			  `pending_reason` CHAR(50) NOT NULL,
-			  `transaction_entity` CHAR(50) NOT NULL,
-			  `amount` DECIMAL( 10, 2 ) NOT NULL,
-			  `debug_data` TEXT NOT NULL,
-			  `call_data` TEXT NOT NULL,
-			  PRIMARY KEY (`paypal_iframe_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+            CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_iframe_order_transaction` (
+              `paypal_iframe_order_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+              `paypal_iframe_order_id` int(11) NOT NULL,
+              `transaction_id` CHAR(20) NOT NULL,
+              `parent_transaction_id` CHAR(20) NOT NULL,
+              `date_added` DATETIME NOT NULL,
+              `note` VARCHAR(255) NOT NULL,
+              `msgsubid` CHAR(38) NOT NULL,
+              `receipt_id` CHAR(20) NOT NULL,
+              `payment_type` ENUM('none','echeck','instant', 'refund', 'void') DEFAULT NULL,
+              `payment_status` CHAR(20) NOT NULL,
+              `pending_reason` CHAR(50) NOT NULL,
+              `transaction_entity` CHAR(50) NOT NULL,
+              `amount` DECIMAL( 10, 2 ) NOT NULL,
+              `debug_data` TEXT NOT NULL,
+              `call_data` TEXT NOT NULL,
+              PRIMARY KEY (`paypal_iframe_order_transaction_id`)
+            ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
     }
 
     public function uninstall()
@@ -158,23 +160,23 @@ class ModelPaymentPPProIframe extends Model
     public function updateTransaction($transaction)
     {
         $this->db->query("
-			UPDATE " . DB_PREFIX . "paypal_iframe_order_transaction
-			SET paypal_iframe_order_id = " . (int) $transaction['paypal_iframe_order_id'] . ",
-				transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "',
-				parent_transaction_id = '" . $this->db->escape($transaction['parent_transaction_id']) . "',
-				date_added = '" . $this->db->escape($transaction['date_added']) . "',
-				note = '" . $this->db->escape($transaction['note']) . "',
-				msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "',
-				receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "',
-				payment_type = '" . $this->db->escape($transaction['payment_type']) . "',
-				payment_status = '" . $this->db->escape($transaction['payment_status']) . "',
-				pending_reason = '" . $this->db->escape($transaction['pending_reason']) . "',
-				transaction_entity = '" . $this->db->escape($transaction['transaction_entity']) . "',
-				amount = '" . $this->db->escape($transaction['amount']) . "',
-				debug_data = '" . $this->db->escape($transaction['debug_data']) . "',
-				call_data = '" . $this->db->escape($transaction['call_data']) . "'
-			WHERE paypal_iframe_order_transaction_id = " . (int) $transaction['paypal_iframe_order_transaction_id'] . "
-		");
+            UPDATE " . DB_PREFIX . "paypal_iframe_order_transaction
+            SET paypal_iframe_order_id = " . (int) $transaction['paypal_iframe_order_id'] . ",
+                transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "',
+                parent_transaction_id = '" . $this->db->escape($transaction['parent_transaction_id']) . "',
+                date_added = '" . $this->db->escape($transaction['date_added']) . "',
+                note = '" . $this->db->escape($transaction['note']) . "',
+                msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "',
+                receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "',
+                payment_type = '" . $this->db->escape($transaction['payment_type']) . "',
+                payment_status = '" . $this->db->escape($transaction['payment_status']) . "',
+                pending_reason = '" . $this->db->escape($transaction['pending_reason']) . "',
+                transaction_entity = '" . $this->db->escape($transaction['transaction_entity']) . "',
+                amount = '" . $this->db->escape($transaction['amount']) . "',
+                debug_data = '" . $this->db->escape($transaction['debug_data']) . "',
+                call_data = '" . $this->db->escape($transaction['call_data']) . "'
+            WHERE paypal_iframe_order_transaction_id = " . (int) $transaction['paypal_iframe_order_transaction_id'] . "
+        ");
     }
 
     public function addTransaction($transaction_data, $request_data = array())
@@ -187,11 +189,11 @@ class ModelPaymentPPProIframe extends Model
             $serialized_data = serialize($request_data);
 
             $this->db->query("
-				UPDATE " . DB_PREFIX . "paypal_iframe_order_transaction
-				SET call_data = '" . $this->db->escape($serialized_data) . "'
-				WHERE paypal_iframe_order_transaction_id = " . (int) $paypal_iframe_order_transaction_id . "
-				LIMIT 1
-			");
+                UPDATE " . DB_PREFIX . "paypal_iframe_order_transaction
+                SET call_data = '" . $this->db->escape($serialized_data) . "'
+                WHERE paypal_iframe_order_transaction_id = " . (int) $paypal_iframe_order_transaction_id . "
+                LIMIT 1
+            ");
         }
 
         return $paypal_iframe_order_transaction_id;
@@ -229,10 +231,10 @@ class ModelPaymentPPProIframe extends Model
     public function updateAuthorizationId($paypal_iframe_order_id, $authorization_id)
     {
         $this->db->query("
-			UPDATE `" . DB_PREFIX . "paypal_iframe_order`
-			SET `authorization_id` = '" . $this->db->escape($authorization_id) . "'
-			WHERE `paypal_iframe_order_id` = '" . $this->db->escape($paypal_iframe_order_id) . "'
-		");
+            UPDATE `" . DB_PREFIX . "paypal_iframe_order`
+            SET `authorization_id` = '" . $this->db->escape($authorization_id) . "'
+            WHERE `paypal_iframe_order_id` = '" . $this->db->escape($paypal_iframe_order_id) . "'
+        ");
     }
 
     public function updateRefundTransaction($transaction_id, $transaction_type)
@@ -243,10 +245,10 @@ class ModelPaymentPPProIframe extends Model
     public function getFailedTransaction($paypl_iframe_order_transaction_id)
     {
         $result = $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_iframe_order_transaction
-			WHERE paypal_iframe_order_transaction_id = " . (int) $paypl_iframe_order_transaction_id . "
-		")->row;
+            SELECT *
+            FROM " . DB_PREFIX . "paypal_iframe_order_transaction
+            WHERE paypal_iframe_order_transaction_id = " . (int) $paypl_iframe_order_transaction_id . "
+        ")->row;
 
         if ($result) {
             return $result;
@@ -258,10 +260,10 @@ class ModelPaymentPPProIframe extends Model
     public function getLocalTransaction($transaction_id)
     {
         $result = $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_iframe_order_transaction
-			WHERE transaction_id = '" . $this->db->escape($transaction_id) . "'
-		")->row;
+            SELECT *
+            FROM " . DB_PREFIX . "paypal_iframe_order_transaction
+            WHERE transaction_id = '" . $this->db->escape($transaction_id) . "'
+        ")->row;
 
         if ($result) {
             return $result;

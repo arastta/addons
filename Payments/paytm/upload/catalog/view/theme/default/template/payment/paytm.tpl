@@ -10,7 +10,7 @@
 <input type='hidden' name='WEBSITE' value="<?php echo $website; ?>" />
 
 <?php if($paytm_callbackurl == '1') { ?>
-	<input type='hidden' name='CALLBACK_URL' value="<?php echo $callback_url; ?>" />
+    <input type='hidden' name='CALLBACK_URL' value="<?php echo $callback_url; ?>" />
 <?php } ?>
 
 <input type='hidden' name='EMAIL' value="<?php echo $email; ?>" />
