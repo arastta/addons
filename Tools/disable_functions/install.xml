@@ -170,8 +170,8 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         <operation error="log">
             <search><![CDATA[<legend><?php echo $text_product; ?></legend>]]></search>
             <add position="after"><![CDATA[                                <div class="form-group">
-                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_compare; ?>"><?php echo $entry_compare; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_compare; ?>"><?php echo $entry_compare; ?></span></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($config_compare_status) { ?>
                                             <input type="radio" name="config_compare_status" value="1" checked="checked" />
@@ -193,8 +193,8 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_wishlist; ?>"><?php echo $entry_wishlist; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_wishlist; ?>"><?php echo $entry_wishlist; ?></span></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($config_wishlist_status) { ?>
                                             <input type="radio" name="config_wishlist_status" value="1" checked="checked" />
@@ -216,8 +216,8 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_reward_point; ?>"><?php echo $entry_reward_point; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_reward_point; ?>"><?php echo $entry_reward_point; ?></span></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($config_reward_point_status) { ?>
                                             <input type="radio" name="config_reward_point_status" value="1" checked="checked" />
@@ -243,8 +243,8 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         <operation error="log">
             <search><![CDATA[<legend><?php echo $text_affiliate; ?></legend>]]></search>
             <add position="after"><![CDATA[                                <div class="form-group">
-                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_affiliate_status; ?>"><?php echo $entry_affiliate_status; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_affiliate_status; ?>"><?php echo $entry_affiliate_status; ?></span></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($config_affiliate_status) { ?>
                                             <input type="radio" name="config_affiliate_status" value="1" checked="checked" />
@@ -266,8 +266,8 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
                                     </div>
                                 </div>]]></add>
         </operation>
-    </file>    
-    
+    </file>
+
     <file path="admin/controller/dashboard/charts.php">
         <operation error="log">
             <search><![CDATA[$this->load->model('localisation/currency');]]></search>
@@ -356,7 +356,7 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
             <add position="after"><![CDATA[                                <?php } ?>]]></add>
         </operation>
     </file>
-    
+
     <file path="admin/view/theme/basic/template/marketing/contact.tpl">
         <operation error="log">
             <search><![CDATA[<option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>]]></search>
@@ -565,7 +565,7 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         </operation>
     </file>
 
-	<file path="catalog/view/theme/*/template/account/account.tpl">
+    <file path="catalog/view/theme/*/template/account/account.tpl">
         <operation error="log">
             <search><![CDATA[<?php if ($reward) { ?>]]></search>
             <add position="replace"><![CDATA[<?php if ($reward && $config_reward_point_status) { ?>]]></add>
@@ -579,14 +579,14 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         </operation>
     </file>
 
-	<file path="catalog/view/theme/*/template/module/account.tpl">
+    <file path="catalog/view/theme/*/template/module/account.tpl">
         <operation error="log">
             <search><![CDATA[<a href="<?php echo $reward; ?>" class="list-group-item"><?php echo $text_reward; ?></a>]]></search>
             <add position="replace"><![CDATA[<?php if ($config_reward_point_status) { ?> <a href="<?php echo $reward; ?>" class="list-group-item"><?php echo $text_reward; ?></a> <?php } ?>]]></add>
         </operation>
     </file>
 
-	<file path="catalog/controller/checkout/cart.php">
+    <file path="catalog/controller/checkout/cart.php">
         <operation error="log">
             <search><![CDATA[$data['vouchers'] = array();]]></search>
             <add position="before" offset="1"><![CDATA[            $data['config_reward_point_status'] = $this->config->get('config_reward_point_status');]]></add>
@@ -733,6 +733,22 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         </operation>
     </file>
 
+    <file path="catalog/view/theme/yemek/template/module/featured.tpl" error="skip">
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-exchange"></span></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-exchange"></span></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-heart"></span></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-heart"></span></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
     <file path="catalog/controller/module/latest.php">
         <operation error="log">
             <search><![CDATA[$this->load->language('module/latest');]]></search>
@@ -762,6 +778,22 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
             <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
             <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/yemek/template/module/latest.tpl" error="skip">
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-exchange"></span></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-exchange"></span></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-heart"></span></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-heart"></span></button>
                 <?php } ?>]]></add>
         </operation>
     </file>
@@ -840,6 +872,29 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         </operation>
     </file>
 
+    <file path="catalog/view/theme/yemek/template/product/category.tpl" error="skip">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button"  data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button"  data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
     <file path="catalog/controller/product/manufacturer.php">
         <operation error="log">
             <search><![CDATA[$data['heading_title'] = $manufacturer_info['name'];]]></search>
@@ -877,6 +932,29 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
             <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
             <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/yemek/template/product/manufacturer_info.tpl" error="skip">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button"  data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button"  data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-heart"></i></button>
                 <?php } ?>]]></add>
         </operation>
     </file>
@@ -922,6 +1000,31 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         </operation>
     </file>
 
+    <file path="catalog/view/theme/yemek/template/product/search.tpl" error="skip">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');">
+                                    <i class="uk-icon-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"> <i class="uk-icon-exchange"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');">
+                                    <i class="uk-icon-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button class="uk-button uk-button-large uk-button-white" type="button" data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"> <i class="uk-icon-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
     <file path="catalog/controller/product/special.php">
         <operation error="log">
             <search><![CDATA[$data['text_empty'] = $this->language->get('text_empty');]]></search>
@@ -963,6 +1066,29 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
         </operation>
     </file>
 
+    <file path="catalog/view/theme/yemek/template/product/special.tpl" error="skip">
+        <operation error="log">
+            <search><![CDATA[<p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+            <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
+            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" uk-data-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-exchange"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                            <button class="uk-button uk-button-large uk-button-white" type="button" uk-data-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-exchange"></i></button>
+                            <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button class="uk-button uk-button-large uk-button-white" type="button" uk-data-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-heart"></i></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                            <button class="uk-button uk-button-large uk-button-white" type="button" uk-data-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="uk-icon-heart"></i></button>
+                            <?php } ?>]]></add>
+        </operation>
+    </file>
+
     <file path="catalog/controller/product/product.php">
         <operation error="log">
             <search><![CDATA[$data['reward'] = $product_info['reward'];]]></search>
@@ -995,12 +1121,12 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
 
         <operation error="skip">
             <search><![CDATA[<div class="btn-group">]]></search>
-            <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_compare_status) { ?>]]></add>
+            <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_wishlist_status) { ?>]]></add>
         </operation>
 
         <operation error="skip">
             <search><![CDATA[<div class="btn-group pull-right">]]></search>
-            <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_compare_status) { ?>]]></add>
+            <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_wishlist_status) { ?>]]></add>
         </operation>
 
         <operation error="skip">
@@ -1038,6 +1164,51 @@ $_['help_reward_point']                = 'Enable/Disable product reward point.';
             <search><![CDATA[<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>]]></search>
             <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                <?php } ?>]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/view/theme/yemek/template/product/product.tpl" error="skip">
+        <operation error="log">
+            <search><![CDATA[<?php if ($reward) { ?>]]></search>
+            <add position="replace"><![CDATA[<?php if ($reward && $config_reward_point_status) { ?>]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[<div class="uk-margin uk-grid" data-uk-grid-margin>]]></search>
+            <add position="before"><![CDATA[                    <?php if ($config_compare_status || $config_wishlist_status) { ?>]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[<div class="uk-margin uk-grid" data-uk-grid-margin>]]></search>
+            <add position="after" offset="7"><![CDATA[                    <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-uk-tooltip class="uk-button uk-width-1-1" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="uk-icon-exchange"></i> <?php echo $button_compare; ?></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                        <button type="button" data-uk-tooltip class="uk-button uk-width-1-1" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="uk-icon-exchange"></i> <?php echo $button_compare; ?></button>
+                        <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" data-uk-tooltip class="uk-button uk-width-1-1" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="uk-icon-heart"></i> <?php echo $button_wishlist; ?></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                        <button type="button" data-uk-tooltip class="uk-button uk-width-1-1" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="uk-icon-heart"></i> <?php echo $button_wishlist; ?></button>
+                        <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" class="uk-button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-exchange"></span></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_compare_status) { ?>
+                <button type="button" class="uk-button" data-uk-tooltip title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-exchange"></span></button>
+                <?php } ?>]]></add>
+        </operation>
+
+        <operation error="log">
+            <search><![CDATA[<button type="button" class="uk-button" data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-heart"></span></button>]]></search>
+            <add position="replace"><![CDATA[<?php if ($config_wishlist_status) { ?>
+                <button type="button" class="uk-button" data-uk-tooltip title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><span class="uk-icon-heart"></span></button>
                 <?php } ?>]]></add>
         </operation>
     </file>
